@@ -5,9 +5,6 @@ import database as db
 class UserEntity(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
-
-    def test_function_user_entity(self):
-        print('test fonction user entity')
     
     def create_tables(self):
         self.create_user_type_table()
@@ -35,8 +32,8 @@ class UserEntity(db.VelostoreDatabase):
                         user_type INTEGER NOT NULL,
                         username STRING NOT NULL,
                         status BOOL NOT NULL,
-                        mail STRING NOT NULL,
-                        password STRING NOT NULL,
+                        mail STRING NOT NULL UNIQUE,
+                        password STRING NOT NULL UNIQUE,
                         FOREIGN KEY(user_type) REFERENCES user_type(id)
                         FOREIGN KEY(status) REFERENCES user_status(id)
                     )
