@@ -3,25 +3,36 @@ import os, sys
 
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
 import bike_entity as be
-
+import order_entity as oe
+import user_entity as ue
+import stat_bike_entity as sbe
 
 class Migration(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
         self.bike_entity = be.BikeEntity()
+        self.order_entity = oe.OrderEntity()
+        self.user_entity = ue.UserEntity()
+        self.stat_bike_entity = sbe.StatBikeEntity()
 
     def setup(self):
         self.create_bike_tables()
+        self.create_order_tables()
+        self.create_user_tables()
+        self.create_stat_tables()
         self.add_statics_data()
 
     def create_bike_tables(self):
         self.bike_entity.create_tables()
 
     def create_order_tables(self):
-        pass
+        self.order_entity.create_tables()
 
     def create_user_tables(self):
-        pass
+        self.user_entity.create_tables()
+    
+    def create_stat_tables(self):
+        self.stat_bike_entity.create_tables()
 
     def add_statics_data(self):
         self.add_bike_status()
@@ -29,6 +40,9 @@ class Migration(db.VelostoreDatabase):
         self.add_bike_category()
         self.add_bike_color()
         self.add_bike_type()
+        self.add_order_status()
+        self.add_user_status()
+        self.add_stats_name()
 
     def add_bike_status(self):
         status_list = [
@@ -113,6 +127,51 @@ class Migration(db.VelostoreDatabase):
             "Total",
             self.cursor.rowcount,
             "Records inserted successfully into bike_type table",
+        )
+
+    def add_order_status(self):
+        status_order__list = [
+            ("en attente",),
+            ("payé",),
+            ("livré",)
+        ]
+        self.cursor.executemany(
+            "INSERT OR IGNORE INTO order_status (status) VALUES (?)", status_order__list
+        )
+        self.connection.commit()
+        print(
+            "Total",
+            self.cursor.rowcount,
+            "Records inserted successfully into order_status table",
+        )
+
+    def add_user_status(self):
+        status_user__list = [
+            ("actif",),
+            ("inactif",)
+        ]
+        self.cursor.executemany(
+            "INSERT OR IGNORE INTO user_status (status) VALUES (?)", status_user__list
+        )
+        self.connection.commit()
+        print(
+            "Total",
+            self.cursor.rowcount,
+            "Records inserted successfully into user_status table",
+        )
+
+    def add_stats_name(self):
+        stats_name_list = [
+            ("Nombre de clique par vélo",)
+        ]
+        self.cursor.executemany(
+            "INSERT OR IGNORE INTO statistics_name (status) VALUES (?)", stats_name_list
+        )
+        self.connection.commit()
+        print(
+            "Total",
+            self.cursor.rowcount,
+            "Records inserted successfully into statistics_name table",
         )
 
 

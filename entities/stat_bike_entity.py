@@ -6,7 +6,7 @@ class StatBikeEntity(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
     
-    def create_table(self):
+    def create_tables(self):
         self.create_statistics_name()
         self.create_statistics_bike()
 
@@ -33,7 +33,7 @@ class StatBikeEntity(db.VelostoreDatabase):
 
 def main():
     stats = StatBikeEntity()
-    stats.create_table()
+    stats.create_tables()
 
 if __name__ == '__main__':
     main()
