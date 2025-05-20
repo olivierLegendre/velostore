@@ -6,9 +6,6 @@ class StatBikeEntity(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
     
-    def test_function_stat_entity(self):
-        print('test function stat')
-    
     def create_table(self):
         self.create_statistics_name()
         self.create_statistics_bike()
@@ -29,7 +26,8 @@ class StatBikeEntity(db.VelostoreDatabase):
                         id_bike INTEGER NOT NULL,
                         statistics_name INTEGER NOT NULL,
                         statistics_counter INTEGER NOT NULL,
-                        FOREIGN KEY(statistics_name) REFERENCES statistics_name(id)
+                        FOREIGN KEY(statistics_name) REFERENCES statistics_name(id),
+                        FOREIGN KEY(id_bike) REFERENCES bike(id)
                     )
                     """)
 
