@@ -17,7 +17,7 @@ class StatBikeEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                     CREATE TABLE IF NOT EXISTS statistics_name (
                         id INTEGER PRIMARY KEY NOT NULL,
-                        name STRING NOT NULL
+                        name STRING NOT NULL UNIQUE
                     )
                     """)
 
