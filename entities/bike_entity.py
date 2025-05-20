@@ -14,13 +14,14 @@ class BikeEntity(db.VelostoreDatabase):
         self.create_bike_size_table()
         self.create_bike_category_table()
         self.create_bike_color_table()
+        self.create_bike_type_table()
         self.create_bike_table()
         
     def create_bike_status_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_status (
                             id INTEGER PRIMARY KEY NOT NULL,
-                            status STRING NOT NULL
+                            status STRING NOT NULL UNIQUE
                         )
                         """)
         
@@ -28,7 +29,7 @@ class BikeEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_size (
                             id INTEGER PRIMARY KEY NOT NULL,
-                            size STRING NOT NULL
+                            size STRING NOT NULL UNIQUE
                         )
                         """)
         
@@ -36,7 +37,7 @@ class BikeEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_category (
                             id INTEGER PRIMARY KEY NOT NULL,
-                            category STRING NOT NULL
+                            category STRING NOT NULL UNIQUE
                         )
                         """)
         
@@ -44,7 +45,7 @@ class BikeEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_color (
                             id INTEGER PRIMARY KEY NOT NULL,
-                            color STRING NOT NULL
+                            color STRING NOT NULL UNIQUE
                         )
                         """)
         
@@ -52,7 +53,7 @@ class BikeEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_type (
                             id INTEGER PRIMARY KEY NOT NULL,
-                            type STRING NOT NULL
+                            type STRING NOT NULL UNIQUE
                         )
                         """)
         

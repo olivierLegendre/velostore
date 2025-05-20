@@ -12,6 +12,6 @@ def main():
     bike_entity = be.BikeEntity()
     # bike_entity.test_function_bike_entity()
     bicycle = Bike(bike_entity)
-    
+
 if __name__ == '__main__':
     main()
