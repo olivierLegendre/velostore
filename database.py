@@ -7,7 +7,7 @@ class VelostoreDatabase():
     def connection_db(self) -> None:
         """create a connection and a cursor object
         """
-        with sqlite3.connect("velostore.db") as connection:
+        with sqlite3.connect("db/velostore.db") as connection:
             self.connection = connection
             self.cursor = connection.cursor()
         
@@ -16,7 +16,7 @@ class VelostoreDatabase():
             you can reset the whole "game" by deleting the water_world.db
         """
         #create file wator_world.db s'il n'existe pas
-        file_path = "velostor.db"
+        file_path = "db/velostor.db"
 
         try:
             with open(file_path, 'x') as file:
@@ -34,6 +34,10 @@ class VelostoreDatabase():
                             blablabla
                         )
                         """)
+      
+    def create_bike_tables(self):
+        #create
+        pass
         
     def test_function(self):
         print("test function import")

@@ -5,13 +5,13 @@ import bike_entity as be
 
 class Bike():
     def __init__(self, entity=be.BikeEntity()):
-        self.entity = entity
-
+        # self.cursor = super().cursor
+        
 
 def main():
     bike_entity = be.BikeEntity()
-    bike_entity.test_function_bike_entity()
+    # bike_entity.test_function_bike_entity()
     bicycle = Bike(bike_entity)
-
+    
 if __name__ == '__main__':
     main()
