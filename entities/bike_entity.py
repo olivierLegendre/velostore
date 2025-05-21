@@ -12,9 +12,9 @@ class BikeEntity(db.VelostoreDatabase):
     def create_tables(self):
         self.create_bike_status_table()
         self.create_bike_size_table()
-        self.create_bike_category_table()
+        self.create_bike_destination_table()
         self.create_bike_color_table()
-        self.create_bike_type_table()
+        self.create_bike_brand_table()
         self.create_bike_table()
         
     def create_bike_status_table(self):
@@ -30,14 +30,16 @@ class BikeEntity(db.VelostoreDatabase):
                         CREATE TABLE IF NOT EXISTS bike_size (
                             id INTEGER PRIMARY KEY NOT NULL,
                             size STRING NOT NULL UNIQUE
+                            
                         )
                         """)
         
-    def create_bike_category_table(self):
+    def create_bike_destination_table(self):
         self.cursor.execute("""
-                        CREATE TABLE IF NOT EXISTS bike_category (
+                        CREATE TABLE IF NOT EXISTS bike_destination (
                             id INTEGER PRIMARY KEY NOT NULL,
-                            category STRING NOT NULL UNIQUE
+                            destination STRING NOT NULL UNIQUE
+                            
                         )
                         """)
         
@@ -46,14 +48,24 @@ class BikeEntity(db.VelostoreDatabase):
                         CREATE TABLE IF NOT EXISTS bike_color (
                             id INTEGER PRIMARY KEY NOT NULL,
                             color STRING NOT NULL UNIQUE
+                            
                         )
                         """)
         
-    def create_bike_type_table(self):
+    def create_bike_brand_table(self):
         self.cursor.execute("""
-                        CREATE TABLE IF NOT EXISTS bike_type (
+                        CREATE TABLE IF NOT EXISTS bike_brand (
                             id INTEGER PRIMARY KEY NOT NULL,
-                            type STRING NOT NULL UNIQUE
+                            brand STRING NOT NULL UNIQUE,
+                            description STRING NOT NULL,
+                            price INTEGER NOT NULL,
+                            color INTEGER NOT NULL,
+                            size INTEGER NOT NULL,
+                            destination STRING NOT NULL,
+                            img STRING,
+                            FOREIGN KEY(color) REFERENCES bike_color(id),
+                            FOREIGN KEY(destination) REFERENCES bike_destination(id),
+                            FOREIGN KEY(size) REFERENCES bike_size(id)
                         )
                         """)
         
@@ -61,19 +73,10 @@ class BikeEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike (
                             id INTEGER PRIMARY KEY NOT NULL,
-                            type INTEGER NOT NULL,
-                            color INTEGER NOT NULL,
-                            category INTEGER NOT NULL,
+                            brand INTEGER NOT NULL,
                             status INTEGER NOT NULL,
-                            size INTEGER NOT NULL,
-                            description STRING NOT NULL,
-                            price INTEGER NOT NULL,
-                            img STRING,
-                            FOREIGN KEY(type) REFERENCES bike_type(id),
-                            FOREIGN KEY(color) REFERENCES bike_color(id),
-                            FOREIGN KEY(category) REFERENCES bike_category(id),
-                            FOREIGN KEY(status) REFERENCES bike_status(id),
-                            FOREIGN KEY(size) REFERENCES bike_size(id)
+                            FOREIGN KEY(brand) REFERENCES bike_brand(id),
+                            FOREIGN KEY(status) REFERENCES bike_status(id)
                         )
                         """)
 

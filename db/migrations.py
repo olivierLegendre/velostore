@@ -37,9 +37,9 @@ class Migration(db.VelostoreDatabase):
     def add_statics_data(self):
         self.add_bike_status()
         self.add_bike_size()
-        self.add_bike_category()
+        self.add_bike_destination()
         self.add_bike_color()
-        self.add_bike_type()
+        self.add_bike_brand()
         self.add_order_status()
         self.add_user_status()
         self.add_stats_name()
@@ -76,21 +76,21 @@ class Migration(db.VelostoreDatabase):
             "Records inserted successfully into bike_size table",
         )
 
-    def add_bike_category(self):
-        category_list = [
+    def add_bike_destination(self):
+        destination_list = [
             ("route",),
             ("course",),
             ("VTT",),
             ("BMX",),
         ]
         self.cursor.executemany(
-            "INSERT OR IGNORE INTO bike_category (category) VALUES (?)", category_list
+            "INSERT OR IGNORE INTO bike_destination (destination) VALUES (?)", destination_list
         )
         self.connection.commit()
         print(
             "Total",
             self.cursor.rowcount,
-            "Records inserted successfully into bike_category table",
+            "Records inserted successfully into bike_destination table",
         )
 
     def add_bike_color(self):
@@ -112,21 +112,21 @@ class Migration(db.VelostoreDatabase):
             "Records inserted successfully into bike_color table",
         )
 
-    def add_bike_type(self):
-        type_list = [
+    def add_bike_brand(self):
+        brand_list = [
             ("Rockrider",),
             ("Elops",),
             ("Btwin",),
             ("Stilus",),
         ]
         self.cursor.executemany(
-            "INSERT OR IGNORE INTO bike_type (type) VALUES (?)", type_list
+            "INSERT OR IGNORE INTO bike_brand (brand) VALUES (?)", brand_list
         )
         self.connection.commit()
         print(
             "Total",
             self.cursor.rowcount,
-            "Records inserted successfully into bike_type table",
+            "Records inserted successfully into bike_brand table",
         )
 
     def add_order_status(self):
@@ -165,7 +165,7 @@ class Migration(db.VelostoreDatabase):
             ("Nombre de clique par vélo",)
         ]
         self.cursor.executemany(
-            "INSERT OR IGNORE INTO statistics_name (status) VALUES (?)", stats_name_list
+            "INSERT OR IGNORE INTO statistics_name (name) VALUES (?)", stats_name_list
         )
         self.connection.commit()
         print(
