@@ -42,7 +42,9 @@ class Migration(db.VelostoreDatabase):
         self.add_bike_brand()
         self.add_order_status()
         self.add_user_status()
+        self.add_user_type()
         self.add_stats_name()
+    
 
     def add_bike_status(self):
         status_list = [
@@ -159,6 +161,23 @@ class Migration(db.VelostoreDatabase):
             self.cursor.rowcount,
             "Records inserted successfully into user_status table",
         )
+
+
+    def add_user_type(self):
+        status_user__type = [
+            ("utilisateur",),
+            ("admin",)
+        ]
+        self.cursor.executemany(
+            "INSERT OR IGNORE INTO user_type (type) VALUES (?)", status_user__type
+        )
+        self.connection.commit()
+        print(
+            "Total",
+            self.cursor.rowcount,
+            "Records inserted successfully into user_type table",
+        )
+
 
     def add_stats_name(self):
         stats_name_list = [
