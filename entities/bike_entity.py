@@ -84,6 +84,29 @@ class BikeEntity(db.VelostoreDatabase):
                         (bike_id,))
         return self.cursor.fetchone()
     
+    def get_bike_by_parameters(self, parameters):
+        query = "SELECT * FROM bike WHERE "
+        conditions = []
+        values = []
+
+        for key, value in parameters.items():
+            if key in ['id', 'brand', 'size', 'color', 'status']:
+                conditions.append(f"{key} = ?")
+                values.append(value)
+
+        if not conditions:
+            raise ValueError("No valid parameters provided for the query.")
+        # pour joindre les 2 param (clé valeur) à vérifier
+        query += " AND ".join(conditions)
+
+        # debug
+        #print("Generated SQL Query:", query)
+        #print("Values:", values)
+
+        self.cursor.execute(query, tuple(values))
+        return self.cursor.fetchone()
+
+
     def delete_bike_status_table(self):
         self.cursor.execute("""
                         DROP TABLE IF EXISTS bike_status
