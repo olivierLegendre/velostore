@@ -6,7 +6,10 @@ import bike_entity as be
 class Bike():
     def __init__(self, entity=be.BikeEntity()):
         # self.cursor = super().cursor
-        
+        return
+    
+    def get_bike_id(self, bike_id):
+        bike = self.be.get_bike_by_id(bike_id)
 
 def main():
     bike_entity = be.BikeEntity()
