@@ -6,6 +6,7 @@ class StatBikeEntity(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
     
+    # CREATE
     def create_tables(self):
         self.create_statistics_name()
         self.create_statistics_bike()
@@ -18,7 +19,6 @@ class StatBikeEntity(db.VelostoreDatabase):
                     )
                     """)
 
-
     def create_statistics_bike(self):
         self.cursor.execute("""
                     CREATE TABLE IF NOT EXISTS statistics_bike (
@@ -30,6 +30,18 @@ class StatBikeEntity(db.VelostoreDatabase):
                         FOREIGN KEY(id_bike) REFERENCES bike_brand(id)
                     )
                     """)
+        
+    # DELETE
+    def delete_statistics_bike(self):
+        self.cursor.execute("""
+                        DROP TABLE IF EXISTS statistics_bike
+                        """)
+        
+    def delete_statistics_name(self):
+        self.cursor.execute("""
+                        DROP TABLE IF EXISTS statistics_name
+                        """)
+        
 
 def main():
     stats = StatBikeEntity()
