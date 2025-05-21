@@ -1,14 +1,14 @@
 import os, sys
+
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db")
 import database as db
+
 
 class BikeEntity(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
-        
-    def test_function_bike_entity(self):
-        print("test_function_bike_entity")
-        
+
+    # CREATE
     def create_tables(self):
         self.create_bike_status_table()
         self.create_bike_size_table()
@@ -16,7 +16,7 @@ class BikeEntity(db.VelostoreDatabase):
         self.create_bike_color_table()
         self.create_bike_brand_table()
         self.create_bike_table()
-        
+
     def create_bike_status_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_status (
@@ -24,7 +24,7 @@ class BikeEntity(db.VelostoreDatabase):
                             status STRING NOT NULL UNIQUE
                         )
                         """)
-        
+
     def create_bike_size_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_size (
@@ -32,7 +32,7 @@ class BikeEntity(db.VelostoreDatabase):
                             size STRING NOT NULL UNIQUE
                         )
                         """)
-        
+
     def create_bike_destination_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_destination (
@@ -41,7 +41,7 @@ class BikeEntity(db.VelostoreDatabase):
                             
                         )
                         """)
-        
+
     def create_bike_color_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_color (
@@ -49,7 +49,7 @@ class BikeEntity(db.VelostoreDatabase):
                             color STRING NOT NULL UNIQUE 
                         )
                         """)
-        
+
     def create_bike_brand_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_brand (
@@ -57,12 +57,12 @@ class BikeEntity(db.VelostoreDatabase):
                             brand STRING NOT NULL UNIQUE,
                             description STRING NOT NULL,
                             price INTEGER NOT NULL,
-                            destination STRING NOT NULL,
+                            destination INTEGER NOT NULL,
                             img STRING,
                             FOREIGN KEY(destination) REFERENCES bike_destination(id)
                         )
                         """)
-        
+
     def create_bike_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike (
@@ -77,20 +77,24 @@ class BikeEntity(db.VelostoreDatabase):
                             FOREIGN KEY(color) REFERENCES bike_color(id)
                         )
                         """)
+
+    # READ
     def get_bike_by_id(self, bike_id):
-        self.cursor.execute("""
+        self.cursor.execute(
+            """
                         SELECT * FROM bike WHERE ID = ?
                         """,
-                        (bike_id,))
+            (bike_id,),
+        )
         return self.cursor.fetchone()
-    
+
     def get_bike_by_parameters(self, parameters):
         query = "SELECT * FROM bike WHERE "
         conditions = []
         values = []
 
         for key, value in parameters.items():
-            if key in ['id', 'brand', 'size', 'color', 'status']:
+            if key in ["id", "brand", "size", "color", "status"]:
                 conditions.append(f"{key} = ?")
                 values.append(value)
 
@@ -100,22 +104,48 @@ class BikeEntity(db.VelostoreDatabase):
         query += " AND ".join(conditions)
 
         # debug
-        #print("Generated SQL Query:", query)
-        #print("Values:", values)
+        # print("Generated SQL Query:", query)
+        # print("Values:", values)
 
         self.cursor.execute(query, tuple(values))
         return self.cursor.fetchone()
 
 
+    # DELETE
+    def delete_bike_table(self):
+        self.cursor.execute("""
+                        DROP TABLE IF EXISTS bike
+                        """)
+
     def delete_bike_status_table(self):
         self.cursor.execute("""
                         DROP TABLE IF EXISTS bike_status
+                        """)
+    
+    def delete_bike_color_table(self):
+        self.cursor.execute("""
+                        DROP TABLE IF EXISTS bike_color
+                        """)
+
+    def delete_bike_size_table(self):
+        self.cursor.execute("""
+                        DROP TABLE IF EXISTS bike_size
+                        """)
+        
+    def delete_bike_brand_table(self):
+        self.cursor.execute("""
+                        DROP TABLE IF EXISTS bike_brand
+                        """)
+
+    def delete_bike_destination_table(self):
+        self.cursor.execute("""
+                        DROP TABLE IF EXISTS bike_destination
                         """)
 
 def main():
     super_velo = BikeEntity()
     super_velo.create_tables()
-    
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

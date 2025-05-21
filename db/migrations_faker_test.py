@@ -18,7 +18,7 @@ class Migration_test(db.VelostoreDatabase):
         self.bike_entity.create_tables()
 
     def add_dynamics_test_data(self):
-        self.add_dynamics_test()
+        self.add_dynamics_test_bike_brand()
 
     def add_dynamics_test(self):
         for i in range(10):
@@ -33,6 +33,20 @@ class Migration_test(db.VelostoreDatabase):
             self.cursor.executemany(
                 "INSERT INTO bike_brand (brand, description, price, color, size, destination) VALUES (?, ?, ?, ?, ?, ?)",
                 [(name, address, phone_number, color, date_of_birth, name2)]
+            )
+
+    def add_dynamics_test_bike_brand(self):
+        for i in range(10):
+            fake = Faker()
+            name = fake.name()
+            address = fake.address()
+            phone_number = fake.phone_number()
+            date_of_birth = fake.date_of_birth()
+            color = fake.color_name() 
+
+            self.cursor.executemany(
+                "INSERT INTO bike_brand (brand, description, price, img, destination) VALUES (?, ?, ?, ?, ?)",
+                [(name, address, phone_number, color, date_of_birth)]
             )
 
         self.connection.commit()
