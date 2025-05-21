@@ -27,7 +27,7 @@ class StatBikeEntity(db.VelostoreDatabase):
                         statistics_name INTEGER NOT NULL,
                         statistics_counter INTEGER NOT NULL,
                         FOREIGN KEY(statistics_name) REFERENCES statistics_name(id),
-                        FOREIGN KEY(id_bike) REFERENCES bike(id)
+                        FOREIGN KEY(id_bike) REFERENCES bike_brand(id)
                     )
                     """)
 
