@@ -79,6 +79,11 @@ class BikeEntity(db.VelostoreDatabase):
                             FOREIGN KEY(status) REFERENCES bike_status(id)
                         )
                         """)
+    def get_bike_by_id(self, bike_id):
+        self.cursor.execute("""
+                        SELECT * FROM bike WHERE ID = ?""",
+                        (bike_id,))
+        return self.cursor.fetchone()
 
     # def create_table_bike(self):
     #     self.cursor.execute("""
