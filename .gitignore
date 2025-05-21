@@ -174,3 +174,5 @@ cython_debug/
 .pypirc
 .vscode/
 db/velostore.db
+streamlit/secrets.toml
+streamlit/static/*
