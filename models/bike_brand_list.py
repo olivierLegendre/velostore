@@ -6,11 +6,11 @@ import bike_brand_list_entity as bbl
 class BikeBrandList():
     def __init__(self, entity=bbl.BikeBrandListEntity()):
         self.entity = entity
-        return
     
     def get_bike_brand_list(self):
         brand = self.entity.get_all_bike_brand_list()
         print(brand)
+        return brand
 
     def get_all_prices_list(self):
         prices = self.entity.get_all_prices_list()
