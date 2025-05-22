@@ -15,6 +15,7 @@ class BikeBrandList():
     def get_all_prices_list(self):
         prices = self.entity.get_all_prices_list()
         print(prices)
+        return prices
 
 def main():
     bike_brand_list_entity = bbl.BikeBrandListEntity()

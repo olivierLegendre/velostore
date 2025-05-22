@@ -6,11 +6,12 @@ import bike_brand_entity as bbe
 class BikeBrand():
     def __init__(self, entity=bbe.BikeBrandEntity()):
         self.entity = entity
-        return
+        
     
     def get_brand_by_id(self, brand_id):
         brand_id = self.entity.get_brand_by_id(brand_id)
         print(brand_id)
+        return brand_id
 
 def main():
     bike_brand_entity = bbe.BikeBrandEntity()
