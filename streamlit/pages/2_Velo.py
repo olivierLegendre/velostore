@@ -27,7 +27,6 @@ def add_bike_item_to_cart():
     # size = st.session_state.bike_brand
     # bike = Bike_item(bike_brand, color, size)
     st.session_state.bike_item = bike
-    st.switch_page("pages/3_Panier.py")
 
 def bike_display(bike_brand):
     bike = bike_brand
@@ -47,6 +46,8 @@ def bike_display(bike_brand):
     if st.button("Acheter"):
         # bike = Bike_item(bike_brand, color, size)
         st.session_state.bike_item = bike
+        add_bike_item_to_cart(bike)
+    if st.button("Aller sur votre panier"):
         st.switch_page("pages/3_Panier.py")
     
 bike_display(bike)
