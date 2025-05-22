@@ -1,6 +1,7 @@
 import os, sys
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db")
 import database as db
+from database import VelostoreDatabase
 from bike_entity import BikeEntity
 
 class OrderEntity(db.VelostoreDatabase):
@@ -89,9 +90,8 @@ class OrderEntity(db.VelostoreDatabase):
             order_info = self.cursor.fetchone()
             if order_info:
                 # recup noms colonnes via cursor.description
-                column_names = [description[0] for description in self.cursor.description]
-                return dict(zip(column_names, order_info))
-
+                order_info = VelostoreDatabase.change_list_to_dict(self, order_info)
+                print(type(order_info))
             return order_info
         else:
             return self.bike_entity.get_bike_by_id(bike_id)
