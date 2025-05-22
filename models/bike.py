@@ -22,7 +22,7 @@ def main():
     # bike_entity.test_function_bike_entity()
     bicycle = Bike(bike_entity)
     bike_id = bicycle.get_bike_id(2)  
-    bike_param = bicycle.get_bike_parameters({'brand': 'Amy Jackson'})
+    bike_param = bicycle.get_bike_parameters({'brand': '2'})
 
 
 

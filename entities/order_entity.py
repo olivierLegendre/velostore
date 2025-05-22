@@ -1,10 +1,12 @@
 import os, sys
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db")
 import database as db
+from bike_entity import BikeEntity
 
 class OrderEntity(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
+        self.bike_entity = BikeEntity() 
 
 
     def create_tables(self):
@@ -76,9 +78,22 @@ class OrderEntity(db.VelostoreDatabase):
                         DROP TABLE IF EXISTS order_item
                         """)
         
+    def get_bike_id(self, bike_id, expand=False):
+        if expand:
+            # Récupérer les informations de la commande
+            self.cursor.execute("""
+                SELECT id_user, date, total_price, status FROM orders WHERE id_order = ?
+            """, (bike_id,))
+            order_info = self.cursor.fetchone()
+            if order_info:
+                return list(order_info)
+            return order_info
+        else:
+            return self.bike_entity.get_bike_by_id(bike_id)
+        
 def main():
     order = OrderEntity()
     order.create_tables()
-
+    
 if __name__ == '__main__':
     main()
