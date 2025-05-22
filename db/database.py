@@ -41,3 +41,7 @@ class VelostoreDatabase():
         
     def test_function(self):
         print("test function import")
+
+    def change_list_to_dict(self, list):
+        column_names = [description[0] for description in self.cursor.description]
+        return dict(zip(column_names, list))

@@ -29,7 +29,7 @@ class BikeItemEntity(db.VelostoreDatabase):
                         SELECT * FROM bike WHERE ID = ?
                         """,
                         (bike_id,))
-        return self.cursor.fetchone()
+        return super().change_list_to_dict(self.cursor.fetchone())
     
     def get_bike_by_parameters(self, parameters):
         query = "SELECT * FROM bike WHERE "
@@ -51,7 +51,7 @@ class BikeItemEntity(db.VelostoreDatabase):
         #print("Values:", values)
 
         self.cursor.execute(query, tuple(values))
-        return self.cursor.fetchone()
+        return super().change_list_to_dict(self.cursor.fetchone())
 
 def main():
     super_velo = BikeItemEntity()

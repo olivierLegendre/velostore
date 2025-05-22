@@ -12,6 +12,7 @@ class BikeBrandListEntity(db.VelostoreDatabase):
                         """,
         )
         return self.cursor.fetchall()
+    
 
     def get_all_prices_list(self):
         self.cursor.execute(

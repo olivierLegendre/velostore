@@ -1,20 +1,20 @@
 import os, sys
+
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db")
 import database as db
 from bike_entity import BikeEntity
 
+
 class OrderEntity(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
-        self.bike_entity = BikeEntity() 
-
+        self.bike_entity = BikeEntity()
 
     def create_tables(self):
         self.create_orders_table()
         self.create_item_list_table()
         self.create_order_item_table()
 
-        
     def create_orders_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS orders (
@@ -26,7 +26,7 @@ class OrderEntity(db.VelostoreDatabase):
                             FOREIGN KEY(status) REFERENCES order_status(id),
                             FOREIGN KEY(id_user) REFERENCES user(id)
                         )
-                        """)  
+                        """)
 
     def create_item_list_table(self):
         self.cursor.execute("""
@@ -37,7 +37,7 @@ class OrderEntity(db.VelostoreDatabase):
                             FOREIGN KEY(id_order) REFERENCES order_table(id_order)
                             FOREIGN KEY(id_order_item) REFERENCES order_item_table(id_order_item)
                         )
-                        """)     
+                        """)
 
     def create_order_item_table(self):
         self.cursor.execute("""
@@ -54,25 +54,26 @@ class OrderEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                         DROP TABLE IF EXISTS order_status
                         """)
-        
+
     def delete_orders_table(self):
         self.cursor.execute("""
                         DROP TABLE IF EXISTS orders
                         """)
-        
+
     def delete_item_list_table(self):
         self.cursor.execute("""
                         DROP TABLE IF EXISTS item_list
                         """)
-        
+
     def delete_order_item_table(self):
         self.cursor.execute("""
                         DROP TABLE IF EXISTS order_item
                         """)
-        
-    def get_bike_id(self, bike_id, expand=True):
+
+    def get_bike_by_id(self, bike_id, expand=True):
         if expand:
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
                 SELECT
                     bike.id,
                     bike_brand.brand as brand,
@@ -85,23 +86,27 @@ class OrderEntity(db.VelostoreDatabase):
                 JOIN bike_brand ON bike.brand = bike_brand.id
                 JOIN bike_status ON bike.status = bike_status.id
                 WHERE bike.id = ?
-            """, (bike_id,))
-            order_info = self.cursor.fetchone()
-            if order_info:
-                # recup noms colonnes via cursor.description
-                column_names = [description[0] for description in self.cursor.description]
-                return dict(zip(column_names, order_info))
-
-            return order_info
+            """,
+                (bike_id,),
+            )
+            return super().change_list_to_dict(self.cursor.fetchone())
         else:
-            return self.bike_entity.get_bike_by_id(bike_id)
+            self.cursor.execute(
+                """
+                SELECT 
+                    * 
+                FROM bike 
+                WHERE bike.id = ?
+            """,
+                (bike_id,),
+            )
+            return super().change_list_to_dict(self.cursor.fetchone())
 
 
-
-        
 def main():
     order = OrderEntity()
     order.create_tables()
-    
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     main()
