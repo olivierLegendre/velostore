@@ -6,11 +6,11 @@ import order_entity as oe
 class Order():
     def __init__(self, entity=oe.OrderEntity()):
         self.entity = entity
-        return
 
     def get_id(self, bike_id):
         bike_id = self.entity.get_bike_id(bike_id)
         print(bike_id)
+        return bike_id
 
 
 def main():

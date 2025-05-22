@@ -6,11 +6,11 @@ import bike_item_list_entity as bile
 class BikeItemList():
     def __init__(self, entity=bile.BikeItemListEntity()):
         self.entity = entity
-        return
     
     def get_bike_list_brand(self):
         brand = self.entity.get_all_bike_item()
         print(brand)
+        return brand
 
 
 def main():

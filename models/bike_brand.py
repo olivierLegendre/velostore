@@ -6,7 +6,6 @@ import bike_brand_entity as bbe
 class BikeBrand():
     def __init__(self, entity=bbe.BikeItemEntity()):
         self.entity = entity
-        return
 
 def main():
     pass
