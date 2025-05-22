@@ -8,7 +8,7 @@ class Order():
         self.entity = entity
 
     def get_id(self, bike_id):
-        bike_id = self.entity.get_bike_id(bike_id)
+        bike_id = self.entity.get_bike_by_id(bike_id)
         print(bike_id)
         return bike_id
 

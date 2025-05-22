@@ -70,7 +70,7 @@ class OrderEntity(db.VelostoreDatabase):
                         DROP TABLE IF EXISTS order_item
                         """)
         
-    def get_bike_id(self, bike_id, expand=True):
+    def get_bike_by_id(self, bike_id, expand=True):
         if expand:
             self.cursor.execute("""
                 SELECT
