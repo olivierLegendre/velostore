@@ -6,15 +6,16 @@ import bike_item_entity as bie
 class BikeItem():
     def __init__(self, entity=bie.BikeItemEntity()):
         self.entity = entity
-        return
     
     def get_bike_id(self, bike_id):
         bike_id = self.entity.get_bike_by_id(bike_id)
         print(bike_id)
+        return bike_id
     
     def get_bike_parameters(self, parameters):
         bike_param = self.entity.get_bike_by_parameters(parameters)
         print(bike_param)
+        return bike_param
 
 def main():
     bike_item_entity = bie.BikeItemEntity()

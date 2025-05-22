@@ -6,7 +6,6 @@ import internal_parameters_list_entity as iple
 class InternalParametersList():
     def __init__(self, entity=iple.InternalParametersListEntity()):
         self.entity = entity
-        return
     
     def get_bike_status_list(self):
         status_list = self.entity.get_all_bike_status()
