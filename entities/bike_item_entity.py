@@ -5,11 +5,26 @@ import database as db
 class BikeItemEntity(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
-
-    def create_tables(self):
-        self.create_bike_item_table()
         
-    def create_bike_item_table(self):
+    def create_tables(self):
+        self.create_bike_brand_table()
+        self.create_bike_table()
+
+        
+    def create_bike_brand_table(self):
+        self.cursor.execute("""
+                        CREATE TABLE IF NOT EXISTS bike_brand (
+                            id INTEGER PRIMARY KEY NOT NULL,
+                            brand STRING NOT NULL UNIQUE,
+                            description STRING NOT NULL,
+                            price INTEGER NOT NULL,
+                            destination STRING NOT NULL,
+                            img STRING,
+                            FOREIGN KEY(destination) REFERENCES bike_destination(id)
+                        )
+                        """)
+        
+    def create_bike_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike (
                             id INTEGER PRIMARY KEY NOT NULL,
@@ -23,13 +38,12 @@ class BikeItemEntity(db.VelostoreDatabase):
                             FOREIGN KEY(color) REFERENCES bike_color(id)
                         )
                         """)
-        
     def get_bike_by_id(self, bike_id):
         self.cursor.execute("""
                         SELECT * FROM bike WHERE ID = ?
                         """,
                         (bike_id,))
-        return super().change_list_to_dict(self.cursor.fetchone())
+        return self.cursor.fetchone()
     
     def get_bike_by_parameters(self, parameters):
         query = "SELECT * FROM bike WHERE "
@@ -51,7 +65,45 @@ class BikeItemEntity(db.VelostoreDatabase):
         #print("Values:", values)
 
         self.cursor.execute(query, tuple(values))
-        return super().change_list_to_dict(self.cursor.fetchone())
+        return self.cursor.fetchone()
+
+    def get_bike_expand_by_id(self, bike_id, expand=True):
+        if expand:
+            self.cursor.execute(
+                """
+                SELECT
+                    bike.id,
+                    bike_brand.brand as brand,
+                    bike_size.size as size,
+                    bike_color.color as color,
+                    bike_status.status as status
+                FROM bike
+                JOIN bike_size ON bike.size = bike_size.id
+                JOIN bike_color ON bike.color = bike_color.id
+                JOIN bike_brand ON bike.brand = bike_brand.id
+                JOIN bike_status ON bike.status = bike_status.id
+                WHERE bike.id = ?
+            """,
+                (bike_id,),
+            )
+            return super().change_list_to_dict(self.cursor.fetchone())
+        else:
+            self.cursor.execute(
+                """
+                SELECT 
+                    * 
+                FROM bike 
+                WHERE bike.id = ?
+            """,
+                (bike_id,),
+            )
+            return super().change_list_to_dict(self.cursor.fetchone())
+
+
+    def delete_bike_status_table(self):
+        self.cursor.execute("""
+                        DROP TABLE IF EXISTS bike_status
+                        """)
 
 def main():
     super_velo = BikeItemEntity()
