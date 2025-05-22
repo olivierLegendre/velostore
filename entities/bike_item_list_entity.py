@@ -3,6 +3,14 @@ sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db"
 import database as db
 
 
+class BikeItemListEntity(db.VelostoreDatabase):
+    def get_all_bike_item(self):
+        self.cursor.execute("""
+                        SELECT * FROM bike
+                        """,
+                        )
+        return self.cursor.fetchall()
+
 def main():
     pass
 
