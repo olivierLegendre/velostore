@@ -11,34 +11,42 @@ class InternalParametersList():
     def get_bike_status_list(self):
         status_list = self.entity.get_all_bike_status()
         print(status_list)
+        return status_list
 
     def get_bike_size_list(self):
         size_list = self.entity.get_all_bike_size()
         print(size_list)
+        return size_list
 
     def get_bike_destination_list(self):
         destination_list = self.entity.get_all_bike_destination()
         print(destination_list)
+        return destination_list
 
     def get_bike_color_list(self):
         color_list = self.entity.get_all_bike_color()
         print(color_list)
+        return color_list
 
     def get_order_status_list(self):
         order_status_list = self.entity.get_all_order_status()
         print(order_status_list)
+        return order_status_list
 
     def get_user_type_list(self):
         user_type_list = self.entity.get_all_user_type()
         print(user_type_list)
+        return user_type_list
 
     def get_user_status_list(self):
         user_status_list = self.entity.get_all_user_status()
         print(user_status_list)
+        return user_status_list
 
     def get_statistics_name_list(self):
         statistics_name_list = self.entity.get_all_statistics_name()
         print(statistics_name_list)
+        return statistics_name_list
 
 
 def main():
