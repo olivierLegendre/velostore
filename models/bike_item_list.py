@@ -8,15 +8,14 @@ class BikeItemList():
         self.entity = entity
         return
     
-    def get_bike_list_brand(self):
-        brand = self.entity.get_all_bike_item()
-        print(brand)
-
+    def get_bike_item_list(self):
+        items = self.entity.get_all_bike_item()
+        print(items)
 
 def main():
     bike_item_list_entity = bile.BikeItemListEntity()
     bike_item = BikeItemList(bike_item_list_entity)
-    all_bike_item = bike_item.get_bike_list_brand()
+    all_bike_item = bike_item.get_bike_item_list()
 
 if __name__ == '__main__':
     main()

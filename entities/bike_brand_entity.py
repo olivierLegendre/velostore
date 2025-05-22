@@ -21,6 +21,13 @@ class BikeBrandEntity(db.VelostoreDatabase):
                             FOREIGN KEY(destination) REFERENCES bike_destination(id)
                         )
                         """)
+        
+    def get_brand_by_id(self, brand_id):
+        self.cursor.execute("""
+                        SELECT * FROM bike_brand WHERE ID = ?
+                        """,
+                        (brand_id,))
+        return self.cursor.fetchone()
 
 def main():
     super_velo = BikeBrandEntity()
