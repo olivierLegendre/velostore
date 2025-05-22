@@ -27,7 +27,7 @@ class BikeBrandEntity(db.VelostoreDatabase):
                         SELECT * FROM bike_brand WHERE ID = ?
                         """,
                         (brand_id,))
-        return self.cursor.fetchone()
+        return super().change_list_to_dict(self.cursor.fetchone())
 
 def main():
     super_velo = BikeBrandEntity()
