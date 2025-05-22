@@ -97,7 +97,7 @@ class InternalParametersEntity(db.VelostoreDatabase):
                         (size_id,))
         return self.cursor.fetchone()
     
-    def get_destination_by_id(self, destination_id):
+    def get_bike_destination_by_id(self, destination_id):
         self.cursor.execute("""
                         SELECT * FROM bike_destination WHERE ID = ?
                         """,
