@@ -10,18 +10,10 @@ class OrderEntity(db.VelostoreDatabase):
 
 
     def create_tables(self):
-        self.create_order_status_table()
         self.create_orders_table()
         self.create_item_list_table()
         self.create_order_item_table()
 
-    def create_order_status_table(self):
-        self.cursor.execute("""
-                        CREATE TABLE IF NOT EXISTS order_status (
-                            id INTEGER PRIMARY KEY NOT NULL,
-                            status STRING NOT NULL
-                        )
-                        """)
         
     def create_orders_table(self):
         self.cursor.execute("""

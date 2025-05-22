@@ -8,16 +8,8 @@ class StatBikeEntity(db.VelostoreDatabase):
     
     # CREATE
     def create_tables(self):
-        self.create_statistics_name()
         self.create_statistics_bike()
 
-    def create_statistics_name(self):
-        self.cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS statistics_name (
-                        id INTEGER PRIMARY KEY NOT NULL,
-                        name STRING NOT NULL UNIQUE
-                    )
-                    """)
 
     def create_statistics_bike(self):
         self.cursor.execute("""

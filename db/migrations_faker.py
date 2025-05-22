@@ -10,6 +10,7 @@ import bike_entity as be
 import order_entity as oe
 import user_entity as ue
 import stat_bike_entity as sbe
+import internal_parameters_entity as ipe
 
 class Migration(db.VelostoreDatabase):
     def __init__(self):
@@ -18,12 +19,14 @@ class Migration(db.VelostoreDatabase):
         self.order_entity = oe.OrderEntity()
         self.user_entity = ue.UserEntity()
         self.stat_bike_entity = sbe.StatBikeEntity()
+        self.internal_parameters_entity = ipe.InternalParametersEntity()
 
     def setup(self):
         self.create_bike_tables()
         self.create_order_tables()
         self.create_user_tables()
         self.create_stat_tables()
+        self.create_internal_parameters_tables()
         self.add_statics_data()
         self.add_dynamics_data()
 
@@ -38,6 +41,9 @@ class Migration(db.VelostoreDatabase):
     
     def create_stat_tables(self):
         self.stat_bike_entity.create_tables()
+
+    def create_internal_parameters_tables(self):
+        self.internal_parameters_entity.create_tables()
 
     def add_statics_data(self):
         self.add_bike_status()
