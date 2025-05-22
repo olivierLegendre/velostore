@@ -1,12 +1,11 @@
 import os, sys
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
 
-import bike_entity as be
+import bike_item_entity as bie
 
-class Bike():
-    def __init__(self, entity=be.BikeEntity()):
+class BikeItem():
+    def __init__(self, entity=bie.BikeItemEntity()):
         self.entity = entity
-        # self.cursor = super().cursor
         return
     
     def get_bike_id(self, bike_id):
@@ -18,9 +17,9 @@ class Bike():
         print(bike_param)
 
 def main():
-    bike_entity = be.BikeEntity()
+    bike_item_entity = bie.BikeItemEntity()
     # bike_entity.test_function_bike_entity()
-    bicycle = Bike(bike_entity)
+    bicycle = BikeItem(bike_item_entity)
     bike_id = bicycle.get_bike_id(2)  
     bike_param = bicycle.get_bike_parameters({'brand': '2'})
 
