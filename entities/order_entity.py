@@ -70,18 +70,34 @@ class OrderEntity(db.VelostoreDatabase):
                         DROP TABLE IF EXISTS order_item
                         """)
         
-    def get_bike_id(self, bike_id, expand=False):
+    def get_bike_id(self, bike_id, expand=True):
         if expand:
-            # Récupérer les informations de la commande
             self.cursor.execute("""
-                SELECT id_user, date, total_price, status FROM orders WHERE id_order = ?
+                SELECT
+                    bike.id,
+                    bike_brand.brand as brand,
+                    bike_size.size as size,
+                    bike_color.color as color,
+                    bike_status.status as status
+                FROM bike
+                JOIN bike_size ON bike.size = bike_size.id
+                JOIN bike_color ON bike.color = bike_color.id
+                JOIN bike_brand ON bike.brand = bike_brand.id
+                JOIN bike_status ON bike.status = bike_status.id
+                WHERE bike.id = ?
             """, (bike_id,))
             order_info = self.cursor.fetchone()
             if order_info:
-                return list(order_info)
+                # recup noms colonnes via cursor.description
+                column_names = [description[0] for description in self.cursor.description]
+                return dict(zip(column_names, order_info))
+
             return order_info
         else:
             return self.bike_entity.get_bike_by_id(bike_id)
+
+
+
         
 def main():
     order = OrderEntity()
