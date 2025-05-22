@@ -7,24 +7,8 @@ class UserEntity(db.VelostoreDatabase):
         super().__init__()
     
     def create_tables(self):
-        self.create_user_type_table()
-        self.create_user_status_table()
         self.create_user_table()
     
-    def create_user_type_table(self):
-        self.cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS user_type (
-                        id INTEGER PRIMARY KEY NOT NULL,
-                        type INTEGER NOT NULL
-                    )
-                    """)
-    def create_user_status_table(self):
-        self.cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS user_status (
-                        id INTEGER PRIMARY KEY NOT NULL,
-                        status STRING NOT NULL
-                    )
-                    """)
     def create_user_table(self):
         self.cursor.execute("""
                     CREATE TABLE IF NOT EXISTS user (
