@@ -23,32 +23,8 @@ class BikeItemEntity(db.VelostoreDatabase):
                             FOREIGN KEY(color) REFERENCES bike_color(id)
                         )
                         """)
-    def get_bike_by_id(self, bike_id):
-        self.cursor.execute("""
-                        SELECT * FROM bike WHERE ID = ?
-                        """,
-                        (bike_id,))
-        return self.cursor.fetchone()
-    
-    def get_bike_by_parameters(self, parameters):
-        query = "SELECT * FROM bike WHERE "
-        conditions = []
-        values = []
 
-        for key, value in parameters.items():
-            if key in ['id', 'brand', 'size', 'color', 'status']:
-                conditions.append(f"{key} = ?")
-                values.append(value)
-
-        if not conditions:
-            raise ValueError("No valid parameters provided for the query.")
-        # pour joindre les 2 param (clé valeur) à vérifier
-        query += " AND ".join(conditions)
-
-        self.cursor.execute(query, tuple(values))
-        return self.cursor.fetchone()
-
-    def get_bike_expand_by_id(self, bike_id, expand=True):
+    def get_bike_by_id(self, bike_id, expand=False):
         if expand:
             self.cursor.execute(
                 """
@@ -80,6 +56,23 @@ class BikeItemEntity(db.VelostoreDatabase):
             )
             return super().change_list_to_dict(self.cursor.fetchone())
 
+    def get_bike_by_parameters(self, parameters):
+        query = "SELECT * FROM bike WHERE "
+        conditions = []
+        values = []
+
+        for key, value in parameters.items():
+            if key in ['id', 'brand', 'size', 'color', 'status']:
+                conditions.append(f"{key} = ?")
+                values.append(value)
+
+        if not conditions:
+            raise ValueError("Paramètres invalides")
+        # pour joindre les 2 param (clé valeur) à vérifier
+        query += " AND ".join(conditions)
+
+        self.cursor.execute(query, tuple(values))
+        return self.cursor.fetchone()
 
     def delete_bike_status_table(self):
         self.cursor.execute("""
