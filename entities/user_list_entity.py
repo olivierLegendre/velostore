@@ -7,7 +7,6 @@ class UserListEntity(db.VelostoreDatabase):
         self.cursor.execute("""SELECT * FROM user""")
         return super().list_change()
 
-
 def main():
     pass
 
