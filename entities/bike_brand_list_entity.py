@@ -6,12 +6,12 @@ import database as db
 class BikeBrandListEntity(db.VelostoreDatabase):
     def get_all_bike_brand_list(self):
         self.cursor.execute("""SELECT * FROM bike_brand""")
-        return super().list_change(self.cursor.fetchall())
+        return super().list_change()
     
 
     def get_all_prices_list(self):
         self.cursor.execute("""SELECT id, price FROM bike_brand""")
-        return super().list_change(self.cursor.fetchall())
+        return super().list_change()
 
 def main():
     pass

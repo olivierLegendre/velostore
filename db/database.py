@@ -46,11 +46,11 @@ class VelostoreDatabase():
         column_names = [description[0] for description in self.cursor.description]
         return dict(zip(column_names, list))
     
-    def list_change(self, list):
+    def list_change(self):
         new_dict_list = [] 
-        ids_list = [row[0] for row in list]
-        print(ids_list)
-        for element in list:
+        result = self.cursor.fetchall()
+        ids_list = [row[0] for row in result]
+        for element in result:
             new_dict_list.append(self.change_list_to_dict(element))
         return dict(zip(ids_list, new_dict_list))
 
