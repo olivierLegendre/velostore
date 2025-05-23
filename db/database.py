@@ -45,3 +45,12 @@ class VelostoreDatabase():
     def change_list_to_dict(self, list):
         column_names = [description[0] for description in self.cursor.description]
         return dict(zip(column_names, list))
+    
+    def change_list_of_list_to_dict(self, list, columns):
+        new_dict = {}
+        for element in list:
+            row_dict = {columns[i]: element[i] for i in range(len(columns))}
+            new_dict[row_dict['id']] = row_dict
+
+        return new_dict
+        

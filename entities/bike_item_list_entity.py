@@ -9,7 +9,7 @@ class BikeItemListEntity(db.VelostoreDatabase):
                         SELECT * FROM bike
                         """,
                         )
-        return self.cursor.fetchall()
+        return super().change_list_of_list_to_dict(self.cursor.fetchall())
 
 def main():
     pass
