@@ -7,23 +7,8 @@ class BikeItemEntity(db.VelostoreDatabase):
         super().__init__()
         
     def create_tables(self):
-        self.create_bike_brand_table()
         self.create_bike_table()
-
-        
-    def create_bike_brand_table(self):
-        self.cursor.execute("""
-                        CREATE TABLE IF NOT EXISTS bike_brand (
-                            id INTEGER PRIMARY KEY NOT NULL,
-                            brand STRING NOT NULL UNIQUE,
-                            description STRING NOT NULL,
-                            price INTEGER NOT NULL,
-                            destination STRING NOT NULL,
-                            img STRING,
-                            FOREIGN KEY(destination) REFERENCES bike_destination(id)
-                        )
-                        """)
-        
+  
     def create_bike_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike (

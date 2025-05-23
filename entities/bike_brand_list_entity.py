@@ -13,12 +13,10 @@ class BikeBrandListEntity(db.VelostoreDatabase):
     
 
     def get_all_prices_list(self):
-        self.cursor.execute(
-            """
-                            SELECT id, price FROM bike_brand
-                            """,
-        )
-        return super().change_list_of_list_to_dict(self.cursor.fetchall())
+        self.cursor.execute("""SELECT id, price FROM bike_brand""")
+        columns = [desc[0] for desc in self.cursor.description]
+        rows = self.cursor.fetchall()
+        return super().change_list_of_list_to_dict(rows, columns)
 
 def main():
     pass
