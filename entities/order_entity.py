@@ -112,7 +112,7 @@ class OrderEntity(db.VelostoreDatabase):
                 SELECT
                     item_list.id,
                     orders.id_order as id_order,
-                    order_item.id_order_item as id_order_item,
+                    order_item.id_order_item as id_order_item
                 FROM item_list
                 JOIN orders ON item_list.id_order = orders.id_order
                 JOIN order_item ON item_list.id_order_item = order_item.id_order_item
@@ -152,6 +152,24 @@ class OrderEntity(db.VelostoreDatabase):
 
         self.cursor.execute(query, (order_item_id,))
         return super().change_list_to_dict(self.cursor.fetchone())
+    
+    # ADD ORDER ITEM
+    def add_order_item(self, id_bike, nb_unit, total_price):
+        self.cursor.execute("""
+            INSERT INTO order_item (id_bike, nb_unit, total_price)
+            VALUES (?, ?, ?)
+        """, (id_bike, nb_unit, total_price))
+        self.connection.commit()
+        return self.cursor.lastrowid    
+
+    # ADD ORDER
+    def add_order(self, id_user, date, total_price, status):
+        self.cursor.execute("""
+            INSERT INTO orders (id_user, date, total_price, status)
+            VALUES (?, ?, ?, ?)
+        """, (id_user, date, total_price, status))
+        self.connection.commit()
+        return self.cursor.lastrowid
 
 
 def main():

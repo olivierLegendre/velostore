@@ -1,8 +1,24 @@
 import os, sys
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
 
+import order_list_entity as ole
+
+class OrderList():
+    def __init__(self, entity=ole.OrderListEntity()):
+        self.entity = entity
+    
+    def get_all_orders_list(self):
+        return self.entity.get_all_orders()
+
+    def get_orders_by_user_list(self,id):
+        return self.entity.get_orders_by_user(id)
+
 def main():
-    pass
+    order_list_entity = ole.OrderListEntity()
+    order_list = OrderList(order_list_entity)
+    order_list.get_all_orders_list()  
+    order_list.get_orders_by_user_list(1)
+
 
 if __name__ == '__main__':
     main()
