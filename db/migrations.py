@@ -6,7 +6,8 @@ fake = Faker()
 num_records = 20
 
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
-import bike_entity as be
+import bike_item_entity as be
+import bike_brand_entity as bbe
 import order_entity as oe
 import user_entity as ue
 import stat_bike_entity as sbe
@@ -15,7 +16,8 @@ import internal_parameters_entity as ipe
 class Migration(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
-        self.bike_entity = be.BikeEntity()
+        self.bike_item_entity = be.BikeItemEntity()
+        self.bike_brand_entity = bbe.BikeBrandEntity()
         self.order_entity = oe.OrderEntity()
         self.user_entity = ue.UserEntity()
         self.stat_bike_entity = sbe.StatBikeEntity()
@@ -23,6 +25,7 @@ class Migration(db.VelostoreDatabase):
 
     def setup(self):
         self.create_bike_tables()
+        self.create_bike_brand_tables()
         self.create_order_tables()
         self.create_user_tables()
         self.create_stat_tables()
@@ -31,7 +34,10 @@ class Migration(db.VelostoreDatabase):
         self.add_dynamics_data()
 
     def create_bike_tables(self):
-        self.bike_entity.create_tables()
+        self.bike_item_entity.create_tables()
+
+    def create_bike_brand_tables(self):
+        self.bike_brand_entity.create_tables()
 
     def create_order_tables(self):
         self.order_entity.create_tables()
