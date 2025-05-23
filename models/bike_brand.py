@@ -10,7 +10,6 @@ class BikeBrand():
     
     def get_brand_by_id(self, brand_id):
         brand_id = self.entity.get_brand_by_id(brand_id)
-        print(brand_id)
         return brand_id
 
 def main():

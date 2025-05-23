@@ -10,7 +10,6 @@ class StatBike():
     
     def get_stat_by_id(self, stat_id):
         stat = self.entity.get_statistics_by_id(stat_id)
-        print(stat)
         return stat
 
 

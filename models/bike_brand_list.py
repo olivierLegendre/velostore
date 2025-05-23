@@ -9,17 +9,14 @@ class BikeBrandList():
     
     def get_bike_brand_list(self):
         brand = self.entity.get_all_bike_brand_list()
-        print(brand)
         return brand
 
     def get_all_prices_list(self):
         prices = self.entity.get_all_prices_list()
-        print(prices)
         return prices
 
     def get_all_destinations_list(self):
         destinations = self.entity.get_all_destinations_list()
-        print(destinations)
         return destinations
 
 def main():

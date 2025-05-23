@@ -45,10 +45,6 @@ class BikeItemEntity(db.VelostoreDatabase):
         # pour joindre les 2 param (clé valeur) à vérifier
         query += " AND ".join(conditions)
 
-        # debug
-        #print("Generated SQL Query:", query)
-        #print("Values:", values)
-
         self.cursor.execute(query, tuple(values))
         return self.cursor.fetchone()
 
