@@ -31,7 +31,7 @@ class Migration(db.VelostoreDatabase):
         self.create_stat_tables()
         self.create_internal_parameters_tables()
         self.add_statics_data()
-        self.add_dynamics_data()
+
 
     def create_bike_tables(self):
         self.bike_item_entity.create_tables()
@@ -391,6 +391,7 @@ class Migration(db.VelostoreDatabase):
 def main():
     initial_setup = Migration()
     initial_setup.setup()
+    initial_setup.add_dynamics_data()
 
 
 if __name__ == "__main__":
