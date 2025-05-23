@@ -53,4 +53,4 @@ class VelostoreDatabase():
             new_dict[row_dict['id']] = row_dict
 
         return new_dict
-        
+            
