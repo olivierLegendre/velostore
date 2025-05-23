@@ -176,3 +176,4 @@ cython_debug/
 db/velostore.db
 streamlit/secrets.toml
 streamlit/static/*
+.streamlit/
