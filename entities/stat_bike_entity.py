@@ -34,6 +34,30 @@ class StatBikeEntity(db.VelostoreDatabase):
                         DROP TABLE IF EXISTS statistics_name
                         """)
         
+    # GET STATS BY ID
+    def get_statistics_by_id(self, statistics_id, expand=True):
+        if expand:
+            query = """
+                SELECT
+                    statistics_bike.id,
+                    bike_brand.brand as brand,
+                    statistics_name.name as name_stat,
+                    statistics_bike.statistics_counter
+                FROM statistics_bike
+                JOIN bike_brand ON statistics_bike.id_bike = bike_brand.id
+                JOIN statistics_name ON statistics_bike.statistics_name = statistics_name.id
+                WHERE statistics_bike.id = ?
+            """
+        else:
+            query = """
+                SELECT 
+                    * 
+                FROM statistics_bike
+                WHERE statistics_bike.id = ?
+            """
+
+        self.cursor.execute(query, (statistics_id,))
+        return super().change_list_to_dict(self.cursor.fetchone())
 
 def main():
     stats = StatBikeEntity()

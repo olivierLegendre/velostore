@@ -34,6 +34,34 @@ class UserEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                         DROP TABLE IF EXISTS user
                         """)
+        
+    # GET USER BY ID
+    def get_user_by_id(self, user_id, expand=True):
+        if expand:
+            query = """
+                SELECT
+                    user.id,
+                    user_type.type as type,
+                    user.username,
+                    user_status.status as status,
+                    user.mail,
+                    user.password
+                FROM user
+                JOIN user_type ON user.user_type = user_type.id
+                JOIN user_status ON user.status = user_status.id
+                WHERE user.id = ?
+            """
+        else:
+            query = """
+                SELECT 
+                    * 
+                FROM user
+                WHERE user.id = ?
+            """
+
+        self.cursor.execute(query, (user_id,))
+        return super().change_list_to_dict(self.cursor.fetchone())
+
 
 def main():
     user = UserEntity()
