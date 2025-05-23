@@ -108,6 +108,53 @@ class OrderEntity(db.VelostoreDatabase):
             else:
                 return None
 
+    # GET ITEM LIST BY ID
+    def get_item_list_by_id(self, item_list_id, expand=True):
+        if expand:
+            query = """
+                SELECT
+                    item_list.id,
+                    orders.id_order as id_order,
+                    order_item.id_order_item as id_order_item,
+                FROM item_list
+                JOIN orders ON item_list.id_order = orders.id_order
+                JOIN order_item ON item_list.id_order_item = order_item.id_order_item
+                WHERE item_list.id = ?
+            """
+        else:
+            query = """
+                SELECT 
+                    * 
+                FROM item_list
+                WHERE item_list.id = ?
+            """
+
+        self.cursor.execute(query, (item_list_id,))
+        return super().change_list_to_dict(self.cursor.fetchone())
+    
+    # GET ORDER ITEM BY ID
+    def get_order_item_by_id(self, order_item_id, expand=True):
+        if expand:
+            query = """
+                SELECT
+                    order_item.id_order_item,
+                    bike.id as id_bike,
+                    order_item.nb_unit,
+                    order_item.total_price
+                FROM order_item
+                JOIN bike ON order_item.id_bike = bike.id
+                WHERE order_item.id_order_item = ?
+            """
+        else:
+            query = """
+                SELECT 
+                    * 
+                FROM order_item
+                WHERE order_item.id_order_item = ?
+            """
+
+        self.cursor.execute(query, (order_item_id,))
+        return super().change_list_to_dict(self.cursor.fetchone())
 
 
 def main():
