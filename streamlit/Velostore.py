@@ -1,5 +1,10 @@
 import streamlit as st
-import user_bar as bar
+import os, sys
+import components
+sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/models")
+# import bike_brand as bb
+import bike_brand_list as bbl
+import internal_parameters_list as ipl
 
 st.set_page_config(
     page_title = "Velostore: Nos velos",
@@ -8,8 +13,46 @@ st.set_page_config(
 
 st.write("# Bienvenue chez VeloStore! 👋")
 
-def main():
+def set_parameters():
+    st.session_state.img_path = "streamlit/static/"
+    parameters = ipl.InternalParametersList()
+    colors = parameters.get_bike_color_list()
+    # print(f"colors : {colors}")
+    st.session_state.colors = colors
+    sizes = parameters.get_bike_size_list()
+    # print(f"sizes : {sizes}")
+    st.session_state.size = sizes
+    destinations = parameters.get_bike_destination_list()
+    # print(f"destinations : {destinations}")
+    st.session_state.destination = destinations
+
+def set_datas_to_session():
+    if 'bikes' not in st.session_state: 
+        st.session_state.bikes = get_all_bikes()
+    #bikes
+    #prices
+    #brand
+    #destinations
     pass
+    
+@st.cache_data
+def get_all_bikes():
+    bikes = bbl.BikeBrandList()
+    all_bikes = bikes.get_bike_brand_list()
+    # print(f"liste des velos : {all_bikes}")
+    return all_bikes
+    
+def get_all_brand():
+    pass
+def get_all_destinations():
+    pass
+
+def main():
+    components.display_sidebar()
+    set_parameters()
+    set_datas_to_session()
+    components.display_all_bikes()
+    # components.bike_display()
 
 if __name__ == '__main__':
     main()

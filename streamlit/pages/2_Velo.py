@@ -1,4 +1,5 @@
 import streamlit as st
+import components
 
 st.set_page_config(
     page_title = "Velostore: Votre velo",
@@ -54,6 +55,7 @@ bike_display(bike)
 
 
 def main():
+    components.display_sidebar()
     pass
 
 if __name__ == '__main__':

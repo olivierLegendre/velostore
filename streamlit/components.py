@@ -1,0 +1,71 @@
+import streamlit as st
+
+def display_bike(bike_brand):
+    bike = bike_brand
+    colors = st.session_state.colors
+    size = st.session_state.size
+    st.title(bike["brand"])
+    st.subheader(bike["description"])
+    st.text(f"A partir de {bike["price"]}€")
+    st.image(f"{st.session_state.img_path}{bike["image"]}")
+    st.text(f"Categorie : {bike["destination"]}")
+    select_color = st.selectbox("Choisissez votre couleur", colors)
+    select_size = st.selectbox("Choisissez votre taille", size)
+    st.session_state.bike_brand = bike_brand
+    st.session_state.bike_color = select_color
+    st.session_state.bike_brand = select_size
+    # st.button("Acheter", on_click=add_bike_item_to_cart)
+    if st.button("Acheter"):
+        # bike = Bike_item(bike_brand, color, size)
+        st.session_state.bike_item = bike
+        # add_bike_item_to_cart(bike)
+    if st.button("Aller sur votre panier"):
+        st.switch_page("pages/3_Panier.py")
+        
+def display_one_bike_brand(bike_brand):
+    bike = bike_brand
+    print(f"bike : {bike}")
+    st.title(bike["brand"])
+    st.subheader(bike["description"])
+    st.text(f"A partir de {bike["price"]}€")
+    st.image(f"{st.session_state.img_path}{bike["image"]}")
+    st.text(f"Categorie : {bike["destination"]}")
+
+def display_all_bikes():
+    st.write("Je vais afficher tous les velos")
+    bikes = st.session_state.bikes
+    bike = bikes[0]
+    display_one_bike_brand(bike)
+    # for bike in bikes:
+    #     display_one_bike_brand(bike)
+    # st.write(st.session_state.bikes)
+    
+def display_sidebar():
+    with st.sidebar:
+        st.page_link("Velostore.py", label="Mes velos")
+        st.page_link("pages/2_Velo.py", label="Mon Velo")
+        st.page_link("pages/3_Panier.py", label="Mon Panier")
+        st.page_link("pages/4_Commandes.py", label="Mes commandes"),
+        st.page_link("pages/5_Login.py", label="Se connecter"),
+        
+        st.page_link("pages/6_Logout.py", label="Se deconnecter"),
+        st.page_link("pages/7_Admin.py", label="Ma Page Admin"),
+
+def display_login_block():
+    login =  st.text_input("Login", "Votre login")
+    password = st.text_input("Mot de passe", "Password")
+    connect = st.button("Se connecter")
+    if connect:
+        st.write("Je me connecte")
+    
+
+def display_logout_block():
+    logout = st.button("Se deconnecter")
+    if logout:
+        st.write("Je me deconnecte")
+
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()

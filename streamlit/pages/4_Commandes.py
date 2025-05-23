@@ -3,11 +3,11 @@ import pandas as pd
 import components
 
 st.set_page_config(
-    page_title = "Velostore: Votre panier",
+    page_title = "Velostore: Vos commandes",
     page_icon="🚲"
 )
 
-st.write("# Votre Panier 🚲")
+st.write("# Vos Commandes 🚲")
 
 def get_bike_one():
     bike = dict()
@@ -62,41 +62,72 @@ def get_order():
     order["total_price"] = total_price
     order["order_item_list"] = order_item_list
     return order
+
+def get_old_orders():
+    old_orders = list()
+    date = "2024/05/21"
+    total_price = 300
+    order_item_list = list()
+    order_item_list.append(get_item_one())
+    order_item_list.append(get_item_two())
+    order = dict()
+    order["date"] = date
+    order["total_price"] = total_price
+    order["order_item_list"] = order_item_list
+    date = "2024/05/18"
+    total_price = 200
+    order_item_list = list()
+    order_item_list.append(get_item_two())
+    order_item_list.append(get_item_one())
+    order2 = dict()
+    order2["date"] = date
+    order2["total_price"] = total_price
+    order2["order_item_list"] = order_item_list
+    old_orders.append(order)
+    old_orders.append(order2)
+    return old_orders
     
-def display_order():
+def display_pending_order():
     order = get_order()
-    df_order = pd.DataFrame(order)
+    # df_order = pd.DataFrame(order)
     # df_order = create_order_dataframe(order)
-    st.subheader(f"Votre commande a la date {order["date"]}")
+    st.subheader(f"Votre panier a la date {order["date"]}")
     st.text(f"Cout total de la commande {order["total_price"]}")
+    products_expander = st.expander("Vos produits")
     create_order_item_table(order)
+    products_expander.table(create_order_item_table(order))
+    
+def display_closed_order():
+    old_orders = get_old_orders()
+    st.subheader("Vos anciennes commandes")
+    st.text("Nombre de commandes passées ")
+    create_old_orders_expander(old_orders)
+        
     
 def create_order_item_table(order):
-    products_expander = st.expander("Vos produits")
+    
     products = order["order_item_list"]
     bikes = [item.get("bike") for item in order["order_item_list"]]
     df_bikes = pd.DataFrame(bikes)
     df_bikes = df_bikes.drop(columns="image")
-    # df_products = create_order_datafram(order)
     df_products = pd.DataFrame(products)
     df_order = pd.concat([df_bikes, df_products], axis=1)
     df_order = df_order.drop(columns="bike")
-    products_expander.table(df_order)
-    # products_expander.table(df_bikes)
-    # products_expander.table(df_products)
-    return products_expander
-
-def create_order_datafram(order):
-    bikes = [item.get("bike") for item in order["order_item_list"]]
-    df_bike = pd.DataFrame(bikes)
-    df_order_item = pd.DataFrame(order)
-    df_order = pd.concat([df_order_item, df_bike], axis=1)
-    df_order = df_order.drop(columns="order_item_list")
     return df_order
+
+def create_old_orders_expander(orders):
+    orders_expander = st.expander("#Vos anciennes commandes")
+    for order in orders:
+        orders_expander.subheader(f"Date : {order["date"]}")
+        orders_expander.text(f"Prix total : {order["total_price"]}")
+        create_order_item_table(order)
+        orders_expander.table(create_order_item_table(order))
+    return orders_expander
 
 def main():
     components.display_sidebar()
-    display_order()
+    display_pending_order()
+    display_closed_order()
 
 if __name__ == '__main__':
     main()
