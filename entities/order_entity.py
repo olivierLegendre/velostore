@@ -2,13 +2,10 @@ import os, sys
 
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db")
 import database as db
-from bike_entity import BikeEntity
-
 
 class OrderEntity(db.VelostoreDatabase):
     def __init__(self):
         super().__init__()
-        self.bike_entity = BikeEntity()
 
     def create_tables(self):
         self.create_orders_table()
