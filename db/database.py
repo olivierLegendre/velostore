@@ -7,7 +7,7 @@ class VelostoreDatabase():
     def connection_db(self) -> None:
         """create a connection and a cursor object
         """
-        with sqlite3.connect("db/velostore.db") as connection:
+        with sqlite3.connect("db/velostore.db", check_same_thread=False) as connection:
             self.connection = connection
             self.cursor = connection.cursor()
         
