@@ -32,6 +32,9 @@ def auth_login():
             st.error('Username/password is incorrect')
         elif st.session_state.get('authentication_status') is None:
             st.warning('Please enter your username and password')
+            
+
+        
 
 def display_bike(bike_brand):
     bike = bike_brand
@@ -61,16 +64,16 @@ def display_one_bike_brand(bike_brand):
     st.title(bike["brand"])
     st.subheader(bike["description"])
     st.text(f"A partir de {bike["price"]}€")
-    st.image(f"{st.session_state.img_path}{bike["image"]}")
+    if 'image' in bike:
+        st.image(f"{st.session_state.img_path}{bike["image"]}")
     st.text(f"Categorie : {bike["destination"]}")
 
 def display_all_bikes():
     st.write("Je vais afficher tous les velos")
     bikes = st.session_state.bikes
-    bike = bikes[0]
-    display_one_bike_brand(bike)
-    # for bike in bikes:
-    #     display_one_bike_brand(bike)
+    for bike_id, bike in bikes.items():
+        print(f" bike unique : {bike}")
+        display_one_bike_brand(bike)
     # st.write(st.session_state.bikes)
     
 def display_sidebar():
@@ -96,6 +99,16 @@ def display_logout_block():
     logout = st.button("Se deconnecter")
     if logout:
         st.write("Je me deconnecte")
+        
+def create_bike_brand_block():
+    creation_brand_expander = st.expander("#Creer un nouveau modele")
+    with creation_brand_expander:
+        brand = st.text_input("Saisissez le nom de votre modele : ", "brand")
+        description = st.text_input("Entrez la description de votre modele", "description")
+        price = st.text_input("Entrez le prix de votre modele", "price")
+        create_bike_brand = st.button("Creer le modele")
+        if create_bike_brand:
+            st.write("Votre modele est créé")
 
 def main():
     pass
