@@ -9,7 +9,6 @@ class BikeItemList():
     
     def get_bike_item_list(self):
         items = self.entity.get_all_bike_item()
-        print(items)
         return items
 
 def main():
