@@ -69,38 +69,45 @@ class OrderEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                         DROP TABLE IF EXISTS order_item
                         """)
-
-    def get_bike_by_id(self, bike_id, expand=True):
+        
+    def get_order_by_id(self, order_id, expand=True):
         if expand:
             self.cursor.execute(
                 """
                 SELECT
-                    bike.id,
-                    bike_brand.brand as brand,
-                    bike_size.size as size,
-                    bike_color.color as color,
-                    bike_status.status as status
-                FROM bike
-                JOIN bike_size ON bike.size = bike_size.id
-                JOIN bike_color ON bike.color = bike_color.id
-                JOIN bike_brand ON bike.brand = bike_brand.id
-                JOIN bike_status ON bike.status = bike_status.id
-                WHERE bike.id = ?
+                    orders.id_order,
+                    user.username,
+                    orders.date,
+                    orders.total_price,
+                    order_status.status
+                FROM orders
+                JOIN user ON orders.id_user = user.id
+                JOIN order_status ON orders.status = order_status.id
+                WHERE orders.id_order = ?
             """,
-                (bike_id,),
+                (order_id,),
             )
-            return super().change_list_to_dict(self.cursor.fetchone())
+            result = self.cursor.fetchone()
+            if result:
+                return super().change_list_to_dict(result)
+            else:
+                return None
         else:
             self.cursor.execute(
                 """
-                SELECT 
-                    * 
-                FROM bike 
-                WHERE bike.id = ?
+                SELECT
+                    *
+                FROM orders
+                WHERE orders.id_order = ?
             """,
-                (bike_id,),
+                (order_id,),
             )
-            return super().change_list_to_dict(self.cursor.fetchone())
+            result = self.cursor.fetchone()
+            if result:
+                return super().change_list_to_dict(result)
+            else:
+                return None
+
 
 
 def main():

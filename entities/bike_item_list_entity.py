@@ -5,11 +5,10 @@ import database as db
 
 class BikeItemListEntity(db.VelostoreDatabase):
     def get_all_bike_item(self):
-        self.cursor.execute("""
-                        SELECT * FROM bike
-                        """,
-                        )
-        return self.cursor.fetchall()
+        self.cursor.execute("""SELECT * FROM bike""",)
+        columns = [desc[0] for desc in self.cursor.description] 
+        rows = self.cursor.fetchall()
+        return self.change_list_of_list_to_dict(rows, columns)
 
 def main():
     pass
