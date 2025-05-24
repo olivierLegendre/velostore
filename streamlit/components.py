@@ -77,21 +77,27 @@ def display_one_bike_brand(bike_brand: Dict[str, Any]) -> None:
         bike_brand (Dict[str, Any]): Dictionnaire contenant les détails de la marque de vélo.
     """
     bike = bike_brand
-    print(f"bike : {bike}")
-    st.title(bike["brand"])
-    st.subheader(bike["description"])
-    st.text(f"A partir de {bike["price"]}€")
-    if 'image' in bike:
-        st.image(f"{st.session_state.img_path}{bike["image"]}")
-    st.text(f"Categorie : {bike["destination"]}")
+    with st.container(height=600):
+        st.title(bike["brand"])
+        st.subheader(bike["description"])
+        st.text(f"A partir de {bike["price"]}€")
+        if 'image' in bike:
+            st.image(f"{st.session_state.img_path}{bike["image"]}")
+        st.text(f"Categorie : {bike["destination"]}")
 
 def display_all_bikes() -> None:
     """Affiche tous les vélos disponibles."""
     st.write("Je vais afficher tous les velos")
     bikes = st.session_state.bikes
     for bike_id, bike in bikes.items():
-        print(f" bike unique : {bike}")
-        display_one_bike_brand(bike)
+        print(f"bike id {bike_id}")
+        print(f"bike {bike}")
+        if "all_bike_brand_select_destination" in st.session_state:
+            print(f"destination:  {st.session_state.all_bike_brand_select_destination}")
+            if st.session_state.all_bike_brand_select_destination == bike["destination"]:
+                display_one_bike_brand(bike)
+        else: 
+            display_one_bike_brand(bike)
     # st.write(st.session_state.bikes)
     
 def display_sidebar() -> None:

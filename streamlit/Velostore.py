@@ -9,7 +9,8 @@ from typing import Dict, Any
 
 st.set_page_config(
     page_title = "Velostore: Nos velos",
-    page_icon="🚲"
+    page_icon="🚲",
+    layout="wide",
 )
 
 st.write("# Bienvenue chez VeloStore! 👋")
@@ -41,12 +42,9 @@ def set_datas_to_session() -> None:
     """
     if 'bikes' not in st.session_state:
         st.session_state.bikes = get_all_bikes()
-    #bikes
-    #prices
-    #brand
-    #destinations
     pass
     
+<<<<<<< HEAD
 # @st.cache_data
 def get_all_bikes() -> Dict[str, Any]:
     """
@@ -55,20 +53,27 @@ def get_all_bikes() -> Dict[str, Any]:
     Returns:
         Dict[str, Any]: Dictionnaire contenant la liste des vélos.
     """
+=======
+@st.cache_data
+def get_all_bikes():
+>>>>>>> b637daa (feat(streamlit): :sparkles: add a custom selectbox to the main streamlit page)
     bikes = bbl.BikeBrandList()
-    all_bikes = bikes.get_bike_brand_list()
-    print(f"liste des velos : {all_bikes}")
-    return all_bikes
+    return bikes.get_bike_brand_list()
     
 def get_all_brand() -> None:
     """
     Récupère toutes les marques de vélos. (À implémenter)
     """
     pass
+<<<<<<< HEAD
 def get_all_destinations() -> None:
     """
     Récupère toutes les destinations de vélos. (À implémenter)
     """
+=======
+
+def get_all_destinations():
+>>>>>>> b637daa (feat(streamlit): :sparkles: add a custom selectbox to the main streamlit page)
     pass
 
 def main() -> None:
@@ -78,8 +83,21 @@ def main() -> None:
     set_parameters()
     set_datas_to_session()
     components.display_sidebar()
-    components.display_all_bikes()
-    # components.bike_display()
+    col1, col2 = st.columns(2)
+    with col1:
+        
+        components.display_all_bikes()
+            # components.bike_display()
+        # with col2:
+        #     print(f" destination : {st.session_state.destination}")
+    with col2:
+        destinations = st.session_state.destination
+        id_destination = [destination[0] for destination in st.session_state.destination]
+        st.session_state.all_bike_brand_select_destination = st.selectbox(
+            "destination", 
+            id_destination, 
+            format_func=lambda x: str(destinations[x-1][1]),
+            )
 
 if __name__ == '__main__':
     main()

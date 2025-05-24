@@ -14,7 +14,7 @@ def get_bike_one():
     bike["brand"] = "rockrider"
     bike["description"] = "Oh, le joli velo"
     bike["price"] = 150
-    bike["image"] = "A30M.jpg"
+    bike["img"] = "A30M.jpg"
     bike["destination"] = "vtt"
     return bike
 
@@ -23,7 +23,7 @@ def get_bike_two():
     bike["brand"] = "elios"
     bike["description"] = "Plus detente"
     bike["price"] = 120
-    bike["image"] = "A30M.jpg"
+    bike["img"] = "A30M.jpg"
     bike["destination"] = "route"
     return bike
 
