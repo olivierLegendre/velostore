@@ -14,7 +14,7 @@ def get_bike_one():
     bike["brand"] = "rockrider"
     bike["description"] = "Oh, le joli velo"
     bike["price"] = 150
-    bike["image"] = "A30M.jpg"
+    bike["img"] = "A30M.jpg"
     bike["destination"] = "vtt"
     return bike
 
@@ -23,7 +23,7 @@ def get_bike_two():
     bike["brand"] = "elios"
     bike["description"] = "Plus detente"
     bike["price"] = 120
-    bike["image"] = "A30M.jpg"
+    bike["img"] = "A30M.jpg"
     bike["destination"] = "route"
     return bike
 
@@ -109,7 +109,7 @@ def create_order_item_table(order):
     products = order["order_item_list"]
     bikes = [item.get("bike") for item in order["order_item_list"]]
     df_bikes = pd.DataFrame(bikes)
-    df_bikes = df_bikes.drop(columns="image")
+    df_bikes = df_bikes.drop(columns="img")
     df_products = pd.DataFrame(products)
     df_order = pd.concat([df_bikes, df_products], axis=1)
     df_order = df_order.drop(columns="bike")

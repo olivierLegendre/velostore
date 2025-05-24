@@ -26,7 +26,7 @@ def set_parameters():
     if 'sizes' not in st.session_state:
         sizes = parameters.get_bike_size_list()
         # print(f"sizes : {sizes}")
-        st.session_state.size = sizes
+        st.session_state.sizes = sizes
     if 'destinations' not in st.session_state:
         destinations = parameters.get_bike_destination_list()
         # print(f"destinations : {destinations}")
@@ -56,17 +56,8 @@ def main():
     with col1:
         
         components.display_all_bikes()
-            # components.bike_display()
-        # with col2:
-        #     print(f" destination : {st.session_state.destination}")
     with col2:
-        destinations = st.session_state.destination
-        id_destination = [destination[0] for destination in st.session_state.destination]
-        st.session_state.all_bike_brand_select_destination = st.selectbox(
-            "destination", 
-            id_destination, 
-            format_func=lambda x: str(destinations[x-1][1]),
-            )
+        components.select_box_destination()
 
 if __name__ == '__main__':
     main()
