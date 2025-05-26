@@ -164,6 +164,23 @@ class OrderEntity(db.VelostoreDatabase):
 
     # ADD ORDER
     def add_order(self, id_user, date, total_price, status):
+        # Check if the order already exists
+        self.cursor.execute("""
+            SELECT id_order, total_price FROM orders WHERE id_user = ? AND date = ?
+        """, (id_user, date))
+        result = self.cursor.fetchone()
+        if result:
+            # Order exists, update it
+            id_order, old_total_price = result
+            new_total_price = old_total_price + total_price
+            self.cursor.execute("""
+                UPDATE orders
+                SET total_price = ?, status = ?
+                WHERE id_order = ?
+            """, (new_total_price, status, id_order))
+            self.connection.commit()
+            return id_order
+        # insert new one
         self.cursor.execute("""
             INSERT INTO orders (id_user, date, total_price, status)
             VALUES (?, ?, ?, ?)
@@ -171,7 +188,7 @@ class OrderEntity(db.VelostoreDatabase):
         self.connection.commit()
         return self.cursor.lastrowid
 
-    # UPDATE ORDER
+    # UPDATE ORDER STATUS
     def update_order_status(self, order_id, new_status):
         self.cursor.execute("""
             UPDATE orders
@@ -180,6 +197,7 @@ class OrderEntity(db.VelostoreDatabase):
         """, (new_status, order_id))
         self.connection.commit()
         return self.cursor.rowcount
+
     
     # Insert into item_list table
     def add_order_in_item_list(self, id_order, id_order_item):
