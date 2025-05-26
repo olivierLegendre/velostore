@@ -12,7 +12,7 @@ class BikeItemEntity(db.VelostoreDatabase):
     def create_bike_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike (
-                            id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                            id INTEGER PRIMARY KEY NOT NULL,
                             brand INTEGER NOT NULL,
                             size INTEGER NOT NULL,
                             color INTEGER NOT NULL,
