@@ -80,6 +80,17 @@ class OrderList():
             list: Une liste des commandes en attente de l'utilisateur.
         """
         return self.entity.get_pending_order_by_user(user_id)
+    
+    def get_closed_order_by_user(self, user_id: int) -> list:
+        """Récupère les commandes fermée d'un utilisateur
+
+        Args:
+            user_id (int): L'identifiant de l'utilisateur.
+
+        Returns:
+            list: Une liste des commandes deja payées
+        """
+        return self.entity.get_closed_order_by_user(user_id)
 
 def main():
     """Fonction principale pour la classe OrderList."""
