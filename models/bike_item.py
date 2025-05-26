@@ -18,6 +18,10 @@ class BikeItem():
     #def get_bike_id_expand(self, bike_id):
     #    bike_expand = self.entity.get_bike_by_id(bike_id)
     #    return bike_expand
+
+    def add_bike_item(self, brand_id, size_id, color_id, status_id):
+        return self.entity.add_bike_item(brand_id, size_id, color_id, status_id)
+       
     
 def main():
     bike_item_entity = bie.BikeItemEntity()
@@ -26,6 +30,7 @@ def main():
     bike_id = bicycle.get_bike_id(2)  
     bike_param = bicycle.get_bike_parameters({'brand': '2'})
     get_bike_id = bicycle.get_bike_id(2)
+    bicycle.add_bike_item(1,1,1,1)
 
 
 
