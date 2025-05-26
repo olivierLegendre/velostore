@@ -18,15 +18,24 @@ class OrderList():
     
     def get_pending_order(self):
         return self.entity.get_pending_order()
+    def get_orders_by_status_list(self, status):
+        return self.entity.get_order_by_status(status)
+
+    def get_orders_by_user_and_status(self, user_id, status, expand=True):
+        return self.entity.get_orders_by_user_and_status(user_id, status)
     
-    def get_close_order(self):
-        return self.entity.get_close_order()
+    def get_pending_order_by_user(self,user_id):
+        return self.entity.get_pending_order_by_user(user_id)
 
 def main():
     order_list_entity = ole.OrderListEntity()
     order_list = OrderList(order_list_entity)
     order_list.get_all_orders_list()  
-    print(order_list.get_pending_order())
+    # print(order_list.get_pending_order())
+    print(order_list.get_pending_order_by_user(11))
+    
+    
+
 
 
 if __name__ == '__main__':
