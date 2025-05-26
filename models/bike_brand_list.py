@@ -14,7 +14,7 @@ class BikeBrandList():
         """
         self.entity = entity
     
-    def get_bike_brand_list(self, expand=True):
+    def get_bike_brand_list(self, expand: bool = True) -> list:
         """Récupère la liste des marques de vélos.
 
         Args:
@@ -26,7 +26,7 @@ class BikeBrandList():
         brand = self.entity.get_all_bike_brand_list(expand)
         return brand
 
-    def get_all_prices_list(self):
+    def get_all_prices_list(self) -> list:
         """Réupère la liste de tous les prix.
 
         Returns:
@@ -35,7 +35,7 @@ class BikeBrandList():
         prices = self.entity.get_all_prices_list()
         return prices
 
-    def get_all_destinations_list(self):
+    def get_all_destinations_list(self) -> list:
         """Récupère la liste de tous les types de vélos
 
         Returns:
@@ -51,5 +51,6 @@ def main():
     brand = BikeBrandList(bike_brand_list_entity)
     print(brand.get_bike_brand_list())
     all_destinations = brand.get_all_destinations_list()
+
 if __name__ == '__main__':
     main()

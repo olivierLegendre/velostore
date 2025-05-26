@@ -14,7 +14,7 @@ class BikeItem():
         """
         self.entity = entity
     
-    def get_bike_id(self, bike_id):
+    def get_bike_id(self, bike_id: int) -> dict:
         """Récupère un vélo par son identifiant.
 
         Args:
@@ -26,7 +26,7 @@ class BikeItem():
         bike_id = self.entity.get_bike_by_id(bike_id)
         return bike_id
     
-    def get_bike_parameters(self, parameters):
+    def get_bike_parameters(self, parameters: dict) -> list:
         """Récupère des vélos en fonction de paramètres donnés
 
         Args:
@@ -38,7 +38,7 @@ class BikeItem():
         bike_param = self.entity.get_bike_by_parameters(parameters)
         return bike_param
 
-    def add_bike_item(self, brand_id, size_id, color_id, status_id):
+    def add_bike_item(self, brand_id: int, size_id: int, color_id:int, status_id:int) -> dict:
         """Ajoute un nouvel article de vélo.
 
         Args:

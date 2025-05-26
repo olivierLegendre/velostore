@@ -14,7 +14,7 @@ class InternalParametersList():
         """
         self.entity = entity
     
-    def get_bike_status_list(self):
+    def get_bike_status_list(self) -> list:
         """Récupère la liste des status de vélo.
 
         Returns:
@@ -23,7 +23,7 @@ class InternalParametersList():
         status_list = self.entity.get_all_bike_status()
         return status_list
 
-    def get_bike_size_list(self):
+    def get_bike_size_list(self) -> list:
         """Récupère la liste des tailles de vélo
 
         Returns:
@@ -32,11 +32,11 @@ class InternalParametersList():
         size_list = self.entity.get_all_bike_size()
         return size_list
 
-    def get_bike_destination_list(self):
+    def get_bike_destination_list(self) -> list:
         destination_list = self.entity.get_all_bike_destination()
         return destination_list
 
-    def get_bike_color_list(self):
+    def get_bike_color_list(self) -> list:
         """Récupère la liste des couleurs de vélo.
 
         Returns:
@@ -45,7 +45,7 @@ class InternalParametersList():
         color_list = self.entity.get_all_bike_color()
         return color_list
 
-    def get_order_status_list(self):
+    def get_order_status_list(self) -> list:
         """
         Récupère la liste des statuts de commande.
 
@@ -55,7 +55,7 @@ class InternalParametersList():
         order_status_list = self.entity.get_all_order_status()
         return order_status_list
 
-    def get_user_type_list(self):
+    def get_user_type_list(self) -> list:
         """
         Récupère la liste des types d'utilisateur.
 
@@ -65,7 +65,7 @@ class InternalParametersList():
         user_type_list = self.entity.get_all_user_type()
         return user_type_list
 
-    def get_user_status_list(self):
+    def get_user_status_list(self) -> list:
         """
         Récupère la liste des statuts d'utilisateur.
 
@@ -75,7 +75,7 @@ class InternalParametersList():
         user_status_list = self.entity.get_all_user_status()
         return user_status_list
 
-    def get_statistics_name_list(self):
+    def get_statistics_name_list(self) -> list:
         """
         Récupère la liste des noms de statistiques.
 

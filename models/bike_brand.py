@@ -15,7 +15,7 @@ class BikeBrand():
         self.entity = entity
         
     
-    def get_brand_by_id(self, brand_id):
+    def get_brand_by_id(self, brand_id: int) -> dict:
         """Récupère unemarque de vélo par son identifiant.
 
         Args:
