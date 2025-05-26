@@ -23,15 +23,43 @@ class OrderListEntity(db.VelostoreDatabase):
         self.cursor.execute(query)
         return super().list_change()
 
-    def get_orders_by_user(self, user_id):
-        self.cursor.execute("""
-            SELECT * FROM orders WHERE id_user = ? ORDER BY date DESC
-        """, (user_id,))
+    def get_orders_by_user(self, user_id, expand=True):
+        if expand:
+            query = """
+                SELECT
+                    orders.id_order,
+                    user.id,
+                    orders.date,
+                    orders.total_price,
+                    order_status.status
+                FROM orders
+                JOIN user ON orders.id_order = user.id
+                JOIN order_status on orders.id_order = order_status.id
+                ORDER BY date DESC
+            """
+        else:
+            query = "SELECT * FROM orders WHERE id_user = ? ORDER BY date DESC"
+
+        self.cursor.execute(query)
         return super().list_change()
 
-    def get_order_by_status(self, status):
-        self.cursor.execute("""
-                            SELECT * FROM orders WHERE status = ? """, (status,))
+    def get_order_by_status(self, status, expand=True):
+        if expand:
+            query = """
+                SELECT
+                    orders.id_order,
+                    user.id,
+                    orders.date,
+                    orders.total_price,
+                    order_status.status
+                FROM orders
+                JOIN user ON orders.id_order = user.id
+                JOIN order_status on orders.id_order = order_status.id
+            """
+        else:
+            query = "SELECT * FROM orders WHERE status = ?"
+            
+        self.cursor.execute(query)
         return super().list_change()
 
     def get_pending_order(self):

@@ -53,8 +53,8 @@ class InternalParametersEntity(db.VelostoreDatabase):
     def create_order_status_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS order_status (
-                            id INTEGER PRIMARY KEY NOT NULL,
-                            status STRING NOT NULL
+                            id INTEGER PRIMARY KEY NOT NULL UNIQUE,
+                            status STRING NOT NULL UNIQUE
                         )
                         """)
         
@@ -62,7 +62,7 @@ class InternalParametersEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                     CREATE TABLE IF NOT EXISTS user_type (
                         id INTEGER PRIMARY KEY NOT NULL,
-                        type INTEGER NOT NULL
+                        type INTEGER NOT NULL UNIQUE
                     )
                     """)
         
@@ -70,7 +70,7 @@ class InternalParametersEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                     CREATE TABLE IF NOT EXISTS user_status (
                         id INTEGER PRIMARY KEY NOT NULL,
-                        status STRING NOT NULL
+                        status STRING NOT NULL UNIQUE
                     )
                     """)
         

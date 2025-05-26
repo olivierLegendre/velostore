@@ -43,7 +43,7 @@ class InternalParametersList():
 def main():
     internal_parameters_list_entity = iple.InternalParametersListEntity()
     internal_parameters_list = InternalParametersList(internal_parameters_list_entity)
-    all_color = internal_parameters_list.get_bike_color_list()
+    print(internal_parameters_list.get_bike_color_list())
 
 if __name__ == '__main__':
     main()
