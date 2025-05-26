@@ -25,6 +25,9 @@ class Order():
     def add_order(self, id_user, date, total_price, status):
         return self.entity.add_order(id_user, date, total_price, status)
     
+    def add_order_in_item_list(self, id_order, id_order_item):
+        return self.entity.add_order_in_item_list(id_order, id_order_item)
+    
     def place_order_with_bike(self, id_user, brand_id, size_id, color_id, price_per_unit):
         # 1. Add the bike
         bike_item = bi.BikeItem()
@@ -37,7 +40,10 @@ class Order():
         # 3. Add the order item
         id_order_item = self.entity.add_order_item(id_bike, 1, price_per_unit)
 
-        return 
+        # 4. Insert into item_list table
+        id_item_list = self.entity.add_order_in_item_list(id_order, id_order_item)
+
+        return id_order
     
 def main():
     order_entity= oe.OrderEntity()
@@ -45,7 +51,7 @@ def main():
     order.get_id(2)
     order.get_item_list_by_id(2)
     order.get_order_item_by_id(2)
-    order.place_order_with_bike(1, 1, 1, 1, 10)
+    order.place_order_with_bike(2, 2, 1, 1, 1000)
 
 
 

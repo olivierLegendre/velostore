@@ -12,7 +12,7 @@ class BikeBrandEntity(db.VelostoreDatabase):
     def create_bike_brand_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS bike_brand (
-                            id INTEGER PRIMARY KEY NOT NULL,
+                            id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
                             brand STRING NOT NULL UNIQUE,
                             description STRING NOT NULL,
                             price INTEGER NOT NULL,
