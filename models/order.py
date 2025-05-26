@@ -27,7 +27,7 @@ class Order():
         """
         return self.entity.get_order_by_id(order_id)
     
-    def get_item_list_by_id(self, item_list_id: int) -> list:
+    def get_item_list_by_id_order(self, id_order: int) -> list:
         """Récupère une liste d'articles par son identifiant.
 
         Args:
@@ -36,9 +36,9 @@ class Order():
         Returns:
             list: La liste d'articles correspondante.
         """
-        return self.entity.get_item_list_by_id(item_list_id)
+        return self.entity.get_item_list_by_id_order(id_order)
     
-    def get_order_item_by_id(self, order_item_id: int) -> dict:
+    def get_order_item_by_id_order(self, id_order: int) -> dict:
         """Récupère un article de commande par son identifiant.
 
         Args:
@@ -47,7 +47,7 @@ class Order():
         Returns:
             dict: Les informations de l'article de commande correspondant.
         """
-        return self.entity.get_item_list_by_id(order_item_id)
+        return self.entity.get_item_list_by_id_order(id_order)
     
     def add_order_item(self, id_bike: int, nb_unit: int, total_price: float) -> dict:
         """Ajoute un article à une commande.
@@ -122,8 +122,8 @@ def main():
     order_entity= oe.OrderEntity()
     order = Order(order_entity)
     order.get_id(2)
-    order.get_item_list_by_id(2)
-    order.get_order_item_by_id(2)
+    order.get_item_list_by_id_order(2)
+    print(order.get_order_item_by_id_order(2))
     order.place_order_with_bike(2, 3, 2, 1, 2000)
 
 

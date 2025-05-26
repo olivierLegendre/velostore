@@ -126,7 +126,7 @@ class OrderEntity(db.VelostoreDatabase):
             else:
                 return None
 
-    def get_item_list_by_id(self, item_list_id: int, expand: bool = True) -> dict:
+    def get_item_list_by_id_order(self, id_order: int, expand: bool = True) -> dict:
         """Récupère une liste d'articles par son identifiant.
 
         Args:
@@ -145,20 +145,20 @@ class OrderEntity(db.VelostoreDatabase):
                 FROM item_list
                 JOIN orders ON item_list.id_order = orders.id_order
                 JOIN order_item ON item_list.id_order_item = order_item.id_order_item
-                WHERE item_list.id = ?
+                WHERE item_list.id_order = ?
             """
         else:
             query = """
                 SELECT
                     *
                 FROM item_list
-                WHERE item_list.id = ?
+                WHERE item_list.id_order = ?
             """
 
-        self.cursor.execute(query, (item_list_id,))
+        self.cursor.execute(query, (id_order,))
         return super().change_list_to_dict(self.cursor.fetchone())
 
-    def get_order_item_by_id(self, order_item_id: int, expand: bool = True) -> dict:
+    def get_order_item_by_id_order(self, order_id: int, expand: bool = True) -> dict:
         """Récupère un article de commande par son identifiant.
 
         Args:
@@ -171,24 +171,24 @@ class OrderEntity(db.VelostoreDatabase):
         if expand:
             query = """
                 SELECT
-                    order_item.id_order_item,
-                    bike.id as id_bike,
-                    order_item.nb_unit,
-                    order_item.total_price
-                FROM order_item
-                JOIN bike ON order_item.id_bike = bike.id
-                WHERE order_item.id_order_item = ?
+                    *
+                FROM order_item oi
+                JOIN item_list il ON il.id_order_item = oi.id_order_item
+                JOIN bike ON bike.id = oi.id_bike
+                WHERE il.id_order = ?
             """
         else:
             query = """
                 SELECT
                     *
-                FROM order_item
-                WHERE order_item.id_order_item = ?
+                FROM order_item oi
+                JOIN item_list il ON il.id_order_item = oi.id_order_item
+                JOIN bike ON bike.id = oi.id_bike
+                WHERE il.id_order = ?
             """
 
-        self.cursor.execute(query, (order_item_id,))
-        return super().change_list_to_dict(self.cursor.fetchone())
+        self.cursor.execute(query, (order_id,))
+        return super().list_change()
 
     def add_order_item(self, id_bike: int, nb_unit: int, total_price: float) -> int:
         """Ajoute un article à une commande.
