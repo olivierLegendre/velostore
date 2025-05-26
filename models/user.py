@@ -27,6 +27,8 @@ class User():
         user = self.entity.get_user_by_id(user_id)
         return user
 
+    def login(self, user_id):
+        return self.get_user_by_id(user_id)
 
 def main():
     """Fonction principale pour la classe User."""
