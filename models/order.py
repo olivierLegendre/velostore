@@ -51,7 +51,7 @@ def main():
     order.get_id(2)
     order.get_item_list_by_id(2)
     order.get_order_item_by_id(2)
-    order.place_order_with_bike(2, 2, 1, 1, 1000)
+    order.place_order_with_bike(2, 2, 2, 2, 33000)
 
 
 
