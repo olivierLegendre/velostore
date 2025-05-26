@@ -4,27 +4,80 @@ sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/ent
 import internal_parameters_entity as ipe
 
 class InternalParameters():
+    """
+    Une classe pour gérer les paramètres internes.
+    """
     def __init__(self, entity=ipe.InternalParametersEntity()):
+        """
+        Initialise une instance de InternalParameters.
+
+        Args:
+            entity (InternalParametersEntity, optionnel): Une entité contenant les paramètres internes.
+        """
         self.entity = entity
-        # self.cursor = super().cursor
 
     def get_bike_status_id(self, bike_status_id):
+        """
+        Récupère le statut de vélo en fonction de son identifiant.
+
+        Args:
+            bike_status_id (int): L'identifiant du statut de vélo.
+
+        Returns:
+            object: Le statut de vélo correspondant à l'identifiant.
+        """
         bike_status = self.entity.get_bike_status_by_id(bike_status_id)
         return bike_status
 
     def get_bike_size_id(self, size_id):
+        """
+        Récupère la taille de vélo en fonction de son identifiant.
+
+        Args:
+            size_id (int): L'identifiant de la taille de vélo.
+
+        Returns:
+            object: La taille de vélo correspondant à l'identifiant.
+        """
         size = self.entity.get_bike_size_by_id(size_id)
         return size
 
     def get_destination_id(self, destination_id):
+        """
+        Récupère la destination de vélo en fonction de son identifiant.
+
+        Args:
+            destination_id (int): L'identifiant de la destination de vélo.
+
+        Returns:
+            object: La destination de vélo correspondant à l'identifiant.
+        """
         destination = self.entity.get_destination_by_id(destination_id)
         return destination
 
     def get_bike_color_id(self, color_id):
+        """
+        Récupère la couleur de vélo en fonction de son identifiant.
+
+        Args:
+            color_id (int): L'identifiant de la couleur de vélo.
+
+        Returns:
+            object: La couleur de vélo correspondant à l'identifiant.
+        """
         color = self.entity.get_bike_color_by_id(color_id)
         return color
 
     def get_order_status_id(self, order_status_id):
+        """
+        Récupère le statut de commande en fonction de son identifiant.
+
+        Args:
+            order_status_id (int): L'identifiant du statut de commande.
+
+        Returns:
+            object: Le statut de commande correspondant à l'identifiant.
+        """
         order_status = self.entity.get_order_status_by_id(order_status_id)
         return order_status
 

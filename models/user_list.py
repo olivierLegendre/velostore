@@ -7,8 +7,8 @@ class UsersList():
     def __init__(self, entity=ule.UserListEntity()):
         self.entity = entity
 
-    def get_user_list(self):
-        users = self.entity.get_all_user_list()
+    def get_user_list(self, expand=True):
+        users = self.entity.get_all_user_list(expand)
         return users
 
 def main():

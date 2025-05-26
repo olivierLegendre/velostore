@@ -7,12 +7,17 @@ class OrderList():
     def __init__(self, entity=ole.OrderListEntity()):
         self.entity = entity
     
-    def get_all_orders_list(self):
-        return self.entity.get_all_orders()
+    def get_all_orders_list(self, expand=True):
+        return self.entity.get_all_orders(expand)
 
-    def get_orders_by_user_id(self,id):
-        return self.entity.get_orders_by_user(id)
+    def get_orders_by_user_list(self,id, expand=True):
+        return self.entity.get_orders_by_user(id, expand)
     
+    def get_orders_by_status_list(self, status, expand=True):
+        return self.entity.get_order_by_status(status, expand)
+    
+    def get_pending_order(self):
+        return self.entity.get_pending_order()
     def get_orders_by_status_list(self, status):
         return self.entity.get_order_by_status(status)
 
