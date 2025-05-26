@@ -78,6 +78,15 @@ class BikeItemEntity(db.VelostoreDatabase):
         self.cursor.execute("""
                         DROP TABLE IF EXISTS bike_status
                         """)
+        
+    def add_bike_item(self, brand_id, size_id, color_id, status_id):
+        self.cursor.execute("""
+            INSERT INTO bike (brand, size, color, status)
+            VALUES (?, ?, ?, ?)
+        """, (brand_id, size_id, color_id, status_id))
+        self.connection.commit()
+        return self.cursor.lastrowid  # Return the ID of the new bike
+    
 
 def main():
     super_velo = BikeItemEntity()
