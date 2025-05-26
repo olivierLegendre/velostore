@@ -390,11 +390,11 @@ class Migration(db.VelostoreDatabase):
     def add_bike_brand(self):
         """Ajoute des marques de vélo à la table bike_brand."""
         bike_brand_list = [
-            ("Rockrider", "Un vélo qui sert à grimper des montagnes", 300, 3, "url"),
-            ("B’Twin", "Vélo urbain confortable idéal pour les trajets quotidiens en ville", 250, 1, "url"),
-            ("Giant", "Vélo de route léger et performant, parfait pour les longues distances", 1200, 2, "url"),
-            ("Cannondale", "Vélo tout-terrain robuste conçu pour les pistes accidentées", 850, 4, "url"),
-            ("Electra", "Vélo cruiser au design rétro pour des balades détendues", 400, 2, "url"),
+            ("Rockrider","Un vélo qui sert à grimper des montagnes",300,3,"A30M.jpg"),
+            ("B’Twin","Vélo urbain confortable idéal pour les trajets quotidiens en ville",250,1,"A21_blue_side_2.jpg"),
+            ("Giant","Vélo de route léger et performant, parfait pour les longues distances",1200,2,"purist_orange_side.jpg"),
+            ("Cannondale","Vélo tout-terrain robuste conçu pour les pistes accidentées",850,4,"velo-ville.jpg"),
+            ("Electra","Vélo cruiser au design rétro pour des balades détendues",400,2,"velo-de-route-pinarello.png"),
         ]
         self.cursor.executemany(
             "INSERT OR IGNORE INTO bike_brand (brand, description, price, destination, img) VALUES (?, ?, ?, ?, ?)", bike_brand_list
