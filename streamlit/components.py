@@ -229,7 +229,16 @@ def display_login_block():
     login =  st.text_input("Login", "Votre login")
     password = st.text_input("Mot de passe", "Password")
     connect = st.button("Se connecter", key="login_button")
+    connect = st.button("Se connecter", key="login_button")
     if connect:
+        user = usr.User()
+        user.login(1)
+        if user: 
+            st.session_state.user = user
+            st.session_state.user_id = 1
+            st.write("Je me connecte")
+        else:
+            st.write("La combinaison login mdp n'est pas la bonne")
         user = usr.User()
         user.login(1)
         if user: 
@@ -244,13 +253,24 @@ def display_login_block():
 #####                        Logout Page : 6_Logout.py                            #####
 #######################################################################################
 
+#######################################################################################
+#####                        Logout Page : 6_Logout.py                            #####
+#######################################################################################
+
 def display_logout_block():
     """create a logout form"""
     logout = st.button("Se deconnecter", key="logout_button")
     if logout:
         del st.session_state.user
         del st.session_state.user_id
+        del st.session_state.user
+        del st.session_state.user_id
         st.write("Je me deconnecte")
+
+#######################################################################################
+#####                        Admin page : 7_Admin.py                              #####
+#######################################################################################
+
 
 #######################################################################################
 #####                        Admin page : 7_Admin.py                              #####
@@ -263,6 +283,8 @@ def create_bike_brand_block():
         brand = st.text_input("Saisissez le nom de votre modele : ", "brand")
         description = st.text_input("Entrez la description de votre modele", "description")
         price = st.text_input("Entrez le prix de votre modele", "price")
+        if st.button("Creer le modele", key="create_bike_button"):
+            st.write("Votre modele est créé")       
         if st.button("Creer le modele", key="create_bike_button"):
             st.write("Votre modele est créé")       
 
