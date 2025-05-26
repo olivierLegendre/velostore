@@ -171,6 +171,15 @@ class OrderEntity(db.VelostoreDatabase):
         self.connection.commit()
         return self.cursor.lastrowid
 
+    # UPDATE ORDER
+    def update_order_status(self, order_id, new_status):
+        self.cursor.execute("""
+            UPDATE orders
+            SET status = ?
+            WHERE id_order = ?
+        """, (new_status, order_id))
+        self.connection.commit()
+        return self.cursor.rowcount
 
 def main():
     order = OrderEntity()
