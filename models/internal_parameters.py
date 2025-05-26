@@ -16,7 +16,7 @@ class InternalParameters():
         """
         self.entity = entity
 
-    def get_bike_status_id(self, bike_status_id):
+    def get_bike_status_id(self, bike_status_id: int) -> object:
         """
         Récupère le statut de vélo en fonction de son identifiant.
 
@@ -29,7 +29,7 @@ class InternalParameters():
         bike_status = self.entity.get_bike_status_by_id(bike_status_id)
         return bike_status
 
-    def get_bike_size_id(self, size_id):
+    def get_bike_size_id(self, size_id: int) -> object:
         """
         Récupère la taille de vélo en fonction de son identifiant.
 
@@ -42,7 +42,7 @@ class InternalParameters():
         size = self.entity.get_bike_size_by_id(size_id)
         return size
 
-    def get_destination_id(self, destination_id):
+    def get_destination_id(self, destination_id: int) -> object:
         """
         Récupère la destination de vélo en fonction de son identifiant.
 
@@ -55,7 +55,7 @@ class InternalParameters():
         destination = self.entity.get_destination_by_id(destination_id)
         return destination
 
-    def get_bike_color_id(self, color_id):
+    def get_bike_color_id(self, color_id: int) -> object:
         """
         Récupère la couleur de vélo en fonction de son identifiant.
 
@@ -68,7 +68,7 @@ class InternalParameters():
         color = self.entity.get_bike_color_by_id(color_id)
         return color
 
-    def get_order_status_id(self, order_status_id):
+    def get_order_status_id(self, order_status_id: int) -> object:
         """
         Récupère le statut de commande en fonction de son identifiant.
 
@@ -81,15 +81,42 @@ class InternalParameters():
         order_status = self.entity.get_order_status_by_id(order_status_id)
         return order_status
 
-    def get_user_type_id(self, user_type_id):
+    def get_user_type_id(self, user_type_id: int) -> object:
+        """
+        Récupère le type d'utilisateur en fonction de son identifiant.
+
+        Args:
+            user_type_id (int): L'identifiant du type d'utilisateur.
+
+        Returns:
+            object: Le type d'utilisateur correspondant à l'identifiant.
+        """
         user_type = self.entity.get_user_type_by_id(user_type_id)
         return user_type
 
-    def get_user_status_id(self, user_status_id):
+    def get_user_status_id(self, user_status_id: int) -> object:
+        """
+        Récupère le statut d'utilisateur en fonction de son identifiant.
+
+        Args:
+            user_status_id (int): L'identifiant du statut d'utilisateur.
+
+        Returns:
+            object: Le statut d'utilisateur correspondant à l'identifiant.
+        """
         user_status = self.entity.gget_user_status_by_id(user_status_id)
         return user_status
 
-    def get_statistics_name_id(self, statistics_name_id):
+    def get_statistics_name_id(self, statistics_name_id: int) -> object:
+        """
+        Récupère le nom de statistique en fonction de son identifiant.
+
+        Args:
+            statistics_name_id (int): L'identifiant du nom de statistique.
+
+        Returns:
+            object: Le nom de statistique correspondant à l'identifiant.
+        """
         statistics_name = self.entity.get_statistics_name_by_id(statistics_name_id)
         return statistics_name
 

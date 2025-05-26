@@ -1,9 +1,20 @@
-import os, sys
+import os
+import sys
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db")
 import database as db
 
 class UserListEntity(db.VelostoreDatabase):
-    def get_all_user_list(self, expand=False):
+    """Classe pour gérer les listes d'utilisateurs dans la base de données."""
+
+    def get_all_user_list(self, expand: bool = False) -> list:
+        """Récupère la liste de tous les utilisateurs.
+
+        Args:
+            expand (bool, optionnel): Un indicateur pour déterminer si les détails doivent être étendus. Par défaut, False.
+
+        Returns:
+            list: Une liste de tous les utilisateurs.
+        """
         if expand:
             query = """
                 SELECT
@@ -24,6 +35,7 @@ class UserListEntity(db.VelostoreDatabase):
         return super().list_change()
 
 def main():
+    """Fonction principale pour la classe UserListEntity."""
     user_list = UserListEntity()
     print(user_list.get_all_user_list())
 

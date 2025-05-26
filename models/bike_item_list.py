@@ -14,7 +14,7 @@ class BikeItemList():
         """
         self.entity = entity
     
-    def get_bike_item_list(self, expand=True):
+    def get_bike_item_list(self, expand: bool = True) -> list:
         """Récupère la liste des articles de vélos.
 
         Args:

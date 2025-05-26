@@ -1,9 +1,20 @@
-import os, sys
+import os
+import sys
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db")
 import database as db
 
 class OrderListEntity(db.VelostoreDatabase):
-    def get_all_orders(self, expand=True):
+    """Classe pour gérer les listes de commandes dans la base de données."""
+
+    def get_all_orders(self, expand: bool = True) -> list:
+        """Récupère la liste de toutes les commandes.
+
+        Args:
+            expand (bool, optionnel): Un indicateur pour déterminer si les détails doivent être étendus. Par défaut, True.
+
+        Returns:
+            list: Une liste de toutes les commandes.
+        """
         if expand:
             query = """
                 SELECT
@@ -23,7 +34,16 @@ class OrderListEntity(db.VelostoreDatabase):
         self.cursor.execute(query)
         return super().list_change()
 
-    def get_orders_by_user(self, user_id, expand=True):
+    def get_orders_by_user(self, user_id: int, expand: bool = True) -> list:
+        """Récupère la liste des commandes d'un utilisateur.
+
+        Args:
+            user_id (int): L'identifiant de l'utilisateur.
+            expand (bool, optionnel): Un indicateur pour déterminer si les détails doivent être étendus. Par défaut, True.
+
+        Returns:
+            list: Une liste des commandes de l'utilisateur.
+        """
         if expand:
             query = """
                 SELECT
@@ -44,7 +64,16 @@ class OrderListEntity(db.VelostoreDatabase):
         self.cursor.execute(query, (user_id,))
         return super().list_change()
 
-    def get_order_by_status(self, status, expand=True):
+    def get_order_by_status(self, status: str, expand: bool = True) -> list:
+        """Récupère la liste des commandes par statut.
+
+        Args:
+            status (str): Le statut des commandes.
+            expand (bool, optionnel): Un indicateur pour déterminer si les détails doivent être étendus. Par défaut, True.
+
+        Returns:
+            list: Une liste des commandes correspondant au statut.
+        """
         if expand:
             query = """
                 SELECT
@@ -61,12 +90,21 @@ class OrderListEntity(db.VelostoreDatabase):
             """
         else:
             query = "SELECT * FROM orders WHERE status = ?"
-            
+
         self.cursor.execute(query, (status,))
         return super().list_change()
 
-    
-    def get_orders_by_user_and_status(self, user_id, status, expand=True):
+    def get_orders_by_user_and_status(self, user_id: int, status: str, expand: bool = True) -> list:
+        """Récupère la liste des commandes d'un utilisateur par statut.
+
+        Args:
+            user_id (int): L'identifiant de l'utilisateur.
+            status (str): Le statut des commandes.
+            expand (bool, optionnel): Un indicateur pour déterminer si les détails doivent être étendus. Par défaut, True.
+
+        Returns:
+            list: Une liste des commandes de l'utilisateur correspondant au statut.
+        """
         if expand:
             query = """
                 SELECT
@@ -95,16 +133,21 @@ class OrderListEntity(db.VelostoreDatabase):
         self.cursor.execute(query, (user_id, status))
         return super().list_change()
 
-    def get_pending_order_by_user(self,user_id):
+    def get_pending_order_by_user(self, user_id: int) -> list:
+        """Récupère les commandes en attente d'un utilisateur.
+
+        Args:
+            user_id (int): L'identifiant de l'utilisateur.
+
+        Returns:
+            list: Une liste des commandes en attente de l'utilisateur.
+        """
         return self.get_orders_by_user_and_status(user_id, "en attente")
-    
-    
-
-
 
 def main():
+    """Fonction principale pour la classe OrderListEntity."""
     orders_instance = OrderListEntity()
-    #close_orders = orders_instance.get_close_order()
+    # close_orders = orders_instance.get_close_order()
 
 if __name__ == '__main__':
     main()

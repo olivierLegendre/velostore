@@ -4,7 +4,16 @@ import database as db
 
 
 class BikeItemListEntity(db.VelostoreDatabase):
-    def get_all_bike_item(self, expand=True):
+    """Classe pour gérer les listes d'articles de vélos dans la base de données."""    """Classe pour gérer les listes d'articles de vélos dans la base de données."""
+    def get_all_bike_item(self, expand: bool = True) -> list:
+        """Récupère la liste de tous les articles de vélos.
+
+        Args:
+            expand (bool, optionnel): Un indicateur pour déterminer si la liste doit être étendue. Par défaut, True.
+
+        Returns:
+            list: Une liste de tous les articles de vélos.
+        """
         if expand:
             query = """
                 SELECT 
@@ -25,6 +34,7 @@ class BikeItemListEntity(db.VelostoreDatabase):
         return super().list_change()
 
 def main():
+    """Fonction principale pour la classe BikeItemListEntity."""
     pass
 
 if __name__ == '__main__':
