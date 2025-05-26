@@ -196,7 +196,7 @@ class OrderEntity(db.VelostoreDatabase):
             WHERE id_order = ?
         """, (new_status, order_id))
         self.connection.commit()
-        return self.cursor.rowcoun
+        return self.cursor.rowcount
 
     
     # Insert into item_list table
