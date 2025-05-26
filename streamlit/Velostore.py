@@ -37,10 +37,10 @@ def set_datas_to_session():
         st.session_state.bikes = get_all_bikes()
     pass
     
-@st.cache_data
+# @st.cache_data
 def get_all_bikes():
     bikes = bbl.BikeBrandList()
-    return bikes.get_bike_brand_list()
+    return bikes.get_bike_brand_list(expand=True)
     
 def get_all_brand():
     pass

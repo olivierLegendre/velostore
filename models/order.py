@@ -16,7 +16,7 @@ class Order():
         """
         self.entity = entity
 
-    def get_id(self, order_id: int) -> dict:
+    def get_order_by_id(self, order_id: int) -> dict:
         """Récupère une commande par son identifiant.
 
         Args:
@@ -47,7 +47,7 @@ class Order():
         Returns:
             dict: Les informations de l'article de commande correspondant.
         """
-        return self.entity.get_item_list_by_id_order(id_order)
+        return self.entity.get_order_item_by_id_order(id_order)
     
     def add_order_item(self, id_bike: int, nb_unit: int, total_price: float) -> dict:
         """Ajoute un article à une commande.
@@ -116,6 +116,17 @@ class Order():
         id_item_list = self.entity.add_order_in_item_list(id_order, id_order_item)
 
         return id_order
+    
+    def pay_order(self, id_order:int ) -> int:
+        """we update the status of the order to 2 (payed)
+
+        Args:
+            id_order (int): _description_
+
+        Returns:
+            int: nb row affected, 1 is expected
+        """
+        return self.entity.update_order_status(id_order, 2)
     
 def main():
     """Fonction principale pour la classe Order."""

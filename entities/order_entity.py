@@ -175,6 +175,9 @@ class OrderEntity(db.VelostoreDatabase):
                 FROM order_item oi
                 JOIN item_list il ON il.id_order_item = oi.id_order_item
                 JOIN bike ON bike.id = oi.id_bike
+                JOIN bike_brand bb ON bb.id = bike.brand
+                JOIN bike_color bc ON bc.id =bike.color
+                JOIN bike_size bs ON bs.id = bike.size
                 WHERE il.id_order = ?
             """
         else:
@@ -222,8 +225,8 @@ class OrderEntity(db.VelostoreDatabase):
         """
         # Check if the order already exists
         self.cursor.execute("""
-            SELECT id_order, total_price FROM orders WHERE id_user = ? AND date = ?
-        """, (id_user, date))
+            SELECT id_order, total_price FROM orders WHERE id_user = ? AND status = "en attente"
+        """, (id_user,))
         result = self.cursor.fetchone()
         if result:
             # Order exists, update it
