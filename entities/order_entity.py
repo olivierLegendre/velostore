@@ -15,7 +15,7 @@ class OrderEntity(db.VelostoreDatabase):
     def create_orders_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS orders (
-                            id_order INTEGER PRIMARY KEY NOT NULL,
+                            id_order INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
                             id_user INTEGER NOT NULL,
                             date DATE NOT NULL,
                             total_price INTEGER NOT NULL,
@@ -28,7 +28,7 @@ class OrderEntity(db.VelostoreDatabase):
     def create_item_list_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS item_list (
-                            id INTEGER PRIMARY KEY NOT NULL,
+                            id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
                             id_order INTEGER NOT NULL,
                             id_order_item INTEGER NOT NULL,
                             FOREIGN KEY(id_order) REFERENCES order_table(id_order)
@@ -39,7 +39,7 @@ class OrderEntity(db.VelostoreDatabase):
     def create_order_item_table(self):
         self.cursor.execute("""
                         CREATE TABLE IF NOT EXISTS order_item (
-                            id_order_item INTEGER PRIMARY KEY NOT NULL,
+                            id_order_item INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
                             id_bike INTEGER NOT NULL,
                             nb_unit STRING NOT NULL,
                             total_price INTEGER NOT NULL,
@@ -180,6 +180,15 @@ class OrderEntity(db.VelostoreDatabase):
         """, (new_status, order_id))
         self.connection.commit()
         return self.cursor.rowcount
+    
+    # Insert into item_list table
+    def add_order_in_item_list(self, id_order, id_order_item):
+        self.cursor.execute("""
+            INSERT INTO item_list (id_order, id_order_item)
+            VALUES (?, ?)
+        """, (id_order, id_order_item))
+        self.connection.commit()
+        return self.cursor.lastrowid
 
 def main():
     order = OrderEntity()
