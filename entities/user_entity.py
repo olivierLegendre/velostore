@@ -14,7 +14,7 @@ class UserEntity(db.VelostoreDatabase):
     def create_user_table(self):
         self.cursor.execute("""
                     CREATE TABLE IF NOT EXISTS user (
-                        id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
                         user_type INTEGER NOT NULL,
                         username STRING NOT NULL,
                         status BOOL NOT NULL,
