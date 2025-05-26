@@ -180,6 +180,15 @@ class OrderEntity(db.VelostoreDatabase):
         """, (new_status, order_id))
         self.connection.commit()
         return self.cursor.rowcount
+    
+    # Insert into item_list table
+    def add_order_in_item_list(self, id_order, id_order_item):
+        self.cursor.execute("""
+            INSERT INTO item_list (id_order, id_order_item)
+            VALUES (?, ?)
+        """, (id_order, id_order_item))
+        self.connection.commit()
+        return self.cursor.lastrowid
 
 def main():
     order = OrderEntity()
