@@ -37,7 +37,11 @@ class Order():
         # 3. Add the order item
         id_order_item = self.entity.add_order_item(id_bike, 1, price_per_unit)
 
-        return 
+        # insert into item_list table
+        self.entity.cursor.execute("INSERT INTO item_list (id_order, id_order_item) VALUES (?, ?)", (id_order, id_order_item))
+        self.entity.connection.commit()
+
+        return id_order
 
 
 def main():
