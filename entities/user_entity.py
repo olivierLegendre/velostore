@@ -67,14 +67,19 @@ class UserEntity(db.VelostoreDatabase):
         self.cursor.execute(query, (user_id,))
         return super().change_list_to_dict(self.cursor.fetchone())
 
-    def get_login_user_by_id(self, user_id):
+    def get_id_by_login_mot_de_passe(self, username, password):
         query = """
-            SELECT user.username
+            SELECT id
             FROM user
-            WHERE id = ?
-            """
-        self.cursor.execute(query, (user_id,))
-        return super().change_list_to_dict(self.cursor.fetchone())
+            WHERE username = ? AND password = ?
+        """
+        self.cursor.execute(query, (username, password))
+        result = self.cursor.fetchone()
+        if result:
+            return result[0]  
+        else:
+            return None 
+
     
     def get_type_id_user(self, user_id):
         query = """
