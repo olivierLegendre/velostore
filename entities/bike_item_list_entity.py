@@ -4,8 +4,24 @@ import database as db
 
 
 class BikeItemListEntity(db.VelostoreDatabase):
-    def get_all_bike_item(self):
-        self.cursor.execute("""SELECT * FROM bike""",)
+    def get_all_bike_item(self, expand=True):
+        if expand:
+            query = """
+                SELECT 
+                    bike_item.id,
+                    bike_item.brand,
+                    bike_size.size,
+                    bike_color.color,
+                    bike_status.status
+                FROM
+                    bike_item
+                JOIN bike_size ON bike_item.id = bike_size.id
+                JOIN bike_color ON bike_item.id = bike_color.id
+                JOIN bike_status ON bike_item.id = bike_status.id
+                """
+        else:
+            query = "SELECT * FROM bike"
+        self.cursor.execute(query)
         return super().list_change()
 
 def main():
