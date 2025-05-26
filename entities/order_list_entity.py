@@ -22,17 +22,27 @@ class OrderListEntity(db.VelostoreDatabase):
 
         self.cursor.execute(query)
         return super().list_change()
-    
+
     def get_orders_by_user(self, user_id):
         self.cursor.execute("""
             SELECT * FROM orders WHERE id_user = ? ORDER BY date DESC
         """, (user_id,))
         return super().list_change()
-    
 
+    def get_order_by_status(self, status):
+        self.cursor.execute("""
+                            SELECT * FROM orders WHERE status = ? """, (status,))
+        return super().list_change()
+
+    def get_pending_order(self):
+        return self.get_order_by_status(1)
+
+    def get_close_order(self):
+        return self.get_order_by_status(2)
 
 def main():
-    pass
+    orders_instance = OrderListEntity()
+    #close_orders = orders_instance.get_close_order()
 
 if __name__ == '__main__':
     main()

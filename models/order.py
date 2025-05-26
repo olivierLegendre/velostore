@@ -38,8 +38,7 @@ class Order():
         id_order_item = self.entity.add_order_item(id_bike, 1, price_per_unit)
 
         return 
-
-
+    
 def main():
     order_entity= oe.OrderEntity()
     order = Order(order_entity)
