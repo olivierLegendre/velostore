@@ -18,6 +18,7 @@ class OrderList():
     
     def get_pending_order(self):
         return self.entity.get_pending_order()
+    
     def get_orders_by_status_list(self, status):
         return self.entity.get_order_by_status(status)
 
