@@ -262,7 +262,7 @@ class Migration(db.VelostoreDatabase):
             id_user = random.choice(user_ids)
             date = fake.date()
             total_price = fake.pricetag()
-            status = random.choice(order_status_ids)
+            status = random.randint(2,3)
 
             orders_list.append((id_user, date, total_price, status))
 
