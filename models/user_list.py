@@ -1,17 +1,14 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import sql_model as sql_m
 
-import user_list_entity as ule
-
-class UsersList():
+class UsersList(sql_m.SqlModel):
     """Classe pour gérer les listes d'utilisateurs."""
-    def __init__(self, entity=ule.UserListEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise UsersList avec une entité.
 
         Args:
             entity (UserListEntity, optionnel): Une entité pour interagir avec les données d'utilisateurs.
         """
-        self.entity = entity
+        super().__init__(connector)
 
     def get_user_list(self, expand: bool = True) -> list:
         """Récupère la liste de tous les utilisateurs.
@@ -27,8 +24,7 @@ class UsersList():
 
 def main():
     """Fonction principale pour la classe UsersList."""
-    user_list_entity = ule.UserListEntity()
-    user = UsersList(user_list_entity)
+    user = UsersList('sqlite')
     all_users = user.get_user_list()
 
 if __name__ == '__main__':

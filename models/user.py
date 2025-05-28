@@ -1,18 +1,14 @@
-import os
-import sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import sql_model as sql_m
 
-import user_entity as ue
-
-class User():
+class User(sql_m.SqlModel):
     """Classe pour gérer les opérations liées aux utilisateurs."""
-    def __init__(self, entity=ue.UserEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise User avec une entité.
 
         Args:
             entity (UserEntity, optionnel): Une entité pour interagir avec les données d'utilisateurs.
         """
-        self.entity = entity
+        super().__init__(connector)
         
     
     def get_user_by_id(self, user_id: int) -> dict:
@@ -32,8 +28,7 @@ class User():
 
 def main():
     """Fonction principale pour la classe User."""
-    user_entity = ue.UserEntity()
-    user = User(user_entity)
+    user = User('sqlite')
     user_id = user. get_user_by_id(1) 
 
 if __name__ == '__main__':

@@ -1,20 +1,16 @@
-import os, sys
-from datetime import date
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
-
-import order_entity as oe
+import sql_model as sql_m
 import bike_item as bi
+from datetime import date
 
-
-class Order():
+class Order(sql_m.SqlModel):
     """Classe pour gérer les opérations liées aux commandes."""
-    def __init__(self, entity=oe.OrderEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise Order avec une entité.
 
         Args:
             entity (OrderEntity, optionnel): Une entité pour interagir avec les données de commandes.
         """
-        self.entity = entity
+        super().__init__(connector)
 
     def get_order_by_id(self, order_id: int) -> dict:
         """Récupère une commande par son identifiant.
@@ -130,8 +126,7 @@ class Order():
     
 def main():
     """Fonction principale pour la classe Order."""
-    order_entity= oe.OrderEntity()
-    order = Order(order_entity)
+    order = Order('sqlite')
     order.get_id(2)
     order.get_item_list_by_id_order(2)
     print(order.get_order_item_by_id_order(2))

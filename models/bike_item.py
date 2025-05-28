@@ -1,18 +1,15 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import sql_model as sql_m
 
-import bike_item_entity as bie
-
-class BikeItem():
+class BikeItem(sql_m.SqlModel):
     """Classe pour gérer les opérations liées aux articles de vélos
     """
-    def __init__(self, entity=bie.BikeItemEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise BikeItem avec une entité.
 
         Args:
             entity (BikeItem, optional): Une entité pour interagir avec les données d'articles de vélos.
         """
-        self.entity = entity
+        super().__init__(connector)
     
     def get_bike_id(self, bike_id: int) -> dict:
         """Récupère un vélo par son identifiant.
@@ -55,9 +52,8 @@ class BikeItem():
 def main():
     """Fonction pricipale pour la class BikeItem
     """
-    bike_item_entity = bie.BikeItemEntity()
     # bike_entity.test_function_bike_entity()
-    bicycle = BikeItem(bike_item_entity)
+    bicycle = BikeItem('sqlite')
     bike_id = bicycle.get_bike_id(2)  
     bike_param = bicycle.get_bike_parameters({'brand': '2'})
     get_bike_id = bicycle.get_bike_id(2)

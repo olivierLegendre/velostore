@@ -1,18 +1,15 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import sql_model as sql_m
 
-import order_list_entity as ole
-
-class OrderList():
+class OrderList(sql_m.SqlModel):
     """CLasse pour gérer les listes de commandes
     """
-    def __init__(self, entity=ole.OrderListEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise OrderList avec une entité.
 
         Args:
             entity (OrderListEntity, optionnel): Une entité pour interagir avec les données de commandes.
         """
-        self.entity = entity
+        super().__init__(connector)
     
     def get_all_orders_list(self, expand: bool = True) -> list:
         """Récupère la liste de toutes les commandes.
@@ -94,8 +91,7 @@ class OrderList():
 
 def main():
     """Fonction principale pour la classe OrderList."""
-    order_list_entity = ole.OrderListEntity()
-    order_list = OrderList(order_list_entity)
+    order_list = OrderList('sqlite')
     order_list.get_all_orders_list()  
     # print(order_list.get_pending_order())
     print(order_list.get_pending_order_by_user(11))
