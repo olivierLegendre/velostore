@@ -1,18 +1,15 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import sql_model as sql_m
 
-import bike_brand_list_entity as bbl
-
-class BikeBrandList():
+class BikeBrandList(sql_m.SqlModel):
     """Gère les opérations liées aux listes de marques de vélos."""
     
-    def __init__(self, entity=bbl.BikeBrandListEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialisation de BikeBrandList avec une entité
 
         Args:
             entity (BikeBrandListEntity, optional): Une entité pour interagir avec les données de marques de vélos.
         """
-        self.entity = entity
+        super().__init__(connector)
     
     def get_bike_brand_list(self, expand: bool = True) -> list:
         """Récupère la liste des marques de vélos.
@@ -47,8 +44,8 @@ class BikeBrandList():
 def main():
     """Fonction pricipale pour la class BikeBrandList
     """
-    bike_brand_list_entity = bbl.BikeBrandListEntity()
-    brand = BikeBrandList(bike_brand_list_entity)
+    # bike_brand_list_entity = bbl.BikeBrandListEntity()
+    brand = BikeBrandList('sqlite')
     print(brand.get_bike_brand_list())
     all_destinations = brand.get_all_destinations_list()
 

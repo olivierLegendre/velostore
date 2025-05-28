@@ -1,14 +1,6 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import sql_model as sql_m
 
-# import bike_brand_entity as bbe
-import entity_manager as em
-
-class BikeBrand():
-    model_name = 'bike_brand'
-    model_class_name = 'BikeBrand'
-    entity_name = 'bike_brand_entity'
-    entity_class_name = 'BikeBrandEntity'
+class BikeBrand(sql_m.SqlModel):
     
     """Classe pour gérer les opérations liées aux marques de vélos
     """
@@ -18,18 +10,7 @@ class BikeBrand():
         Args:
             entity (BikeBrandEntity, optional): Une entité pour interagir avec les données des marques de vélos.
         """
-        entity_manager = em.EntityManager(connector)
-        entity = entity_manager.get_entity(self.get_names())
-        self.entity = entity
-    
-    
-    def get_names(self):
-        return dict(
-            model_name = self.model_name,
-            model_class_name = self.model_class_name,
-            entity_name = self.entity_name,
-            entity_class_name = self.entity_class_name,
-        )
+        super().__init__(connector)
     
     def get_brand_by_id(self, brand_id: int) -> dict:
         """Récupère unemarque de vélo par son identifiant.
