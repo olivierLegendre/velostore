@@ -210,21 +210,7 @@ def create_order_item_table(order: object):
     df_order = pd.concat([df_bikes, df_products], axis=1)
     df_order = df_order.drop(columns="bike")
     return df_order
-db.authors.aggregate([
-  {
-    $match: {
-      _id: 20,
-    },
-  },
-  {
-    $lookup: {
-      from: "books",
-      localField: "_id",
-      foreignField: "author_id",
-      as: "books",
-    },
-  },
-]);
+
 def create_old_orders_expander(orders):
     """add the table to a expander"""
     orders_expander = st.expander("#Vos anciennes commandes")

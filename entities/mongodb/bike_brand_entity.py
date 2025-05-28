@@ -1,7 +1,11 @@
 import os, sys
 
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/../db")
-import sqlite_database as db
+# print(f"truc : {os.path.realpath(__file__).split("/")[0:-2]}")
+# print(f"sys path {sys.path}")
+# import importlib
+# db = importlib.import_module('database')
+import mongodb_database as db
 
 class BikeBrandEntity(db.VelostoreDatabase):
     """Classe pour gérer les opérations de base de données liées aux marques de vélos."""
