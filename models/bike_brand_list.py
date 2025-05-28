@@ -1,6 +1,6 @@
-import sql_model as sql_m
+import utils_model as utils
 
-class BikeBrandList(sql_m.SqlModel):
+class BikeBrandList(utils.UtilsModel):
     """Gère les opérations liées aux listes de marques de vélos."""
     
     def __init__(self, connector='sqlite'):

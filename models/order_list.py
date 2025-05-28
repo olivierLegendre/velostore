@@ -1,6 +1,6 @@
-import sql_model as sql_m
+import utils_model as utils
 
-class OrderList(sql_m.SqlModel):
+class OrderList(utils.UtilsModel):
     """CLasse pour gérer les listes de commandes
     """
     def __init__(self, connector='sqlite'):

@@ -1,8 +1,8 @@
-import sql_model as sql_m
+import utils_model as utils
 import bike_item as bi
 from datetime import date
 
-class Order(sql_m.SqlModel):
+class Order(utils.UtilsModel):
     """Classe pour gérer les opérations liées aux commandes."""
     def __init__(self, connector='sqlite'):
         """Initialise Order avec une entité.

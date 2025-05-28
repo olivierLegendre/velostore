@@ -1,6 +1,6 @@
-import sql_model as sql_m
+import utils_model as utils
 
-class BikeItemList(sql_m.SqlModel):
+class BikeItemList(utils.UtilsModel):
     """Classe pour gérer les opérations liées aux listes d'articles de vélos.
     """
     def __init__(self, connector='sqlite'):

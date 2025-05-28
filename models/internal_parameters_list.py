@@ -1,6 +1,6 @@
-import sql_model as sql_m
+import utils_model as utils
 
-class InternalParametersList(sql_m.SqlModel):
+class InternalParametersList(utils.UtilsModel):
     """Classe pour gérer les listes de paramètres internes
     """
     def __init__(self, connector='sqlite'):

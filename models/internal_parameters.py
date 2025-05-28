@@ -1,6 +1,6 @@
-import sql_model as sql_m
+import utils_model as utils
 
-class InternalParameters(sql_m.SqlModel):
+class InternalParameters(utils.UtilsModel):
     """
     Une classe pour gérer les paramètres internes.
     """

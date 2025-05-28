@@ -1,6 +1,6 @@
-import sql_model as sql_m
+import utils_model as utils
 
-class BikeBrand(sql_m.SqlModel):
+class BikeBrand(utils.UtilsModel):
     
     """Classe pour gérer les opérations liées aux marques de vélos
     """

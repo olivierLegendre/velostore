@@ -1,6 +1,6 @@
-import sql_model as sql_m
+import utils_model as utils
 
-class StatBike(sql_m.SqlModel):
+class StatBike(utils.UtilsModel):
     """Classe pour gérer les statistiques liées aux vélos."""
     def __init__(self, connector='sqlite'):
         """Initialise StatBike avec une entité.

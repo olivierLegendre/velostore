@@ -1,6 +1,6 @@
-import sql_model as sql_m
+import utils_model as utils
 
-class User(sql_m.SqlModel):
+class User(utils.UtilsModel):
     """Classe pour gérer les opérations liées aux utilisateurs."""
     def __init__(self, connector='sqlite'):
         """Initialise User avec une entité.
