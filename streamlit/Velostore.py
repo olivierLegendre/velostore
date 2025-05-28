@@ -10,8 +10,6 @@ st.set_page_config(
     page_title = "Velostore: Nos velos",
     page_icon="🚲",
     layout="wide",
-    page_icon="🚲",
-    layout="wide",
 )
 
 st.write("# Bienvenue chez VeloStore! 👋")
@@ -63,11 +61,6 @@ def main():
     with col2:
         components.select_box_destination()
     col1, col2 = st.columns(2)
-    with col1:
-        
-        components.display_all_bikes()
-    with col2:
-        components.select_box_destination()
 
 if __name__ == '__main__':
     main()
