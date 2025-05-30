@@ -9,7 +9,7 @@ from bson import ObjectId
 from datetime import datetime
 
 class OrderEntity(db.VelostoreDatabase):
-    """Classe pour gérer les opérations de base de données liées aux vélos."""
+    """Classe pour gérer les opérations de base de données liées aux orders."""
 
     def __init__(self):
         """Initialise OrderEntity."""
@@ -110,7 +110,7 @@ class OrderEntity(db.VelostoreDatabase):
 
 
 def main():
-    """Fonction principale pour la classe BikeEntity."""
+    """Fonction principale pour la classe OrderEntity."""
     super_order = OrderEntity()
     print(super_order.get_order_by_id('6839afb0131a0684c0ade292'))
 

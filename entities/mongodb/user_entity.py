@@ -7,10 +7,10 @@ sys.path.insert(1, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 import mongodb_database as db
 
 class UserEntity(db.VelostoreDatabase):
-    """Classe pour gérer les opérations de base de données liées aux vélos."""
+    """Classe pour gérer les opérations de base de données liées aux user."""
 
     def __init__(self):
-        """Initialise BikeEntity."""
+        """Initialise UserEntity."""
         super().__init__()
         self.user_collection = self.mydb['User']
 
@@ -32,17 +32,17 @@ class UserEntity(db.VelostoreDatabase):
     def get_user_by_id(self, user_id):
         return self.user_collection.find_one({"_id": ObjectId(user_id)})
 
-    def update_bike(self, user_id, update_data):
+    def update_user(self, user_id, update_data):
         result = self.user_collection.update_one({"_id": ObjectId(user_id)}, {"$set": update_data})
         return result.modified_count
 
-    def delete_bike(self, user_id):
+    def delete_user(self, user_id):
         result = self.user_collection.delete_one({"_id": ObjectId(user_id)})
         return result.deleted_count
 
 
 def main():
-    """Fonction principale pour la classe BikeEntity."""
+    """Fonction principale pour la classe UserEntity."""
     super_user = UserEntity()
     print(super_user.get_user_by_id('6839adabf458c2b2f4c45602'))
 
