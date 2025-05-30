@@ -1,20 +1,17 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import utils_model as utils
 
-import internal_parameters_entity as ipe
-
-class InternalParameters():
+class InternalParameters(utils.UtilsModel):
     """
     Une classe pour gérer les paramètres internes.
     """
-    def __init__(self, entity=ipe.InternalParametersEntity()):
+    def __init__(self, connector='sqlite'):
         """
         Initialise une instance de InternalParameters.
 
         Args:
             entity (InternalParametersEntity, optionnel): Une entité contenant les paramètres internes.
         """
-        self.entity = entity
+        super().__init__(connector)
 
     def get_bike_status_id(self, bike_status_id: int) -> object:
         """
@@ -121,8 +118,7 @@ class InternalParameters():
         return statistics_name
 
 def main():
-    internal_parameters_entity = ipe.InternalParametersEntity()
-    parameters = InternalParameters(internal_parameters_entity)
+    parameters = InternalParameters('sqlite')
     parameters.get_bike_size_id(2)  
 
 

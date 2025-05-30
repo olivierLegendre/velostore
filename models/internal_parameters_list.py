@@ -1,18 +1,15 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import utils_model as utils
 
-import internal_parameters_list_entity as iple
-
-class InternalParametersList():
+class InternalParametersList(utils.UtilsModel):
     """Classe pour gérer les listes de paramètres internes
     """
-    def __init__(self, entity=iple.InternalParametersListEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise une instance de InternalParametersList.
 
         Args:
             entity (InternalParametersListEntity, optional): Une entité contenant les paramètres internes.
         """
-        self.entity = entity
+        super().__init__(connector)
     
     def get_bike_status_list(self) -> list:
         """Récupère la liste des status de vélo.
@@ -89,8 +86,7 @@ class InternalParametersList():
 def main():
     """Fonction pricipale pour la class InternalParametersList
     """
-    internal_parameters_list_entity = iple.InternalParametersListEntity()
-    internal_parameters_list = InternalParametersList(internal_parameters_list_entity)
+    internal_parameters_list = InternalParametersList('sqlite')
     print(internal_parameters_list.get_bike_color_list())
 
 if __name__ == '__main__':

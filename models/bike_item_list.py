@@ -1,18 +1,15 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import utils_model as utils
 
-import bike_item_list_entity as bile
-
-class BikeItemList():
+class BikeItemList(utils.UtilsModel):
     """Classe pour gérer les opérations liées aux listes d'articles de vélos.
     """
-    def __init__(self, entity=bile.BikeItemListEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise BikeItemList avec une entité.
 
         Args:
             entity (BikeItemListEntity, optional): Une entité pour interagir avec les données d'articles de vélos.
         """
-        self.entity = entity
+        super().__init__(connector)
     
     def get_bike_item_list(self, expand: bool = True) -> list:
         """Récupère la liste des articles de vélos.
@@ -29,8 +26,7 @@ class BikeItemList():
 def main():
     """Fonction principale pour la classe BikeItemList
     """
-    bike_item_list_entity = bile.BikeItemListEntity()
-    bike_item = BikeItemList(bike_item_list_entity)
+    bike_item = BikeItemList('sqlite')
     all_bike_item = bike_item.get_bike_item_list()
 
 if __name__ == '__main__':

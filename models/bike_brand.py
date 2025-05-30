@@ -1,19 +1,16 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import utils_model as utils
 
-import bike_brand_entity as bbe
-
-class BikeBrand():
+class BikeBrand(utils.UtilsModel):
+    
     """Classe pour gérer les opérations liées aux marques de vélos
     """
-    def __init__(self, entity=bbe.BikeBrandEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise BikeBrand avec une entité
 
         Args:
             entity (BikeBrandEntity, optional): Une entité pour interagir avec les données des marques de vélos.
         """
-        self.entity = entity
-        
+        super().__init__(connector)
     
     def get_brand_by_id(self, brand_id: int) -> dict:
         """Récupère unemarque de vélo par son identifiant.
@@ -30,9 +27,10 @@ class BikeBrand():
 def main():
     """Fonction pricipale pour la class BikeBrandList"""
 
-    bike_brand_entity = bbe.BikeBrandEntity()
-    brand = BikeBrand(bike_brand_entity)
-    brand_id = brand.get_brand_by_id(2)  
+    # bike_brand_entity = bbe.BikeBrandEntity()
+    brand = BikeBrand('sqlite')
+    brand = brand.get_brand_by_id(2)
+    print(f"brand {brand}")
 
 if __name__ == '__main__':
     main()
