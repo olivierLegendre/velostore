@@ -19,12 +19,32 @@ class UserEntity(db.VelostoreDatabase):
         self.get_or_create_collection()
 
     def get_or_create_collection(self, collection_name="User"):
+        
+        schema = {
+            "bsonType": "object",
+            "required": ["username", "password"],
+            "properties": {
+                "user_type": {"bsonType": "string"},
+                "username": {"bsonType": "string"},
+                "status": {"bsonType": "string"},
+                "mail": {"bsonType": "string"},
+                "password": {"bsonType": "string"},
+            }
+        }
+
+        validator = {"$jsonSchema": schema}
+
         """Récupère ou crée une collection dans la base de données."""
         if collection_name not in self.mydb.list_collection_names():
-            self.mydb.create_collection(collection_name)
+            self.mydb.create_collection(collection_name, validator=validator)
+            print("Collection 'user' créée avec validation JSON Schema.")
         return self.mydb[collection_name]
 
     # Requête CRUD
+    def add_data_user(self, user_data):
+        result_many = self.user_collection.insert_many(user_data)
+        return result_many.inserted_ids
+    
     def create_user(self, user_data):
         result = self.user_collection.insert_one(user_data)
         return result.inserted_id
