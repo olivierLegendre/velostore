@@ -53,12 +53,8 @@ class Migration(db.MongoDBVelostoreDatabase):
             "size": "M",
             "color": "bleu"
         }}
-
-
         bike_id = self.bike_entity.create_bike(bike_data)
         print(f"Vélo crée id: {bike_id}")
-
-    
 
     def add_user(self):
         pass

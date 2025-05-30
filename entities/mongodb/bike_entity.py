@@ -32,8 +32,10 @@ class BikeEntity(db.MongoDBVelostoreDatabase):
         result = self.bike_collection.insert_one(bike_data)
         return result.inserted_id
     
-    def read_bike_by_id(self, bike_id):
-        return self.bike_collection.find_one({"_id": ObjectId(bike_id)})
+    def get_bike_by_id(self, bike_id):
+        get_bike_by_id = self.bike_collection.find_one({"_id": ObjectId(bike_id)})
+        print(get_bike_by_id)
+        return get_bike_by_id
     
     def update_bike(self, bike_id, update_data):
         result = self.bike_collection.update_one({"_id": ObjectId(bike_id)}, {"$set": update_data})
@@ -50,7 +52,7 @@ class BikeEntity(db.MongoDBVelostoreDatabase):
 def main():
     """Fonction principale pour la classe BikeEntity."""
     super_velo = BikeEntity()
-    super_velo.create_tables()
+    super_velo.get_bike_by_id('68396b4509d233a28a43bdcb')
 
 if __name__ == '__main__':
     main()
