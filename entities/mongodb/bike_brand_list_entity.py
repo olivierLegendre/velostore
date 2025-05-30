@@ -29,7 +29,7 @@ class BikeBrandListEntity(db.VelostoreDatabase):
         # set pour virer les doublons
         unique_brands = set()
         for brand in brands:
-            if "brand" in brand and isinstance(brand["brand"], dict) and "brand" in brand["brand"]:
+            if "brand" in brand and isinstance(brand["brand"], dict):
                 unique_brands.add(brand["brand"]["brand"])
         print(unique_brands)
         return unique_brands
@@ -39,22 +39,31 @@ class BikeBrandListEntity(db.VelostoreDatabase):
         colors = self.bike_collection.find({}, {"config.color":1, "_id":0})
         unique_colors = set()
         for color in colors:
-            if "config" in color and isinstance(color["config"], dict) and "color" in color["config"]:
+            if "config" in color and isinstance(color["config"], dict):
                 unique_colors.add(color["config"]["color"])
-        print(unique_colors)
+        return unique_colors
 
     def get_all_bike_size(self):
         sizes = self.bike_collection.find({}, {"config.size":1, "_id":0})
         unique_sizes = set()
         for size in sizes:
-            if "config" in size and isinstance(size["config"], dict) and "size" in size["config"]:
+            if "config" in size and isinstance(size["config"], dict):
                 unique_sizes.add(size["config"]["size"])
-        print(unique_sizes)
+        return unique_sizes
+    
+    def get_all_bike_destinations(self):
+        destinations = self.bike_collection.find({}, {"brand.destination": 1, "_id": 0})
+        unique_destinations = set()
+        for destination in destinations:
+            if "brand" in destination and isinstance(destination["brand"], dict):
+                unique_destinations.add(destination["brand"]["destination"])
+        print(unique_destinations)
+        return unique_destinations
 
 def main():
     """Fonction principale pour la classe BikeListEntity."""
     super_velo = BikeBrandListEntity()
-    super_velo.get_all_bike_size()
+    super_velo.get_all_bike_destinations()
 
 if __name__ == '__main__':
     main()
