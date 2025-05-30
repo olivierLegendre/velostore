@@ -3,7 +3,7 @@ import sys
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-sys.path.insert(1, r'c:\Users\coque\velostore\db')
+sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/../db")
 
 import mongodb_database as db
 

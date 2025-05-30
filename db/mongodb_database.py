@@ -1,6 +1,6 @@
 import pymongo 
 
-class MongoDBVelostoreDatabase():
+class VelostoreDatabase():
     """Classe pour gérer la base de données Velostore."""
 
     def __init__(self):
@@ -14,7 +14,7 @@ class MongoDBVelostoreDatabase():
         self.mydb = self.myclient["velostore"]
         
 def main():
-    velostore_db = MongoDBVelostoreDatabase()
+    velostore_db = VelostoreDatabase()
     velostore_db.connection_db()
 
 if __name__ == '__main__':

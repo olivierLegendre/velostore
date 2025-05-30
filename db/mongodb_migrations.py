@@ -1,12 +1,12 @@
 import os
 import sys
 
-sys.path.insert(1, r'c:\Users\coque\velostore\entities\mongodb')
+sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "../../entities/mongodb")
 
 import mongodb_database as db
 import bike_entity as be
 
-class Migration(db.MongoDBVelostoreDatabase):
+class Migration(db.VelostoreDatabase):
     """Classe pour gérer la migration des données dans la base de données Velostore."""
 
     def __init__(self):
