@@ -13,9 +13,7 @@ class BikeListEntity(db.VelostoreDatabase):
     def __init__(self):
         """Initialise BikeEntity."""
         super().__init__()
-        self.client = MongoClient('mongodb://localhost:27017/')
-        self.db = self.client['velostore']
-        self.bike_collection = self.db['Bike']
+        self.bike_collection = self.mydb['Bike']
     
     def get_all_bike_list(self, bike_id):
         bike_by_id = self.bike_collection.find_one({"_id": ObjectId(bike_id)})
