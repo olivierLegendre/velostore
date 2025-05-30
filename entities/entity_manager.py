@@ -7,7 +7,7 @@ class EntityManager():
     connectors =  ['sqlite', 'mongodb']
     def __init__(self, connector='sqlite'):
         if connector in self.connectors:
-            print(f"on se connecte sur {connector}")
+            # print(f"on se connecte sur {connector}")
             self.connector = connector
         else: 
             print(f"connector {connector} is not yet available")
@@ -27,8 +27,11 @@ class EntityManager():
         return entity()
         
     def load_database(self):
-        database_loaded = self.load_module('db/database.py')
-        return database_loaded
+        match self.connector:
+            case 'sqlite':
+                return self.load_module('db/sqlite_database.py')
+            case 'mongodb':
+                return self.load_module('db/mongodb_database.py')
         
         
     def gensym(self, length=32, prefix="gensym_"):

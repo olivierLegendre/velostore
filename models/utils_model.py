@@ -2,7 +2,7 @@ import os, sys
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
 import entity_manager as em
 
-class SqlModel:
+class UtilsModel:
     def __init__(self, connector):
         entity_manager = em.EntityManager(connector)
         entity = entity_manager.get_entity(self.get_names())
