@@ -1,10 +1,14 @@
 import os
 import sys
 
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "entities/mongodb")
+sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities/mongodb")
 
 import mongodb_database as db
+from bson import ObjectId
+from datetime import datetime
 import bike_entity as be
+import user_entity as ue
+import order_entity as oe
 
 class Migration(db.VelostoreDatabase):
     """Classe pour gérer la migration des données dans la base de données Velostore."""
@@ -13,6 +17,8 @@ class Migration(db.VelostoreDatabase):
         """Initialise Migration avec les entités nécessaires."""
         super().__init__()
         self.bike_entity = be.BikeEntity()
+        self.user_entity = ue.UserEntity()
+        self.order_entity = oe.OrderEntity()
 
     def setup(self):
         """Configure les collections et ajoute des données statiques."""
@@ -26,11 +32,11 @@ class Migration(db.VelostoreDatabase):
 
     def create_order_tables(self):
         """Crée les collections de commandes."""
-        pass
+        self.order_entity.create_tables()
 
     def create_user_tables(self):
         """Crée les collections d'utilisateurs."""
-        pass
+        self.user_entity.create_tables()
 
     def add_dynamics_data(self):
         """Ajoute des données dynamiques aux collections."""
@@ -57,10 +63,46 @@ class Migration(db.VelostoreDatabase):
         print(f"Vélo crée id: {bike_id}")
 
     def add_user(self):
-        pass
+        user_data = {
+        "user_type": "utilisateur",
+        "username": "jules100",
+        "status": "actif",
+        "mail": "jules@gmail.com",
+        "self.bike_entity.create_tables()word": "vl4e5swer5@"
+    }
+        user_id = self.user_entity.create_user(user_data)
+        print(f"User crée id: {user_id}")
 
     def add_orders(self):
-        pass
+        order_data = {
+        "_id": ObjectId(),
+        "user": {
+            "id_user": ObjectId("665612a5cbe5f12c8a4f1234"),
+            "Username": "jules100",
+            "Mail": "jules@gmail.com"
+        },
+        "bikes": [
+            {
+                "id_bike": ObjectId("665613f1cbe5f12c8a4f1235"),
+                "brand": {
+                    "brand": "Giant",
+                    "Description": "Mountain Bike with suspension",
+                    "Price": 500
+                },
+                "config": {
+                    "Size": "M",
+                    "Color": "Red"
+                },
+                "nb_unit": 1,
+                "price": 500
+            }
+        ],
+        "Date": datetime(2025, 5, 1),
+        "Total_price": 500,
+        "Status": "payé"
+    }
+        order_id = self.order_entity.create_order(order_data)
+        print(f"Order crée id: {order_id}")
 
     def add_item_list(self):
         pass
