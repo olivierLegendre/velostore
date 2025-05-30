@@ -68,7 +68,7 @@ class Migration(db.VelostoreDatabase):
         "username": "jules100",
         "status": "actif",
         "mail": "jules@gmail.com",
-        "self.bike_entity.create_tables()word": "vl4e5swer5@"
+        "password": "vl4e5swer5@"
     }
         user_id = self.user_entity.create_user(user_data)
         print(f"User crée id: {user_id}")
