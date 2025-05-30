@@ -20,13 +20,70 @@ class OrderEntity(db.VelostoreDatabase):
         """Crée les collections nécessaires dans la base de données."""
         self.get_or_create_collection()
 
+    
     def get_or_create_collection(self, collection_name="Order"):
+
+        schema = {
+            "bsonType": "object",
+            "required": ["user", "bikes", "Date", "Total_price", "Status"],
+            "properties": {
+                "user": {
+                    "bsonType": "object",
+                    "required": ["id_user", "Username", "Mail"],
+                    "properties": {
+                        "id_user": {"bsonType": "objectId"},
+                        "Username": {"bsonType": "string"},
+                        "Mail": {"bsonType": "string"}
+                    }
+                },
+                "bikes": {
+                    "bsonType": "array",
+                    "items": {
+                        "bsonType": "object",
+                        "required": ["id_bike", "brand", "config", "nb_unit", "price"],
+                        "properties": {
+                            "id_bike": {"bsonType": "objectId"},
+                            "brand": {
+                                "bsonType": "object",
+                                "required": ["brand", "Description", "Price"],
+                                "properties": {
+                                    "brand": {"bsonType": "string"},
+                                    "Description": {"bsonType": "string"},
+                                    "Price": {"bsonType": "int"}
+                                }
+                            },
+                            "config": {
+                                "bsonType": "object",
+                                "required": ["Size", "Color"],
+                                "properties": {
+                                    "Size": {"bsonType": "string"},
+                                    "Color": {"bsonType": "string"}
+                                }
+                            },
+                            "nb_unit": {"bsonType": "int"},
+                            "price": {"bsonType": "int"}
+                        }
+                    }
+                },
+                "Date": {"bsonType": "date"},
+                "Total_price": {"bsonType": "int"},
+                "Status": {"bsonType": "string"}
+            }
+        }
+
+        validator = {"$jsonSchema": schema}
+
         """Récupère ou crée une collection dans la base de données."""
         if collection_name not in self.mydb.list_collection_names():
-            self.mydb.create_collection(collection_name)
+            self.mydb.create_collection(collection_name, validator=validator)
+            print("Collection 'order' créée avec validation JSON Schema.")
         return self.mydb[collection_name]
 
     # Requête CRUD
+    def add_data_order(self, order_data):
+        result_many = self.order_collection.insert_many(order_data)
+        return result_many.inserted_ids
+
     def create_order(self, order_data):
         result = self.order_collection.insert_one(order_data)
         return result.inserted_id
