@@ -3,11 +3,11 @@ import sys
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/../db")
+sys.path.insert(1, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../db")))
 
 import mongodb_database as db
 
-class BikeListEntity(db.MongoDBVelostoreDatabase):
+class BikeListEntity(db.VelostoreDatabase):
     """Classe pour gérer les opérations de base de données liées aux vélos."""
 
     def __init__(self):

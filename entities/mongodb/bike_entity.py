@@ -2,7 +2,7 @@ import os
 import sys
 from bson.objectid import ObjectId
 
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/../db")
+sys.path.insert(1, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../db")))
 
 import mongodb_database as db
 
