@@ -1,6 +1,5 @@
 import os
 import sys
-from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/../db")
@@ -13,9 +12,7 @@ class BikeEntity(db.VelostoreDatabase):
     def __init__(self):
         """Initialise BikeEntity."""
         super().__init__()
-        self.client = MongoClient('mongodb://localhost:27017/')
-        self.db = self.client['velostore']
-        self.bike_collection = self.db['Bike']
+        self.bike_collection = self.mydb['Bike']
 
     def create_tables(self):
         """Crée les collections nécessaires dans la base de données."""
@@ -23,20 +20,20 @@ class BikeEntity(db.VelostoreDatabase):
 
     def get_or_create_collection(self, collection_name="Bike"):
         """Récupère ou crée une collection dans la base de données."""
-        if collection_name not in self.db.list_collection_names():
-            self.db.create_collection(collection_name)
-        return self.db[collection_name]
-    
+        if collection_name not in self.mydb.list_collection_names():
+            self.mydb.create_collection(collection_name)
+        return self.mydb[collection_name]
+
     # Requête CRUD
     def create_bike(self, bike_data):
         result = self.bike_collection.insert_one(bike_data)
         return result.inserted_id
-    
+
     def get_bike_by_id(self, bike_id):
-        get_bike_by_id = self.bike_collection.find_one({"_id": ObjectId(bike_id)})
-        print(get_bike_by_id)
-        return get_bike_by_id
-    
+        bike = self.bike_collection.find_one({"_id": ObjectId(bike_id)})
+        print(bike)
+        return bike
+
     def update_bike(self, bike_id, update_data):
         result = self.bike_collection.update_one({"_id": ObjectId(bike_id)}, {"$set": update_data})
         return result.modified_count
