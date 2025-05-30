@@ -6,7 +6,7 @@ sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/ent
 import mongodb_database as db
 from bson import ObjectId
 from datetime import datetime
-import bike_entity as be
+import bike_brand_entity as be
 import user_entity as ue
 import order_entity as oe
 
@@ -16,7 +16,7 @@ class Migration(db.VelostoreDatabase):
     def __init__(self):
         """Initialise Migration avec les entités nécessaires."""
         super().__init__()
-        self.bike_entity = be.BikeEntity()
+        self.bike_brand_entity = be.BikeBrandEntity()
         self.user_entity = ue.UserEntity()
         self.order_entity = oe.OrderEntity()
 
@@ -28,7 +28,7 @@ class Migration(db.VelostoreDatabase):
 
     def create_bike_tables(self):
         """Crée la collection de vélos."""
-        self.bike_entity.create_tables()
+        self.bike_brand_entity.create_tables()
 
     def create_order_tables(self):
         """Crée les collections de commandes."""
@@ -59,7 +59,7 @@ class Migration(db.VelostoreDatabase):
             "size": "M",
             "color": "bleu"
         }}
-        bike_id = self.bike_entity.create_bike(bike_data)
+        bike_id = self.bike_brand_entity.create_bike(bike_data)
         print(f"Vélo crée id: {bike_id}")
 
     def add_user(self):

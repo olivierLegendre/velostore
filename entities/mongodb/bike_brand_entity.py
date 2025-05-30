@@ -6,11 +6,11 @@ sys.path.insert(1, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 
 import mongodb_database as db
 
-class BikeEntity(db.VelostoreDatabase):
+class BikeBrandEntity(db.VelostoreDatabase):
     """Classe pour gérer les opérations de base de données liées aux vélos."""
 
     def __init__(self):
-        """Initialise BikeEntity."""
+        """Initialise BikeBrandEntity."""
         super().__init__()
         self.bike_collection = self.mydb['Bike']
 
@@ -48,8 +48,8 @@ class BikeEntity(db.VelostoreDatabase):
 
 def main():
     """Fonction principale pour la classe BikeEntity."""
-    super_velo = BikeEntity()
-    super_velo.get_bike_by_id('68396b4509d233a28a43bdcb')
+    super_velo = BikeBrandEntity()
+    super_velo.get_bike_by_id('6839748b4445c30a2120347d')
 
 if __name__ == '__main__':
     main()
