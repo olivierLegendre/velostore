@@ -15,6 +15,8 @@ class OrderEntity(db.VelostoreDatabase):
         """Initialise OrderEntity."""
         super().__init__()
         self.order_collection = self.mydb['Order']
+        self.user_collection = self.mydb['User']
+        self.bike_collection = self.mydb['Bike']
 
     def create_tables(self):
         """Crée les collections nécessaires dans la base de données."""
@@ -99,12 +101,12 @@ class OrderEntity(db.VelostoreDatabase):
         result = self.order_collection.delete_one({"_id": ObjectId(order_id)})
         return result.deleted_count
     
-    def create_one_order(order_collection, user_collection, bike_collection, id_user, id_bike, nb_unit, bike_price):
+    def create_one_order(self, id_user, id_bike, nb_unit, bike_price):
         # récuper les infos dans collection user
-        user = user_collection.find_one({"_id": ObjectId(id_user)}, {"Username": 1, "Mail": 1})
+        user = self.user_collection.find_one({"_id": ObjectId(id_user)}, {"Username": 1, "Mail": 1})
 
         # récuper infos collection bike
-        bike = bike_collection.find_one({"_id": ObjectId(id_bike)}, {"brand": 1}, {"config": 1} )
+        bike = self.bike_collection.find_one({"_id": ObjectId(id_bike)}, {"brand": 1}, {"config": 1} )
         brand_info = bike.get("brand")
         config_info = bike.get("config")
 
@@ -138,31 +140,31 @@ class OrderEntity(db.VelostoreDatabase):
             "Status": "en attente" 
         }
 
-        result = order_collection.insert_one(order)
+        result = self.order_collection.insert_one(order)
         return result.inserted_id
 
 
-    def get_pending_order_by_user(order_collection, id_user):
-        list_order = list(order_collection.find({"user.id_user": ObjectId(id_user),"Status":"en attente"}))
+    def get_pending_order_by_user(self, id_user):
+        list_order = list(self.order_collection.find({"user.id_user": ObjectId(id_user),"Status":"en attente"}))
         return list_order
 
-    def get_closed_order_by_user(order_collection, id_user):
-        list_order = list(order_collection.find({"user.id_user": ObjectId(id_user),"Status":"livré"}))
+    def get_closed_order_by_user(self, id_user):
+        list_order = list(self.order_collection.find({"user.id_user": ObjectId(id_user),"Status":"livré"}))
         return list_order
 
-    def update_order_status(collection, order_id, new_status):
-        result = collection.update_one(
+    def update_order_status(self, order_id, new_status):
+        result = self.order_collection.update_one(
             {"_id": ObjectId(order_id)},
             {"$set": {"Status": new_status}}
         )
         return result.modified_count
 
-    def get_orders_by_user_id(collection, user_id):
-        return list(collection.find({"user.id_user": ObjectId(user_id)}))
+    def get_orders_by_user_id(self, user_id):
+        return list(self.order_collection.find({"user.id_user": ObjectId(user_id)}))
 
 
-    def read_order_by_id(collection, order_id):
-        return collection.find_one({"_id": ObjectId(order_id)})
+    def read_order_by_id(self, order_id):
+        return self.order_collection.find_one({"_id": ObjectId(order_id)})
 
 
 
