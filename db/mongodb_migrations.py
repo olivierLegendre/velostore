@@ -143,150 +143,144 @@ class Migration(db.VelostoreDatabase):
                 "_id": ObjectId(),
                 "user": {
                     "id_user": ObjectId("665612a5cbe5f12c8a4f1234"),
-                    "Username": "jules100",
-                    "Mail": "jules@gmail.com"
+                    "username": "jules100",
+                    "mail": "jules@gmail.com"
                 },
                 "bikes": [
                     {
                         "id_bike": ObjectId("665613f1cbe5f12c8a4f1235"),
                         "brand": {
                             "brand": "Giant",
-                            "Description": "Mountain Bike with suspension",
-                            "Price": 500
+                            "price": 500.0
                         },
                         "config": {
-                            "Size": "M",
-                            "Color": "Red"
+                            "size": "M",
+                            "color": "Red"
                         },
                         "nb_unit": 1,
-                        "price": 500
+                        "price": 500.0
                     }
                 ],
-                "Date": datetime(2025, 5, 1),
-                "Total_price": 500,
-                "Status": "payé"
+                "date": datetime(2025, 5, 1),
+                "total_price": 500.0,
+                "status": "payé"
             },
             {
                 "_id": ObjectId(),
                 "user": {
                     "id_user": ObjectId("665612a5cbe5f12c8a4f1236"),
-                    "Username": "emma200",
-                    "Mail": "emma200@gmail.com"
+                    "username": "emma200",
+                    "mail": "emma200@gmail.com"
                 },
                 "bikes": [
                     {
                         "id_bike": ObjectId("665613f1cbe5f12c8a4f1237"),
                         "brand": {
                             "brand": "Trek",
-                            "Description": "Road bike for long-distance riding",
-                            "Price": 700
+                            "price": 700.0
                         },
                         "config": {
-                            "Size": "L",
-                            "Color": "Blue"
+                            "size": "L",
+                            "color": "Blue"
                         },
                         "nb_unit": 2,
-                        "price": 1400
+                        "price": 1400.0
                     }
                 ],
-                "Date": datetime(2025, 5, 3),
-                "Total_price": 1400,
-                "Status": "livré"
+                "date": datetime(2025, 5, 3),
+                "total_price": 1400.0,
+                "status": "livré"
             },
             {
                 "_id": ObjectId(),
                 "user": {
                     "id_user": ObjectId("665612a5cbe5f12c8a4f1238"),
-                    "Username": "lucas_dev",
-                    "Mail": "lucas.dev@mail.com"
+                    "username": "lucas_dev",
+                    "mail": "lucas.dev@mail.com"
                 },
                 "bikes": [
                     {
                         "id_bike": ObjectId("665613f1cbe5f12c8a4f1239"),
                         "brand": {
                             "brand": "Decathlon",
-                            "Description": "Urban bike for daily commutes",
-                            "Price": 350
+                            "price": 350.0
                         },
                         "config": {
-                            "Size": "S",
-                            "Color": "Black"
+                            "size": "S",
+                            "color": "Black"
                         },
                         "nb_unit": 1,
-                        "price": 350
+                        "price": 350.0
                     },
                     {
                         "id_bike": ObjectId("665613f1cbe5f12c8a4f1240"),
                         "brand": {
                             "brand": "Orbea",
-                            "Description": "Electric bike with long battery life",
-                            "Price": 1200
+                            "price": 1200.0
                         },
                         "config": {
-                            "Size": "M",
-                            "Color": "White"
+                            "size": "M",
+                            "color": "White"
                         },
                         "nb_unit": 1,
-                        "price": 1200
+                        "price": 1200.0
                     }
                 ],
-                "Date": datetime(2025, 5, 5),
-                "Total_price": 1550,
-                "Status": "livré"
+                "date": datetime(2025, 5, 5),
+                "total_price": 1550.0,
+                "status": "livré"
             },
             {
                 "_id": ObjectId(),
                 "user": {
                     "id_user": ObjectId("665612a5cbe5f12c8a4f1239"),
-                    "Username": "sophie_x",
-                    "Mail": "sophie.x@example.com"
+                    "username": "sophie_x",
+                    "mail": "sophie.x@example.com"
                 },
                 "bikes": [
                     {
                         "id_bike": ObjectId("665613f1cbe5f12c8a4f1241"),
                         "brand": {
                             "brand": "BMC",
-                            "Description": "Hybrid bike for trails and roads",
-                            "Price": 600
+                            "price": 600.0
                         },
                         "config": {
-                            "Size": "M",
-                            "Color": "Green"
+                            "size": "M",
+                            "color": "Green"
                         },
                         "nb_unit": 1,
-                        "price": 600
+                        "price": 600.0
                     }
                 ],
-                "Date": datetime(2025, 5, 6),
-                "Total_price": 600,
-                "Status": "payé"
+                "date": datetime(2025, 5, 6),
+                "total_price": 600.0,
+                "status": "payé"
             },
             {
                 "_id": ObjectId(),
                 "user": {
                     "id_user": ObjectId("665612a5cbe5f12c8a4f1242"),
-                    "Username": "maxime99",
-                    "Mail": "maxime99@hotmail.com"
+                    "username": "maxime99",
+                    "mail": "maxime99@hotmail.com"
                 },
                 "bikes": [
                     {
                         "id_bike": ObjectId("665613f1cbe5f12c8a4f1243"),
                         "brand": {
                             "brand": "Scott",
-                            "Description": "Sport BMX bike",
-                            "Price": 450
+                            "price": 450.0
                         },
                         "config": {
-                            "Size": "S",
-                            "Color": "Yellow"
+                            "size": "S",
+                            "color": "Yellow"
                         },
                         "nb_unit": 2,
-                        "price": 900
+                        "price": 900.0
                     }
                 ],
-                "Date": datetime(2025, 5, 7),
-                "Total_price": 900,
-                "Status": "en attente"
+                "date": datetime(2025, 5, 7),
+                "total_price": 900.0,
+                "status": "en attente"
             }
         ]
         self.order_entity.add_data_order(order_data)
