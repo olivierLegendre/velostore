@@ -27,15 +27,15 @@ class OrderEntity(db.VelostoreDatabase):
 
         schema = {
             "bsonType": "object",
-            "required": ["user", "bikes", "Date", "Total_price", "Status"],
+            "required": ["user", "bikes", "date", "total_price", "status"],
             "properties": {
                 "user": {
                     "bsonType": "object",
-                    "required": ["id_user", "Username", "Mail"],
+                    "required": ["id_user", "username", "mail"],
                     "properties": {
                         "id_user": {"bsonType": "objectId"},
-                        "Username": {"bsonType": "string"},
-                        "Mail": {"bsonType": "string"}
+                        "username": {"bsonType": "string"},
+                        "mail": {"bsonType": "string"}
                     }
                 },
                 "bikes": {
@@ -47,29 +47,28 @@ class OrderEntity(db.VelostoreDatabase):
                             "id_bike": {"bsonType": "objectId"},
                             "brand": {
                                 "bsonType": "object",
-                                "required": ["brand", "Description", "Price"],
+                                "required": ["brand", "price"],
                                 "properties": {
                                     "brand": {"bsonType": "string"},
-                                    "Description": {"bsonType": "string"},
-                                    "Price": {"bsonType": "int"}
+                                    "price": {"bsonType": "double"}
                                 }
                             },
                             "config": {
                                 "bsonType": "object",
-                                "required": ["Size", "Color"],
+                                "required": ["size", "color"],
                                 "properties": {
-                                    "Size": {"bsonType": "string"},
-                                    "Color": {"bsonType": "string"}
+                                    "size": {"bsonType": "string"},
+                                    "color": {"bsonType": "string"}
                                 }
                             },
                             "nb_unit": {"bsonType": "int"},
-                            "price": {"bsonType": "int"}
+                            "price": {"bsonType": "double"}
                         }
                     }
                 },
-                "Date": {"bsonType": "date"},
-                "Total_price": {"bsonType": "int"},
-                "Status": {"bsonType": "string"}
+                "date": {"bsonType": "date"},
+                "total_price": {"bsonType": "double"},
+                "status": {"bsonType": "string"}
             }
         }
 
@@ -101,43 +100,52 @@ class OrderEntity(db.VelostoreDatabase):
         result = self.order_collection.delete_one({"_id": ObjectId(order_id)})
         return result.deleted_count
     
-    def create_one_order(self, id_user, id_bike, nb_unit, bike_price):
+    def create_one_order(self, id_user, bike_list):
         # récuper les infos dans collection user
-        user = self.user_collection.find_one({"_id": ObjectId(id_user)}, {"Username": 1, "Mail": 1})
+        user = self.user_collection.find_one({"_id": ObjectId(id_user)}, {"username": 1, "mail": 1})
 
-        # récuper infos collection bike
-        bike = self.bike_collection.find_one({"_id": ObjectId(id_bike)}, {"brand": 1}, {"config": 1} )
-        brand_info = bike.get("brand")
-        config_info = bike.get("config")
+        total_price = 0
+        bikes_list = []
 
-        bike_entry = {
-            "id_bike": ObjectId(id_bike),
-            "brand": {
-                "brand": brand_info.get("Brand"),
-                "Description": brand_info.get("Description"),
-                "Price": brand_info.get("Price")
-            },
-            "config": {
-                "Size": config_info.get("Size"),
-                "Color": config_info.get("Color")
-            },
-            "nb_unit": nb_unit,
-            "price": bike_price
-        }
-
-        total_price = bike_price * nb_unit
+        for item in bike_list:
+            id_bike = item["id_bike"]
+            nb_unit = item["nb_unit"]
+            
+            # récuper infos collection bike
+            bike = self.bike_collection.find_one({"_id": ObjectId(id_bike)}, {"brand": 1, "config": 1} )
+            brand_info = bike.get("brand")
+            config_info = bike.get("config")
+            bike_price = brand_info.get("price")
+            bike_price_total = bike_price * nb_unit
+    
+            bike_entry = {
+                "id_bike": ObjectId(id_bike),
+                "brand": {
+                    "brand": brand_info.get("brand"),
+                    "price": bike_price
+                },
+                "config": {
+                    "size": config_info.get("size"),
+                    "color": config_info.get("color")
+                },
+                "nb_unit": nb_unit,
+                "price" : bike_price_total
+            }
+    
+            total_price += bike_price_total
+            bikes_list.append(bike_entry)
 
         # compiler infos dans order collection
         order = {
             "user": {
                 "id_user": ObjectId(id_user),
-                "Username": user.get("Username"),
-                "Mail": user.get("Mail")
+                "username": user.get("username"),
+                "mail": user.get("mail")
             },
-            "bikes": [bike_entry],
-            "Date": datetime.now(),
-            "Total_price": total_price,
-            "Status": "en attente" 
+            "bikes": bikes_list,
+            "date": datetime.now(),
+            "total_price": total_price,
+            "status": "en attente" 
         }
 
         result = self.order_collection.insert_one(order)
@@ -145,11 +153,11 @@ class OrderEntity(db.VelostoreDatabase):
 
 
     def get_pending_order_by_user(self, id_user):
-        list_order = list(self.order_collection.find({"user.id_user": ObjectId(id_user),"Status":"en attente"}))
+        list_order = list(self.order_collection.find({"user.id_user": ObjectId(id_user),"status":"en attente"}))
         return list_order
 
     def get_closed_order_by_user(self, id_user):
-        list_order = list(self.order_collection.find({"user.id_user": ObjectId(id_user),"Status":"livré"}))
+        list_order = list(self.order_collection.find({"user.id_user": ObjectId(id_user),"status":"livré"}))
         return list_order
 
     def update_order_status(self, order_id, new_status):
@@ -172,6 +180,8 @@ def main():
     """Fonction principale pour la classe OrderEntity."""
     super_order = OrderEntity()
     print(super_order.get_order_by_id('6839afb0131a0684c0ade292'))
+    bike_list = [{"id_bike":"683b1388304fb1aa022ae280","nb_unit": 2}, {"id_bike":"683b1aaf348d4fe451266411","nb_unit": 3}]
+    super_order.create_one_order("683b1388304fb1aa022ae282",bike_list)
 
 if __name__ == '__main__':
     main()
