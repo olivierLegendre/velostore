@@ -83,24 +83,25 @@ class OrderEntity(db.VelostoreDatabase):
     # Requête CRUD
     def add_data_order(self, order_data):
         result_many = self.order_collection.insert_many(order_data)
-        return result_many.inserted_ids
+        return result_many.inserted_ids    
 
     def create_order(self, order_data):
         result = self.order_collection.insert_one(order_data)
         return result.inserted_id
+        
+    def create_one_order(self, id_user: str, bike_list: list) -> ObjectId :
+        """
+        Crée une commande contenant un ou plusieurs vélos pour un utilisateur donné.
 
-    def get_order_by_id(self, order_id):
-        return self.order_collection.find_one({"_id": ObjectId(order_id)})
+        Paramètres :
+        - id_user : str — ID de l'utilisateur sous forme de chaîne.
+        - bike_list : liste de dictionnaires — Chaque dictionnaire doit contenir :
+            - 'id_bike' : str — ID du vélo
+            - 'nb_unit' : int — Nombre d'unités commandées
 
-    def update_order(self, order_id, update_data):
-        result = self.order_collection.update_one({"_id": ObjectId(order_id)}, {"$set": update_data})
-        return result.modified_count
-
-    def delete_order(self, order_id):
-        result = self.order_collection.delete_one({"_id": ObjectId(order_id)})
-        return result.deleted_count
-    
-    def create_one_order(self, id_user, bike_list):
+        Retour :
+        - ID de la commande insérée dans la collection 'orders'
+        """
         # récuper les infos dans collection user
         user = self.user_collection.find_one({"_id": ObjectId(id_user)}, {"username": 1, "mail": 1})
 
@@ -150,16 +151,17 @@ class OrderEntity(db.VelostoreDatabase):
 
         result = self.order_collection.insert_one(order)
         return result.inserted_id
+ 
+    def get_order_item_by_id_order(self, order_id):
+        return self.order_collection.find_one({"_id": ObjectId(order_id)}, {"bikes": 1})
+    
+    def get_order_by_id(self, order_id):
+        return self.order_collection.find_one({"_id": ObjectId(order_id)})
 
-
-    def get_pending_order_by_user(self, id_user):
-        list_order = list(self.order_collection.find({"user.id_user": ObjectId(id_user),"status":"en attente"}))
-        return list_order
-
-    def get_closed_order_by_user(self, id_user):
-        list_order = list(self.order_collection.find({"user.id_user": ObjectId(id_user),"status":"livré"}))
-        return list_order
-
+    def update_order(self, order_id, update_data):
+        result = self.order_collection.update_one({"_id": ObjectId(order_id)}, {"$set": update_data})
+        return result.modified_count
+    
     def update_order_status(self, order_id, new_status):
         result = self.order_collection.update_one(
             {"_id": ObjectId(order_id)},
@@ -167,21 +169,23 @@ class OrderEntity(db.VelostoreDatabase):
         )
         return result.modified_count
 
-    def get_orders_by_user_id(self, user_id):
-        return list(self.order_collection.find({"user.id_user": ObjectId(user_id)}))
-
-
-    def read_order_by_id(self, order_id):
-        return self.order_collection.find_one({"_id": ObjectId(order_id)})
-
+    def pay_order(self, order_id):
+        result = self.order_collection.update_one(
+            {"_id": ObjectId(order_id)},
+            {"$set": {"Status": "payé"}}
+        )
+        return result.modified_count
+    
+    def delete_order(self, order_id):
+        result = self.order_collection.delete_one({"_id": ObjectId(order_id)})
+        return result.deleted_count
+    
 
 
 def main():
     """Fonction principale pour la classe OrderEntity."""
-    super_order = OrderEntity()
-    print(super_order.get_order_by_id('6839afb0131a0684c0ade292'))
-    bike_list = [{"id_bike":"683b1cb9e919e0fe902b0827","nb_unit": 1}, {"id_bike":"683b1cdb9f09c38f306a569b","nb_unit": 3}]
-    super_order.create_one_order("683b1cb9e919e0fe902b082f",bike_list)
+    order = OrderEntity()
+    print(order.get_order_item_by_id_order('683b1cdb9f09c38f306a56aa'))
     
 
 if __name__ == '__main__':
