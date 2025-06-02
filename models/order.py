@@ -11,6 +11,22 @@ class Order(utils.UtilsModel):
             entity (OrderEntity, optionnel): Une entité pour interagir avec les données de commandes.
         """
         super().__init__(connector)
+        self.init_attributes()
+        
+    def init_attributes(self):
+        self.id_order = None
+        self.id_user = None
+        self.date = None
+        self.total_price = None
+        self.status = None
+        
+    def list_to_object(self, order: list):
+        if self.connector == 'sqlite':
+            self.id_order = order["id_order"]
+            self.id_user = order["id_user"]
+            self.date = order["date"]
+            self.total_price = order["total_price"]
+            self.status = order["status"]
 
     def get_order_by_id(self, order_id: int) -> dict:
         """Récupère une commande par son identifiant.
@@ -21,7 +37,9 @@ class Order(utils.UtilsModel):
         Returns:
             dict: Les informations de la commande correspondante.
         """
-        return self.entity.get_order_by_id(order_id)
+        order = self.entity.get_order_by_id(order_id)
+        self.list_to_object(order)
+        return order
     
     def get_item_list_by_id_order(self, id_order: int) -> list:
         """Récupère une liste d'articles par son identifiant.
