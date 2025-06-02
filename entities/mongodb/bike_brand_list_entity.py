@@ -69,7 +69,7 @@ class BikeBrandListEntity(db.VelostoreDatabase):
 def main():
     """Fonction principale pour la classe BikeListEntity."""
     super_velo = BikeBrandListEntity()
-    super_velo.get_all_bike_list()
+    super_velo.get_all_bike_brand_list()
 
 if __name__ == '__main__':
     main()
