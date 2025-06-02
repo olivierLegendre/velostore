@@ -22,8 +22,7 @@ class BikeBrandListEntity(db.VelostoreDatabase):
             print(bike)
         return all_bikes
 
-    # surement une façon plus simple de faire ou modifier naming brand dans dict brand
-    def get_all_bike_brand_list(self, expand=True):
+    def get_bike_brand_list(self, expand=True):
         """Récupère et affiche toutes les marques."""
         all_brands = self.bike_collection.distinct("brand.brand")
         for brand in all_brands:
@@ -35,31 +34,42 @@ class BikeBrandListEntity(db.VelostoreDatabase):
         colors = self.bike_collection.find({}, {"config.color":1, "_id":0})
         unique_colors = set()
         for color in colors:
-            if "config" in color and isinstance(color["config"], dict):
-                unique_colors.add(color["config"]["color"])
+            unique_colors.add(color["config"]["color"])
+        print(unique_colors)
         return unique_colors
+
+    def get_all_prices_list(self):
+        all_prices = self.bike_collection.find({}, {"brand.price": 1, "_id": 0})
+        prices_list = []
+        for price in all_prices:
+            prices_list.append(price["brand"]["price"])
+        return prices_list
 
     def get_all_bike_size(self):
         sizes = self.bike_collection.find({}, {"config.size":1, "_id":0})
         unique_sizes = set()
         for size in sizes:
-            if "config" in size and isinstance(size["config"], dict):
                 unique_sizes.add(size["config"]["size"])
         return unique_sizes
     
-    def get_all_bike_destinations(self):
+    def get_all_destinations_list(self):
         destinations = self.bike_collection.find({}, {"brand.destination": 1, "_id": 0})
         unique_destinations = set()
         for destination in destinations:
-            if "brand" in destination and isinstance(destination["brand"], dict):
                 unique_destinations.add(destination["brand"]["destination"])
-        print(unique_destinations)
         return unique_destinations
-
+    
+    def get_all_bike_status(self):
+        all_status = self.bike_collection.find({}, {"status": 1, "_id": 0})
+        status_list = []
+        for bike in all_status:
+            status_list.append(bike["status"])
+        return status_list
+    
 def main():
     """Fonction principale pour la classe BikeListEntity."""
     super_velo = BikeBrandListEntity()
-    super_velo.get_all_bike_brand_list()
+    super_velo.get_all_prices_list()
 
 if __name__ == '__main__':
     main()

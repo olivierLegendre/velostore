@@ -87,7 +87,7 @@ def main():
     """Fonction pricipale pour la class InternalParametersList
     """
     internal_parameters_list = InternalParametersList('sqlite')
-    print(internal_parameters_list.get_bike_color_list())
+    print(internal_parameters_list.get_bike_destination_list())
 
 if __name__ == '__main__':
     main()
