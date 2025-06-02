@@ -10,6 +10,18 @@ class BikeItem(utils.UtilsModel):
             entity (BikeItem, optional): Une entité pour interagir avec les données d'articles de vélos.
         """
         super().__init__(connector)
+        self.init_attributes()
+        
+    def init_attributes(self):
+        self.id = None
+        self.id_order = None
+        self.id_order_item = None
+        
+    def dict_to_object(self, bike: list):
+        if self.connector == 'sqlite':
+            self.id = bike["id"]
+            self.id_order = bike["id_order"]
+            self.id_order_item = bike["id_order_item"]
     
     def get_bike_id(self, bike_id: int) -> dict:
         """Récupère un vélo par son identifiant.
@@ -20,8 +32,9 @@ class BikeItem(utils.UtilsModel):
         Returns:
             dict: Les informations du vélo correspondant.
         """
-        bike_id = self.entity.get_bike_by_id(bike_id)
-        return bike_id
+        bike = self.entity.get_bike_by_id(bike_id)
+        self.dict_to_object(bike)
+        return bike
     
     def get_bike_parameters(self, parameters: dict) -> list:
         """Récupère des vélos en fonction de paramètres donnés

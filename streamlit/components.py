@@ -41,13 +41,31 @@ def display_all_bikes():
     for bike_id, bike in bikes.items():
         if "all_bike_brand_select_destination" in st.session_state:
             session_destination = st.session_state.all_bike_brand_select_destination
-            if session_destination == bike["destination"]:
+            if session_destination == bike.destination:
                 display_one_bike_brand(bike)
         else:
             display_one_bike_brand(bike)
     
 
         
+# def display_one_bike_brand(bike_brand: object):
+#     """Dispaly the selected bike brand
+#         Old version
+#     Args:
+#         bike_brand (object): the bike brand to display
+#     """
+#     bike = bike_brand
+#     with st.container(height=800):
+#         st.title(bike["brand"])
+#         st.subheader(bike["description"])
+#         st.text(f"A partir de {bike["price"]}€")
+#         if 'img' in bike:
+#             st.image(f"{st.session_state.img_path}{bike["img"]}")
+#         st.text(f"Categorie : {bike["destination"]}")
+#         if st.button("Voir ce velo", key="go_to_bike_page_button_"+str(bike["id"])):
+#             st.session_state.bike = bike
+#             st.switch_page("pages/2_Velo.py")
+            
 def display_one_bike_brand(bike_brand: object):
     """Dispaly the selected bike brand
 
@@ -56,13 +74,13 @@ def display_one_bike_brand(bike_brand: object):
     """
     bike = bike_brand
     with st.container(height=800):
-        st.title(bike["brand"])
-        st.subheader(bike["description"])
-        st.text(f"A partir de {bike["price"]}€")
-        if 'img' in bike:
-            st.image(f"{st.session_state.img_path}{bike["img"]}")
-        st.text(f"Categorie : {bike["destination"]}")
-        if st.button("Voir ce velo", key="go_to_bike_page_button_"+str(bike["id"])):
+        st.title(bike.brand)
+        st.subheader(bike.description)
+        st.text(f"A partir de {bike.price}€")
+        if bike.img is not None:
+            st.image(f"{st.session_state.img_path}{bike.img}")
+        st.text(f"Categorie : {bike.destination}")
+        if st.button("Voir ce velo", key="go_to_bike_page_button_"+str(bike.id)):
             st.session_state.bike = bike
             st.switch_page("pages/2_Velo.py")
 
@@ -89,26 +107,26 @@ def display_bike():
         st.error("Aucun vélo sélectionné.")
         return
     bike = st.session_state.bike
-    st.title(bike["brand"])
-    st.subheader(bike["description"])
-    st.text(f"A partir de {bike["price"]}€")
-    if bike["img"]:
-        st.image(f"{st.session_state.img_path}{bike["img"]}")
-    st.text(f"Categorie : {bike["destination"]}")
+    st.title(bike.brand)
+    st.subheader(bike.description)
+    st.text(f"A partir de {bike.price}€")
+    if bike.img:
+        st.image(f"{st.session_state.img_path}{bike.img}")
+    st.text(f"Categorie : {bike.destination}")
     select_box_colors()
     select_box_sizes()
     if st.button("Acheter", key="buy_bike_button"):
         if 'user' in st.session_state:
             order = om.Order()
-            brand_id = bike["id"]
+            brand_id = bike.id
             id_user = st.session_state.user_id
             color = st.session_state.bike_brand_select_color
             size = st.session_state.bike_brand_select_size
-            order_id = order.place_order_with_bike(id_user, brand_id, size, color, bike["price"])
+            order_id = order.place_order_with_bike(id_user, brand_id, size, color, bike.price)
             st.session_state.order_id = order_id
         else:
             st.switch_page("pages/5_Login.py")
-    if st.button("Aller sur votre panier", key="go_to_cart_page_button_"+str(bike["id"])):
+    if st.button("Aller sur votre panier", key="go_to_cart_page_button_"+str(bike.id)):
         st.switch_page("pages/3_Panier.py")
         
         
@@ -180,6 +198,7 @@ def create_order_dataframe(order: object):
     order_id = order["id_order"]
     order_model = om.Order()
     order_item = order_model.get_order_item_by_id_order(order_id)
+    st.write(order_item)
     products = order_item
     key_to_keep = ['id_order', 'brand', 'size', 'color', 'nb_unit', 'total_price']
     order_item_list = [value_order_item for value_order_item in products.values()]

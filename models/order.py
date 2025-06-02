@@ -11,6 +11,22 @@ class Order(utils.UtilsModel):
             entity (OrderEntity, optionnel): Une entité pour interagir avec les données de commandes.
         """
         super().__init__(connector)
+        self.init_attributes()
+        
+    def init_attributes(self):
+        self.id_order = None
+        self.id_user = None
+        self.date = None
+        self.total_price = None
+        self.status = None
+        
+    def dict_to_object(self, order: list):
+        if self.connector == 'sqlite':
+            self.id_order = order["id_order"]
+            self.id_user = order["id_user"]
+            self.date = order["date"]
+            self.total_price = order["total_price"]
+            self.status = order["status"]
 
     def get_order_by_id(self, order_id: int) -> dict:
         """Récupère une commande par son identifiant.
@@ -21,7 +37,9 @@ class Order(utils.UtilsModel):
         Returns:
             dict: Les informations de la commande correspondante.
         """
-        return self.entity.get_order_by_id(order_id)
+        order = self.entity.get_order_by_id(order_id)
+        self.dict_to_object(order)
+        return order
     
     def get_item_list_by_id_order(self, id_order: int) -> list:
         """Récupère une liste d'articles par son identifiant.
@@ -90,7 +108,7 @@ class Order(utils.UtilsModel):
         Returns:
             int: L'identifiant de la commande passée.
         """
-        if connector=='sqlite':
+        if self.connector=='sqlite':
             # 1. Add the bike
             bike_item = bi.BikeItem()
             id_bike = bike_item.add_bike_item(brand, size, color, 1)
@@ -104,7 +122,8 @@ class Order(utils.UtilsModel):
     
             # 4. Insert into item_list table
             id_item_list = self.entity.add_order_in_item_list(id_order, id_order_item)
-        if connector=='mongoDB':
+        
+        if self.connector =='mongodb':
             # 1. Add the bike
             bike_item = bi.BikeItem()
             id_bike = bike_item.get_bike_id_by_brand_config(brand, size ,color)

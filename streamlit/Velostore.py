@@ -37,11 +37,11 @@ def set_datas_to_session():
     if 'bikes' not in st.session_state:
         st.session_state.bikes = get_all_bikes()
     pass
-    
-@st.cache_data
+
 def get_all_bikes():
-    bikes = bbl.BikeBrandList()
-    return bikes.get_bike_brand_list(expand=True)
+    bikes = bbl.BikeBrandList('mongodb')
+    bikes = bikes.get_bike_brand_object_list()
+    return bikes
 
 def main():
     set_parameters()

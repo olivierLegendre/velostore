@@ -1,4 +1,5 @@
 import utils_model as utils
+import bike_brand as bb
 
 class BikeBrandList(utils.UtilsModel):
     """Gère les opérations liées aux listes de marques de vélos."""
@@ -11,6 +12,15 @@ class BikeBrandList(utils.UtilsModel):
         """
         super().__init__(connector)
         
+    def get_object_list(self, bike_brand_list_dict: list):
+        self.bike_brand_object_list = dict()
+        for id, bike_brand in bike_brand_list_dict.items():
+            self.bike_brand_object_list[id] = bb.BikeBrand(self.connector).dict_to_object(bike_brand)
+            
+    def get_bike_brand_object_list(self):
+        self.get_object_list(self.get_bike_brand_list(True))
+        return self.bike_brand_object_list
+    
     def get_bike_brand_list(self, expand: bool = True) -> list:
         """Récupère la liste des marques de vélos.
 
@@ -44,7 +54,6 @@ class BikeBrandList(utils.UtilsModel):
 def main():
     """Fonction pricipale pour la class BikeBrandList
     """
-    # bike_brand_list_entity = bbl.BikeBrandListEntity()
     brand = BikeBrandList('sqlite')
     print(brand.get_bike_brand_list())
 

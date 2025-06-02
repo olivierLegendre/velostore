@@ -55,7 +55,6 @@ def main():
     """Fonction principale pour la classe BikeBrandListEntity."""
     bike_brand_list = BikeBrandListEntity()
     test1 = bike_brand_list.get_all_bike_brand_list()
-    #print(test1)
 
 
 if __name__ == "__main__":
