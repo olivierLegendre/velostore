@@ -48,6 +48,20 @@ class BikeItem(utils.UtilsModel):
             dict: Les informations de l'article de vélo ajouté
         """
         return self.entity.add_bike_item(brand_id, size_id, color_id, status_id)
+    
+    def get_bike_id_by_brand_config(self, brand_name: str, size: str, color: str):
+        """
+        Récupère l'ID d'un vélo à partir de son nom de marque, sa taille et sa couleur.
+
+        Paramètres :
+        - brand_name : str — Nom de la marque (brand.brand)
+        - size : str — Taille du vélo (config.size)
+        - color : str — Couleur du vélo (config.color)
+
+        Retour :
+        - ObjectId de la fiche vélo si trouvé, sinon None
+        """
+        return self.entity.get_bike_id_by_brand_config(brand_name, size, color)
        
 def main():
     """Fonction pricipale pour la class BikeItem

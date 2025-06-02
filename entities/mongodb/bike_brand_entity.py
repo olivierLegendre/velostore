@@ -44,11 +44,33 @@ class BikeBrandEntity(db.VelostoreDatabase):
     def get_brand_by_id(self, bike_id, expand=True):
         bike = self.bike_collection.find_one({"_id": ObjectId(bike_id)}, {"brand": 1, "_id": 0})
         return bike.get("brand") if bike else None
+    
+    def get_bike_id_by_brand_config(self, brand_name: str, size: str, color: str):
+        """
+        Récupère l'ID d'un vélo à partir de son nom de marque, sa taille et sa couleur.
+
+        Paramètres :
+        - brand_name : str — Nom de la marque (brand.brand)
+        - size : str — Taille du vélo (config.size)
+        - color : str — Couleur du vélo (config.color)
+
+        Retour :
+        - ObjectId de la fiche vélo si trouvé, sinon None
+        """
+        query = {
+            "brand.brand": brand_name,
+            "config.size": size,
+            "config.color": color
+        }
+
+        bike = self.bike_collection.find_one(query, {"_id": 1})
+        return bike["_id"]
 
 def main():
     """Fonction principale pour la classe BikeEntity."""
     super_velo = BikeBrandEntity()
     super_velo.get_bike_by_id('6839748b4445c30a2120347d')
+    print(super_velo.get_bike_id_by_brand_config("Trek", "M", "bleu"))
 
 if __name__ == '__main__':
     main()

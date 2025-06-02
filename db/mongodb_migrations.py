@@ -54,7 +54,7 @@ class Migration(db.VelostoreDatabase):
             "brand": "Trek",
             "description": "Un vélo qui sert à grimper des montagnes",
             "price": 599.99,
-            "image": "image.url",
+            "image": "A30M.jpg",
             "destination": "VTT"
         },
         "config": {
@@ -68,7 +68,7 @@ class Migration(db.VelostoreDatabase):
             "brand": "Rockrider",
             "description": "Vélo urbain confortable idéal pour les trajets quotidiens en ville",
             "price": 1999.99,
-            "image": "image.url",
+            "image": "A21_blue_side_2.jpg",
             "destination": "BMX"
         },
         "config": {
@@ -82,7 +82,7 @@ class Migration(db.VelostoreDatabase):
             "brand": "Giant",
             "description": "Vélo de route léger et performant, parfait pour les longues distances",
             "price": 5999.99,
-            "image": "image.url",
+            "image": "purist_orange_side.jpg",
             "destination": "course"
         },
         "config": {
@@ -96,7 +96,7 @@ class Migration(db.VelostoreDatabase):
             "brand": "Cannondale",
             "description": "Vélo tout-terrain robuste conçu pour les pistes accidentées",
             "price": 2999.99,
-            "image": "image.url",
+            "image": "velo-ville.jpg",
             "destination": "route"
         },
         "config": {
