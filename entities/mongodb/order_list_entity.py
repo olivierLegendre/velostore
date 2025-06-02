@@ -24,7 +24,7 @@ class OrderListEntity(db.VelostoreDatabase):
         list_order = list(self.order_collection.find({"user.id_user": ObjectId(id_user),"status":"livré"}))
         return list_order
 
-    def get_orders_by_user_id(self, user_id):
+    def get_orders_by_user_id(self, user_id, expand= True):
         return list(self.order_collection.find({"user.id_user": ObjectId(user_id)}))
 
 
@@ -32,7 +32,8 @@ class OrderListEntity(db.VelostoreDatabase):
 def main():
     """Fonction principale pour la classe OrderListEntity."""
     order_list = OrderListEntity()
-    print(order_list.get_pending_order_by_user("665612a5cbe5f12c8a4f1242"))
+    print(order_list.get_pending_order_by_user("665612a5cbe5f12c8a4f1238"))
+    print(order_list.get_orders_by_user_id("665612a5cbe5f12c8a4f1238"))
     
 
 if __name__ == '__main__':
