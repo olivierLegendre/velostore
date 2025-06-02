@@ -12,6 +12,7 @@ class BikeBrandList(utils.UtilsModel):
         super().__init__(connector)
         
     def get_bike_brand_list(self, expand: bool = True) -> list:
+    def get_bike_brand_list(self, expand: bool = True) -> list:
         """Récupère la liste des marques de vélos.
 
         Args:
@@ -20,7 +21,7 @@ class BikeBrandList(utils.UtilsModel):
         Returns:
             list: Une liste des marques de vélos.
         """
-        brand = self.entity.get_all_bike_brand_list()
+        brand = self.entity.get_all_bike_brand_list(expand)
         return brand
 
     def get_all_prices_list(self) -> list:
