@@ -85,8 +85,6 @@ class OrderEntity(db.VelostoreDatabase):
         result_many = self.order_collection.insert_many(order_data)
         return result_many.inserted_ids    
 
-    def add_order(id_user, today_date, price_per_unit, 1):
-
     def create_order(self, order_data):
         result = self.order_collection.insert_one(order_data)
         return result.inserted_id
