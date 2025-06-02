@@ -20,7 +20,7 @@ class Order(utils.UtilsModel):
         self.total_price = None
         self.status = None
         
-    def list_to_object(self, order: list):
+    def dict_to_object(self, order: list):
         if self.connector == 'sqlite':
             self.id_order = order["id_order"]
             self.id_user = order["id_user"]
@@ -38,7 +38,7 @@ class Order(utils.UtilsModel):
             dict: Les informations de la commande correspondante.
         """
         order = self.entity.get_order_by_id(order_id)
-        self.list_to_object(order)
+        self.dict_to_object(order)
         return order
     
     def get_item_list_by_id_order(self, id_order: int) -> list:

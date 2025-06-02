@@ -19,7 +19,7 @@ class User(utils.UtilsModel):
         self.mail = None
         self.password = None
         
-    def list_to_object(self, user: list):
+    def dict_to_object(self, user: list):
         if self.connector == 'sqlite':
             self.id = user["id"]
             self.user_type = user["user_type"]
@@ -39,7 +39,7 @@ class User(utils.UtilsModel):
             dict: Les informations de l'utilisateur correspondant.
         """
         user = self.entity.get_user_by_id(user_id)
-        self.list_to_object(user)
+        self.dict_to_object(user)
         return user
 
     def login(self, user_id):

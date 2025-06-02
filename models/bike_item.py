@@ -17,7 +17,7 @@ class BikeItem(utils.UtilsModel):
         self.id_order = None
         self.id_order_item = None
         
-    def list_to_object(self, bike: list):
+    def dict_to_object(self, bike: list):
         if self.connector == 'sqlite':
             self.id = bike["id"]
             self.id_order = bike["id_order"]
@@ -33,7 +33,7 @@ class BikeItem(utils.UtilsModel):
             dict: Les informations du vélo correspondant.
         """
         bike = self.entity.get_bike_by_id(bike_id)
-        self.list_to_object(bike)
+        self.dict_to_object(bike)
         return bike
     
     def get_bike_parameters(self, parameters: dict) -> list:

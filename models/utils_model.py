@@ -7,6 +7,7 @@ class UtilsModel:
         entity_manager = em.EntityManager(connector)
         entity = entity_manager.get_entity(self.get_names())
         self.entity = entity
+        self.connector = connector
     
     def get_names(self):
         model_class_name_value = self.__class__.__name__

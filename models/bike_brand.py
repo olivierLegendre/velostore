@@ -21,7 +21,8 @@ class BikeBrand(utils.UtilsModel):
         self.destination = None
         self.img = None
         
-    def list_to_object(self, brand: list):
+    def dict_to_object(self, brand: list):
+        print(f"fans bb list to object : {brand}")
         if self.connector == 'sqlite':
             self.id = brand["id"]
             self.brand = brand["brand"]
@@ -29,6 +30,15 @@ class BikeBrand(utils.UtilsModel):
             self.price = brand["price"]
             self.destination = brand["destination"]
             self.img = brand["img"]
+        if self.connector == 'mongodb':
+            self.id = brand["id"]
+            self.brand = brand["brand"]
+            self.description = brand["description"]
+            self.price = brand["price"]
+            self.destination = brand["destination"]
+            self.img = brand["img"]
+        return self
+        
     
     def get_brand_by_id(self, brand_id: int) -> dict:
         """Récupère unemarque de vélo par son identifiant.
@@ -40,7 +50,7 @@ class BikeBrand(utils.UtilsModel):
             dict: Les informations de la marque de vélo correspondante.
         """
         brand = self.entity.get_brand_by_id(brand_id)
-        self.list_to_object(brand)
+        self.dict_to_object(brand)
         return brand
 
 def main():
