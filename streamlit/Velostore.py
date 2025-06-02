@@ -8,8 +8,8 @@ import internal_parameters_list as ipl
 
 st.set_page_config(
     page_title = "Velostore: Nos velos",
-    page_icon="🚲",
     layout="wide",
+    page_icon="🚲",
 )
 
 st.write("# Bienvenue chez VeloStore! 👋")

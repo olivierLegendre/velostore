@@ -26,12 +26,11 @@ class BikeBrandEntity(db.VelostoreDatabase):
 
     # Requête CRUD
     def create_bike(self, bike_data):
-        result = self.bike_collection.insert_one(bike_data)
-        return result.inserted_id
+        result = self.bike_collection.insert_many(bike_data)
+        return result.inserted_ids
 
-    def get_bike_by_id(self, bike_id):
+    def get_bike_by_id(self, bike_id, expand=True):
         bike = self.bike_collection.find_one({"_id": ObjectId(bike_id)})
-        print(bike)
         return bike
 
     def update_bike(self, bike_id, update_data):
@@ -42,7 +41,7 @@ class BikeBrandEntity(db.VelostoreDatabase):
         result = self.bike_collection.delete_one({"_id": ObjectId(bike_id)})
         return result.deleted_count
 
-    def get_brand_by_id(self, bike_id):
+    def get_brand_by_id(self, bike_id, expand=True):
         bike = self.bike_collection.find_one({"_id": ObjectId(bike_id)}, {"brand": 1, "_id": 0})
         return bike.get("brand") if bike else None
 

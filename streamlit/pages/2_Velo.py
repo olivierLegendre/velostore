@@ -11,6 +11,9 @@ st.write("# Choisissez votre Velo 🚲")
 
 def main():
     components.display_sidebar()
+    if 'bike' not in st.session_state:
+        st.error("Aucun vélo sélectionné.")
+        return
     components.display_bike()
     pass
 

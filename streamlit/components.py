@@ -85,6 +85,9 @@ def display_bike():
     """display a single bike, customizable on size and color
         and Acheter et aller sur votre panier buttons
     """
+    if 'bikes' not in st.session_state:
+        st.error("Aucun vélo sélectionné.")
+        return
     bike = st.session_state.bike
     st.title(bike["brand"])
     st.subheader(bike["description"])
