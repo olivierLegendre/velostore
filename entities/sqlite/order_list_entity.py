@@ -1,7 +1,7 @@
 import os
 import sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db")
-import database as db
+sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/../db")
+import sqlite_database as db
 
 class OrderListEntity(db.VelostoreDatabase):
     """Classe pour gérer les listes de commandes dans la base de données."""

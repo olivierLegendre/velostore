@@ -42,24 +42,11 @@ def set_datas_to_session():
 def get_all_bikes():
     bikes = bbl.BikeBrandList()
     return bikes.get_bike_brand_list(expand=True)
-    
-def get_all_brand():
-    pass
-
-
-def get_all_destinations():
-    pass
 
 def main():
     set_parameters()
     set_datas_to_session()
     components.display_sidebar()
-    col1, col2 = st.columns(2)
-    with col1:
-        
-        components.display_all_bikes()
-    with col2:
-        components.select_box_destination()
     col1, col2 = st.columns(2)
     with col1:
         
