@@ -20,7 +20,7 @@ class BikeBrandList(utils.UtilsModel):
         Returns:
             list: Une liste des marques de vélos.
         """
-        brand = self.entity.get_all_bike_brand_list()
+        brand = self.entity.get_all_bike_brand_list(expand)
         return brand
 
     def get_all_prices_list(self) -> list:
