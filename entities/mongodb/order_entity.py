@@ -163,10 +163,16 @@ class OrderEntity(db.VelostoreDatabase):
         return result.modified_count
     
     def update_order_status(self, order_id, new_status):
-        result = self.order_collection.update_one(
+        if new_status == 2:
+            result = self.order_collection.update_one(
             {"_id": ObjectId(order_id)},
-            {"$set": {"Status": new_status}}
+            {"$set": {"Status": "payé"}}
         )
+        else :
+            result = self.order_collection.update_one(
+                {"_id": ObjectId(order_id)},
+                {"$set": {"Status": new_status}}
+            )
         return result.modified_count
 
     def pay_order(self, order_id):
