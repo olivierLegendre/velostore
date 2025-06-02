@@ -11,7 +11,7 @@ class BikeItemEntity(db.VelostoreDatabase):
     def create_tables(self):
         """Crée les tables nécessaires dans la base de données."""
         self.create_bike_table()
-  
+
     def create_bike_table(self):
         """Crée la table des vélos."""
         self.cursor.execute("""
