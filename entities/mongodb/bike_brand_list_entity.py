@@ -15,7 +15,7 @@ class BikeBrandListEntity(db.VelostoreDatabase):
         super().__init__()
         self.bike_collection = self.mydb['Bike']
     
-    def get_all_bike_list(self):
+    def get_all_bike_brand_list(self):
         """Récupère et affiche tous les vélos."""
         all_bikes = list(self.bike_collection.find({}))
         for bike in all_bikes:
