@@ -24,7 +24,7 @@ class OrderListEntity(db.VelostoreDatabase):
         list_order = list(self.order_collection.find({"user.id_user": ObjectId(id_user),"status":"livré"}))
         return list_order
 
-    def get_orders_by_user_id(self, user_id):
+    def get_orders_by_user_id(self, user_id, expand: True):
         return list(self.order_collection.find({"user.id_user": ObjectId(user_id)}))
 
 
