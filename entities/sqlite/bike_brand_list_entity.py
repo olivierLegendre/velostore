@@ -1,7 +1,7 @@
 import os, sys
 
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db")
-import database as db
+sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/../db")
+import sqlite_database as db
 
 class BikeBrandListEntity(db.VelostoreDatabase):
     """Classe pour gérer les listes de marques de vélos dans la base de données."""
@@ -55,7 +55,6 @@ def main():
     """Fonction principale pour la classe BikeBrandListEntity."""
     bike_brand_list = BikeBrandListEntity()
     test1 = bike_brand_list.get_all_bike_brand_list()
-    #print(test1)
 
 
 if __name__ == "__main__":

@@ -1,18 +1,42 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import utils_model as utils
 
-import bike_brand_entity as bbe
-
-class BikeBrand():
+class BikeBrand(utils.UtilsModel):
+    
     """Classe pour gérer les opérations liées aux marques de vélos
     """
-    def __init__(self, entity=bbe.BikeBrandEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise BikeBrand avec une entité
 
         Args:
             entity (BikeBrandEntity, optional): Une entité pour interagir avec les données des marques de vélos.
         """
-        self.entity = entity
+        super().__init__(connector)
+        self.init_attributes()
+    
+    def init_attributes(self):
+        self.id = None
+        self.brand = None
+        self.description = None
+        self.price = None
+        self.destination = None
+        self.img = None
+        
+    def dict_to_object(self, brand: list):
+        if self.connector == 'sqlite':
+            self.id = brand["id"]
+            self.brand = brand["brand"]
+            self.description = brand["description"]
+            self.price = brand["price"]
+            self.destination = brand["destination"]
+            self.img = brand["img"]
+        if self.connector == 'mongodb':
+            self.id = brand["_id"]
+            self.brand = brand["brand"]["brand"]
+            self.description = brand["brand"]["description"]
+            self.price = brand["brand"]["price"]
+            self.destination = brand["brand"]["destination"]
+            self.img = brand["brand"]["image"]
+        return self
         
     
     def get_brand_by_id(self, brand_id: int) -> dict:
@@ -24,15 +48,17 @@ class BikeBrand():
         Returns:
             dict: Les informations de la marque de vélo correspondante.
         """
-        brand_id = self.entity.get_brand_by_id(brand_id)
-        return brand_id
+        brand = self.entity.get_brand_by_id(brand_id)
+        self.dict_to_object(brand)
+        return brand
 
 def main():
     """Fonction pricipale pour la class BikeBrandList"""
 
-    bike_brand_entity = bbe.BikeBrandEntity()
-    brand = BikeBrand(bike_brand_entity)
-    brand_id = brand.get_brand_by_id(2)  
+    # bike_brand_entity = bbe.BikeBrandEntity()
+    brand = BikeBrand('sqlite')
+    brand = brand.get_brand_by_id(2)
+    print(f"brand {brand}")
 
 if __name__ == '__main__':
     main()

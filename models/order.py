@@ -1,20 +1,32 @@
-import os, sys
-from datetime import date
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
-
-import order_entity as oe
+import utils_model as utils
 import bike_item as bi
+from datetime import date
 
-
-class Order():
+class Order(utils.UtilsModel):
     """Classe pour gérer les opérations liées aux commandes."""
-    def __init__(self, entity=oe.OrderEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise Order avec une entité.
 
         Args:
             entity (OrderEntity, optionnel): Une entité pour interagir avec les données de commandes.
         """
-        self.entity = entity
+        super().__init__(connector)
+        self.init_attributes()
+        
+    def init_attributes(self):
+        self.id_order = None
+        self.id_user = None
+        self.date = None
+        self.total_price = None
+        self.status = None
+        
+    def dict_to_object(self, order: list):
+        if self.connector == 'sqlite':
+            self.id_order = order["id_order"]
+            self.id_user = order["id_user"]
+            self.date = order["date"]
+            self.total_price = order["total_price"]
+            self.status = order["status"]
 
     def get_order_by_id(self, order_id: int) -> dict:
         """Récupère une commande par son identifiant.
@@ -25,7 +37,9 @@ class Order():
         Returns:
             dict: Les informations de la commande correspondante.
         """
-        return self.entity.get_order_by_id(order_id)
+        order = self.entity.get_order_by_id(order_id)
+        self.dict_to_object(order)
+        return order
     
     def get_item_list_by_id_order(self, id_order: int) -> list:
         """Récupère une liste d'articles par son identifiant.
@@ -88,34 +102,36 @@ class Order():
         """
         return self.entity.add_order_in_item_list(id_order, id_order_item)
     
-    def place_order_with_bike(self, id_user: int, brand_id: int, size_id: int, color_id: int, price_per_unit: float) -> int:
+    def place_order_with_bike(self, id_user, brand, size, color, price_per_unit: float) -> int:
         """Passe une commande avec un vélo.
-
-        Args:
-            id_user (int): L'identifiant de l'utilisateur.
-            brand_id (int): L'identifiant de la marque.
-            size_id (int): L'identifiant de la taille.
-            color_id (int): L'identifiant de la couleur.
-            price_per_unit (float): Le prix par unité.
 
         Returns:
             int: L'identifiant de la commande passée.
         """
-        # 1. Add the bike
-        bike_item = bi.BikeItem()
-        id_bike = bike_item.add_bike_item(brand_id, size_id, color_id, 1)
+        if self.connector=='sqlite':
+            # 1. Add the bike
+            bike_item = bi.BikeItem()
+            id_bike = bike_item.add_bike_item(brand, size, color, 1)
+    
+            # 2. Add the order
+            today_date = date.today().isoformat()
+            id_order = self.entity.add_order(id_user, today_date, price_per_unit, 1)
+    
+            # 3. Add the order item
+            id_order_item = self.entity.add_order_item(id_bike, 1, price_per_unit)
+    
+            # 4. Insert into item_list table
+            id_item_list = self.entity.add_order_in_item_list(id_order, id_order_item)
+        
+        if self.connector =='mongodb':
+            # 1. Add the bike
+            bike_item = bi.BikeItem()
+            id_bike = bike_item.get_bike_id_by_brand_config(brand, size ,color)
 
-        # 2. Add the order
-        today_date = date.today().isoformat()
-        id_order = self.entity.add_order(id_user, today_date, price_per_unit, 1)
-
-        # 3. Add the order item
-        id_order_item = self.entity.add_order_item(id_bike, 1, price_per_unit)
-
-        # 4. Insert into item_list table
-        id_item_list = self.entity.add_order_in_item_list(id_order, id_order_item)
-
-        return id_order
+            # 2. Add the order
+            id_order = self.entity.add_order(id_user, id_bike)
+    
+            return id_order
     
     def pay_order(self, id_order:int ) -> int:
         """we update the status of the order to 2 (payed)
@@ -130,9 +146,7 @@ class Order():
     
 def main():
     """Fonction principale pour la classe Order."""
-    order_entity= oe.OrderEntity()
-    order = Order(order_entity)
-    order.get_id(2)
+    order = Order('sqlite')
     order.get_item_list_by_id_order(2)
     print(order.get_order_item_by_id_order(2))
     order.place_order_with_bike(2, 3, 2, 1, 2000)

@@ -1,18 +1,27 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import utils_model as utils
 
-import bike_item_entity as bie
-
-class BikeItem():
+class BikeItem(utils.UtilsModel):
     """Classe pour gérer les opérations liées aux articles de vélos
     """
-    def __init__(self, entity=bie.BikeItemEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise BikeItem avec une entité.
 
         Args:
             entity (BikeItem, optional): Une entité pour interagir avec les données d'articles de vélos.
         """
-        self.entity = entity
+        super().__init__(connector)
+        self.init_attributes()
+        
+    def init_attributes(self):
+        self.id = None
+        self.id_order = None
+        self.id_order_item = None
+        
+    def dict_to_object(self, bike: list):
+        if self.connector == 'sqlite':
+            self.id = bike["id"]
+            self.id_order = bike["id_order"]
+            self.id_order_item = bike["id_order_item"]
     
     def get_bike_id(self, bike_id: int) -> dict:
         """Récupère un vélo par son identifiant.
@@ -23,8 +32,9 @@ class BikeItem():
         Returns:
             dict: Les informations du vélo correspondant.
         """
-        bike_id = self.entity.get_bike_by_id(bike_id)
-        return bike_id
+        bike = self.entity.get_bike_by_id(bike_id)
+        self.dict_to_object(bike)
+        return bike
     
     def get_bike_parameters(self, parameters: dict) -> list:
         """Récupère des vélos en fonction de paramètres donnés
@@ -51,13 +61,26 @@ class BikeItem():
             dict: Les informations de l'article de vélo ajouté
         """
         return self.entity.add_bike_item(brand_id, size_id, color_id, status_id)
+    
+    def get_bike_id_by_brand_config(self, brand_name: str, size: str, color: str):
+        """
+        Récupère l'ID d'un vélo à partir de son nom de marque, sa taille et sa couleur.
+
+        Paramètres :
+        - brand_name : str — Nom de la marque (brand.brand)
+        - size : str — Taille du vélo (config.size)
+        - color : str — Couleur du vélo (config.color)
+
+        Retour :
+        - ObjectId de la fiche vélo si trouvé, sinon None
+        """
+        return self.entity.get_bike_id_by_brand_config(brand_name, size, color)
        
 def main():
     """Fonction pricipale pour la class BikeItem
     """
-    bike_item_entity = bie.BikeItemEntity()
     # bike_entity.test_function_bike_entity()
-    bicycle = BikeItem(bike_item_entity)
+    bicycle = BikeItem('sqlite')
     bike_id = bicycle.get_bike_id(2)  
     bike_param = bicycle.get_bike_parameters({'brand': '2'})
     get_bike_id = bicycle.get_bike_id(2)

@@ -1,7 +1,6 @@
 import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/db")
-import database as db
-
+sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/../db")
+import sqlite_database as db
 
 class BikeItemListEntity(db.VelostoreDatabase):
     """Classe pour gérer les listes d'articles de vélos dans la base de données."""    """Classe pour gérer les listes d'articles de vélos dans la base de données."""

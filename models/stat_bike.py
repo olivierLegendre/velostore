@@ -1,17 +1,14 @@
-import os, sys
-sys.path.insert(1, "/".join(os.path.realpath(__file__).split("/")[0:-2]) + "/entities")
+import utils_model as utils
 
-import stat_bike_entity as sbe
-
-class StatBike():
+class StatBike(utils.UtilsModel):
     """Classe pour gérer les statistiques liées aux vélos."""
-    def __init__(self, entity=sbe.StatBikeEntity()):
+    def __init__(self, connector='sqlite'):
         """Initialise StatBike avec une entité.
 
         Args:
             entity (StatBikeEntity, optionnel): Une entité pour interagir avec les données de statistiques de vélos.
         """
-        self.entity = entity
+        super().__init__(connector)
         
     
     def get_stat_by_id(self, stat_id: int)-> dict:
@@ -29,8 +26,7 @@ class StatBike():
 
 def main():
     """Fonction principale pour la classe StatBike."""
-    stat_bike_entity = sbe.StatBikeEntity()
-    stat = StatBike(stat_bike_entity)
+    stat = StatBike('sqlite')
     stat_id = stat. get_stat_by_id(1) 
 
 if __name__ == '__main__':
