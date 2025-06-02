@@ -163,10 +163,16 @@ class OrderEntity(db.VelostoreDatabase):
         return result.modified_count
     
     def update_order_status(self, order_id, new_status):
-        result = self.order_collection.update_one(
+        if new_status == 2:
+            result = self.order_collection.update_one(
             {"_id": ObjectId(order_id)},
-            {"$set": {"Status": new_status}}
+            {"$set": {"Status": "payé"}}
         )
+        else :
+            result = self.order_collection.update_one(
+                {"_id": ObjectId(order_id)},
+                {"$set": {"Status": new_status}}
+            )
         return result.modified_count
 
     def pay_order(self, order_id):
@@ -185,9 +191,9 @@ class OrderEntity(db.VelostoreDatabase):
 def main():
     """Fonction principale pour la classe OrderEntity."""
     order = OrderEntity()
-    print(order.get_order_item_by_id_order('683b1cdb9f09c38f306a56aa'))
-    dict_bike = [{"id_bike" : "683d5ae1da74fc36dd28214b","nb_unit" : 2}]
-    order.create_one_order("683d5ae1da74fc36dd28214e", dict_bike)
+    print(order.get_order_item_by_id_order('683d5ae1da74fc36dd282158'))
+    # dict_bike = [{"id_bike" : "683d5ae1da74fc36dd28214b","nb_unit" : 2}]
+    # order.create_one_order("683d5ae1da74fc36dd28214e", dict_bike)
     
 
 if __name__ == '__main__':

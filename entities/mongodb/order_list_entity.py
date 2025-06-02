@@ -32,7 +32,7 @@ class OrderListEntity(db.VelostoreDatabase):
 def main():
     """Fonction principale pour la classe OrderListEntity."""
     order_list = OrderListEntity()
-    print(order_list.get_pending_order_by_user("665612a5cbe5f12c8a4f1238"))
+    print(order_list.get_closed_order_by_user("665612a5cbe5f12c8a4f1238"))
     print(order_list.get_orders_by_user_id("665612a5cbe5f12c8a4f1238"))
     
 
