@@ -16,16 +16,16 @@ class BikeItemListEntity(db.VelostoreDatabase):
         if expand:
             query = """
                 SELECT 
-                    bike_item.id,
-                    bike_item.brand,
+                    bike.id,
+                    bike.brand,
                     bike_size.size,
                     bike_color.color,
                     bike_status.status
                 FROM
-                    bike_item
-                JOIN bike_size ON bike_item.id = bike_size.id
-                JOIN bike_color ON bike_item.id = bike_color.id
-                JOIN bike_status ON bike_item.id = bike_status.id
+                    bike
+                JOIN bike_size ON bike.id = bike_size.id
+                JOIN bike_color ON bike.id = bike_color.id
+                JOIN bike_status ON bike.id = bike_status.id
                 """
         else:
             query = "SELECT * FROM bike"
