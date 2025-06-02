@@ -20,14 +20,17 @@ class InternalParametersEntity(db.VelostoreDatabase):
         """Appel la fonction get_all_bike_size de bike list entity"""
         return self.bike_list_entity.get_all_bike_size()
     
-    def get_all_bike_destinations(self):
+    def get_all_bike_destination(self):
         """Appel la fonction get_all_bike_destinations de bike list entity"""
-        return self.bike_list_entity.get_all_bike_destinations()
+        return self.bike_list_entity.get_all_destinations_list()
+    
+    def get_bike_status_list(self):
+        return self.bike_list_entity.get_all_bike_status()
         
 def main():
     """Fonction principale pour la classe InternalParametersEntity."""
     internal_parameters = InternalParametersEntity()
-    size = internal_parameters.get_all_bike_size()
+    size = internal_parameters.get_bike_status_list()
     print(size)
 
 if __name__ == '__main__':

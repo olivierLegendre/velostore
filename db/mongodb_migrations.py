@@ -59,8 +59,9 @@ class Migration(db.VelostoreDatabase):
         },
         "config": {
             "size": "M",
-            "color": "bleu"
-        }
+            "color": "bleu",
+        },
+        "status": "Disponible"
     },
     {
         "brand": {
@@ -72,8 +73,9 @@ class Migration(db.VelostoreDatabase):
         },
         "config": {
             "size": "L",
-            "color": "rouge"
-        }
+            "color": "rouge",
+        },
+        "status": "Disponible"
     },
     {
         "brand": {
@@ -85,8 +87,9 @@ class Migration(db.VelostoreDatabase):
         },
         "config": {
             "size": "S",
-            "color": "vert"
-        }
+            "color": "vert",
+        },
+        "status": "Disponible"
     },
     {
         "brand": {
@@ -98,10 +101,11 @@ class Migration(db.VelostoreDatabase):
         },
         "config": {
             "size": "XL",
-            "color": "noir"
-        }
+            "color": "noir",
+        },
+        "status": "Disponible"
     }
-        ]
+    ]
 
         self.bike_brand_entity.create_bike(bike_data)
 
