@@ -11,7 +11,7 @@ class BikeBrandList(utils.UtilsModel):
         """
         super().__init__(connector)
         
-    def get_bike_list(self, expand: bool = True) -> list:
+    def get_bike_brand_list(self, expand: bool = True) -> list:
         """Récupère la liste des marques de vélos.
 
         Args:
@@ -46,7 +46,7 @@ def main():
     """
     # bike_brand_list_entity = bbl.BikeBrandListEntity()
     brand = BikeBrandList('mongodb')
-    print(brand.get_bike_list())
+    print(brand.get_bike_brand_list())
 
 if __name__ == '__main__':
     main()
