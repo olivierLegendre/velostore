@@ -10,7 +10,7 @@ class BikeBrandList(utils.UtilsModel):
             entity (BikeBrandListEntity, optional): Une entité pour interagir avec les données de marques de vélos.
         """
         super().__init__(connector)
-    
+        
     def get_bike_brand_list(self, expand: bool = True) -> list:
         """Récupère la liste des marques de vélos.
 
@@ -24,7 +24,7 @@ class BikeBrandList(utils.UtilsModel):
         return brand
 
     def get_all_prices_list(self) -> list:
-        """Réupère la liste de tous les prix.
+        """Récupère la liste de tous les prix.
 
         Returns:
             list: Une liste de prix.
@@ -47,7 +47,6 @@ def main():
     # bike_brand_list_entity = bbl.BikeBrandListEntity()
     brand = BikeBrandList('sqlite')
     print(brand.get_bike_brand_list())
-    all_destinations = brand.get_all_destinations_list()
 
 if __name__ == '__main__':
     main()
