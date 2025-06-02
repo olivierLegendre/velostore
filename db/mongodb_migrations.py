@@ -48,19 +48,62 @@ class Migration(db.VelostoreDatabase):
         self.add_item_list()
 
     def add_bike(self):
-        bike_data = {"brand":{
+        bike_data = [
+    {
+        "brand": {
             "brand": "Trek",
-            "model": "Marlin 5",
-            "year": 2022,
+            "description": "Un vélo qui sert à grimper des montagnes",
             "price": 599.99,
             "image": "image.url",
             "destination": "VTT"
-        }, "config":{
+        },
+        "config": {
             "size": "M",
             "color": "bleu"
-        }}
-        bike_id = self.bike_brand_entity.create_bike(bike_data)
-        print(f"Vélo crée id: {bike_id}")
+        }
+    },
+    {
+        "brand": {
+            "brand": "Rockrider",
+            "description": "Vélo urbain confortable idéal pour les trajets quotidiens en ville",
+            "price": 1999.99,
+            "image": "image.url",
+            "destination": "BMX"
+        },
+        "config": {
+            "size": "L",
+            "color": "rouge"
+        }
+    },
+    {
+        "brand": {
+            "brand": "Giant",
+            "description": "Vélo de route léger et performant, parfait pour les longues distances",
+            "price": 5999.99,
+            "image": "image.url",
+            "destination": "course"
+        },
+        "config": {
+            "size": "S",
+            "color": "vert"
+        }
+    },
+    {
+        "brand": {
+            "brand": "Cannondale",
+            "description": "Vélo tout-terrain robuste conçu pour les pistes accidentées",
+            "price": 2999.99,
+            "image": "image.url",
+            "destination": "route"
+        },
+        "config": {
+            "size": "XL",
+            "color": "noir"
+        }
+    }
+        ]
+
+        self.bike_brand_entity.create_bike(bike_data)
 
     def add_user(self):
         user_data = [
