@@ -97,21 +97,29 @@ class Order(utils.UtilsModel):
         Returns:
             int: L'identifiant de la commande passée.
         """
-        # 1. Add the bike
-        bike_item = bi.BikeItem()
-        id_bike = bike_item.add_bike_item(brand_id, size_id, color_id, 1)
+        if connector=='sqlite':
+            # 1. Add the bike
+            bike_item = bi.BikeItem()
+            id_bike = bike_item.add_bike_item(brand_id, size_id, color_id, 1)
+    
+            # 2. Add the order
+            today_date = date.today().isoformat()
+            id_order = self.entity.add_order(id_user, today_date, price_per_unit, 1)
+    
+            # 3. Add the order item
+            id_order_item = self.entity.add_order_item(id_bike, 1, price_per_unit)
+    
+            # 4. Insert into item_list table
+            id_item_list = self.entity.add_order_in_item_list(id_order, id_order_item)
+        if connector=='mongoDB':
+            # 1. Add the bike
+            bike_item = bi.BikeItem()
+            id_bike = bike_item.add_bike_item(brand_id, size_id, color_id, price_per_unit)
 
-        # 2. Add the order
-        today_date = date.today().isoformat()
-        id_order = self.entity.add_order(id_user, today_date, price_per_unit, 1)
-
-        # 3. Add the order item
-        id_order_item = self.entity.add_order_item(id_bike, 1, price_per_unit)
-
-        # 4. Insert into item_list table
-        id_item_list = self.entity.add_order_in_item_list(id_order, id_order_item)
-
-        return id_order
+            # 2. Add the order
+            id_order = self.entity.add_order(id_user, id_bike)
+    
+            return id_order
     
     def pay_order(self, id_order:int ) -> int:
         """we update the status of the order to 2 (payed)

@@ -88,6 +88,105 @@ class OrderEntity(db.VelostoreDatabase):
     def create_order(self, order_data):
         result = self.order_collection.insert_one(order_data)
         return result.inserted_id
+    
+
+
+    def add_order(self, id_user: str, id_bike: str) -> ObjectId:
+        """
+        Ajoute un vélo (1 unité) à la commande en attente d’un utilisateur.
+        Si aucune commande n’existe, une nouvelle commande est créée.
+
+        Paramètres :
+        - id_user : str — ID de l'utilisateur
+        - id_bike : str — ID du vélo à ajouter
+
+        Retour :
+        - ObjectId : ID de la commande (existante ou nouvellement créée)
+        """
+
+        # Récupération des informations utilisateur
+        user = self.user_collection.find_one({"_id": ObjectId(id_user)}, {"username": 1, "mail": 1})
+
+        # Récupération des infos du vélo
+        bike = self.bike_collection.find_one({"_id": ObjectId(id_bike)}, {"brand": 1, "config": 1})
+        if not bike:
+            raise ValueError("Vélo introuvable")
+
+        brand_info = bike.get("brand")
+        config_info = bike.get("config")
+        bike_price = brand_info.get("price")
+        bike_price_total = bike_price  # car nb_unit = 1
+
+        bike_entry = {
+            "id_bike": ObjectId(id_bike),
+            "brand": {
+                "brand": brand_info.get("brand"),
+                "price": bike_price
+            },
+            "config": {
+                "size": config_info.get("size"),
+                "color": config_info.get("color")
+            },
+            "nb_unit": 1,
+            "price": bike_price_total
+        }
+
+        # Vérifie s’il existe déjà une commande "en attente" pour l'utilisateur
+        existing_order = self.order_collection.find_one({
+            "user.id_user": ObjectId(id_user),
+            "status": "en attente"
+        })
+
+        if existing_order:
+            # Si la commande existe, mettre à jour la liste des vélos et le prix total
+
+            # Vérifie si le vélo est déjà présent dans la commande
+            updated = False
+            for bike in existing_order["bikes"]:
+                if bike["id_bike"] == ObjectId(id_bike):
+                    # Incrémenter la quantité et mettre à jour le prix
+                    bike["nb_unit"] += 1
+                    bike["price"] += bike_price
+                    updated = True
+                    break
+
+            # Si le vélo n’était pas déjà dans la commande
+            if not updated:
+                existing_order["bikes"].append(bike_entry)
+
+            # Mettre à jour le prix total
+            existing_order["total_price"] += bike_price
+
+            # Mettre à jour la commande dans la base de données
+            self.order_collection.update_one(
+                {"_id": existing_order["_id"]},
+                {
+                    "$set": {
+                        "bikes": existing_order["bikes"],
+                        "total_price": existing_order["total_price"],
+                        "date": datetime.now()
+                    }
+                }
+            )
+            return existing_order["_id"]
+
+        else:
+            # Si aucune commande existante, on en crée une nouvelle
+            new_order = {
+                "user": {
+                    "id_user": ObjectId(id_user),
+                    "username": user.get("username"),
+                    "mail": user.get("mail")
+                },
+                "bikes": [bike_entry],
+                "date": datetime.now(),
+                "total_price": bike_price_total,
+                "status": "en attente"
+            }
+
+            result = self.order_collection.insert_one(new_order)
+            return result.inserted_id
+    
         
     def create_one_order(self, id_user: str, bike_list: list) -> ObjectId :
         """
@@ -194,6 +293,7 @@ def main():
     print(order.get_order_item_by_id_order('683d5ae1da74fc36dd282158'))
     # dict_bike = [{"id_bike" : "683d5ae1da74fc36dd28214b","nb_unit" : 2}]
     # order.create_one_order("683d5ae1da74fc36dd28214e", dict_bike)
+    order.add_order("683d5ae1da74fc36dd28214c","683d5ae1da74fc36dd28214b")
     
 
 if __name__ == '__main__':
