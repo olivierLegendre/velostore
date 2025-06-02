@@ -23,12 +23,11 @@ class BikeBrandListEntity(db.VelostoreDatabase):
         return all_bikes
 
     # surement une façon plus simple de faire ou modifier naming brand dans dict brand
-    def get_all_brand_list(self, expand=True):
+    def get_all_brand_list(self):
         """Récupère et affiche toutes les marques."""
         all_brands = self.bike_collection.distinct("brand.brand")
-        if expand:
-            for brand in all_brands:
-                print(brand)
+        for brand in all_brands:
+            print(brand)
         return all_brands
     
     # Reqûtes internal parameters list 
