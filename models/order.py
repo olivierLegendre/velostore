@@ -108,7 +108,7 @@ class Order(utils.UtilsModel):
         Returns:
             int: L'identifiant de la commande passée.
         """
-        if connector=='sqlite':
+        if self.connector=='sqlite':
             # 1. Add the bike
             bike_item = bi.BikeItem()
             id_bike = bike_item.add_bike_item(brand, size, color, 1)
@@ -122,7 +122,8 @@ class Order(utils.UtilsModel):
     
             # 4. Insert into item_list table
             id_item_list = self.entity.add_order_in_item_list(id_order, id_order_item)
-        if connector=='mongoDB':
+        
+        if self.connector =='mongodb':
             # 1. Add the bike
             bike_item = bi.BikeItem()
             id_bike = bike_item.get_bike_id_by_brand_config(brand, size ,color)

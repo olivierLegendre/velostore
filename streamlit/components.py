@@ -198,6 +198,7 @@ def create_order_dataframe(order: object):
     order_id = order["id_order"]
     order_model = om.Order()
     order_item = order_model.get_order_item_by_id_order(order_id)
+    st.write(order_item)
     products = order_item
     key_to_keep = ['id_order', 'brand', 'size', 'color', 'nb_unit', 'total_price']
     order_item_list = [value_order_item for value_order_item in products.values()]

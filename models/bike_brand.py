@@ -22,7 +22,6 @@ class BikeBrand(utils.UtilsModel):
         self.img = None
         
     def dict_to_object(self, brand: list):
-        print(f"fans bb list to object : {brand}")
         if self.connector == 'sqlite':
             self.id = brand["id"]
             self.brand = brand["brand"]
@@ -31,12 +30,12 @@ class BikeBrand(utils.UtilsModel):
             self.destination = brand["destination"]
             self.img = brand["img"]
         if self.connector == 'mongodb':
-            self.id = brand["id"]
-            self.brand = brand["brand"]
-            self.description = brand["description"]
-            self.price = brand["price"]
-            self.destination = brand["destination"]
-            self.img = brand["img"]
+            self.id = brand["_id"]
+            self.brand = brand["brand"]["brand"]
+            self.description = brand["brand"]["description"]
+            self.price = brand["brand"]["price"]
+            self.destination = brand["brand"]["destination"]
+            self.img = brand["brand"]["image"]
         return self
         
     

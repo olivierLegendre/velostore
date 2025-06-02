@@ -39,7 +39,7 @@ class User(utils.UtilsModel):
             dict: Les informations de l'utilisateur correspondant.
         """
         user = self.entity.get_user_by_id(user_id)
-        self.dict_to_object(user)
+        # self.dict_to_object(user)
         return user
 
     def login(self, user_id):

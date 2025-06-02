@@ -14,9 +14,6 @@ class BikeBrandList(utils.UtilsModel):
         
     def get_object_list(self, bike_brand_list_dict: list):
         self.bike_brand_object_list = dict()
-        print(f" dans get object list bbl {bike_brand_list_dict}")
-        for id, bike_brand in bike_brand_list_dict.items():
-            print(f"bike brand {bike_brand}")
         for id, bike_brand in bike_brand_list_dict.items():
             self.bike_brand_object_list[id] = bb.BikeBrand(self.connector).dict_to_object(bike_brand)
             
@@ -57,7 +54,6 @@ class BikeBrandList(utils.UtilsModel):
 def main():
     """Fonction pricipale pour la class BikeBrandList
     """
-    # bike_brand_list_entity = bbl.BikeBrandListEntity()
     brand = BikeBrandList('sqlite')
     print(brand.get_bike_brand_list())
 
