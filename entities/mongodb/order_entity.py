@@ -186,6 +186,8 @@ def main():
     """Fonction principale pour la classe OrderEntity."""
     order = OrderEntity()
     print(order.get_order_item_by_id_order('683b1cdb9f09c38f306a56aa'))
+    dict_bike = [{"id_bike" : "683d5ae1da74fc36dd28214b","nb_unit" : 2}]
+    order.create_one_order("683d5ae1da74fc36dd28214e", dict_bike)
     
 
 if __name__ == '__main__':
